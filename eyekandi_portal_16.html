@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍬 EYE KANDI Portal</title>
+<style>
+/* System fonts - no external dependencies */
+:root{
+  --candy:#FF2D78;--cl:rgba(255,45,120,0.12);
+  --gold:#FFD166;--gl:rgba(255,209,102,0.12);
+  --mint:#06D6A0;--ml:rgba(6,214,160,0.12);
+  --sky:#60A5FA;--lav:#C084FC;--ora:#F97316;
+  --bg:#07070E;--s1:#0F0F18;--s2:#15151F;--s3:#1B1B26;
+  --bdr:rgba(255,255,255,0.06);--txt:#EDE8FF;--dim:#65657F;--mu:#3A3A55;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;font-size:14px;}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--s1)}
+::-webkit-scrollbar-thumb{background:var(--s3);border-radius:3px}
+
+/* AUTH */
+#authWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(255,45,120,0.15) 0%,transparent 70%);}
+.auth-box{width:380px;background:var(--s1);border:1px solid var(--bdr);border-radius:22px;
+  padding:40px 36px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,0.6);}
+.auth-logo{font-size:42px;margin-bottom:12px;display:block;}
+.auth-title{font-size:22px;font-weight:800;margin-bottom:4px;letter-spacing:-.5px;}
+.auth-sub{font-size:12px;color:var(--dim);margin-bottom:28px;}
+.auth-tabs{display:flex;background:var(--s2);border-radius:12px;padding:4px;margin-bottom:22px;gap:4px;}
+.auth-tab{flex:1;padding:8px;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;
+  border:none;background:transparent;color:var(--dim);transition:all .2s;}
+.auth-tab.active{background:var(--s3);color:var(--txt);}
+.af{width:100%;background:var(--s2);border:1px solid var(--bdr);border-radius:11px;
+  padding:12px 14px;color:var(--txt);font-size:13px;outline:none;margin-bottom:10px;transition:border-color .2s;}
+.af:focus{border-color:rgba(255,45,120,0.5);}
+.af::placeholder{color:var(--mu);}
+.auth-btn{width:100%;padding:13px;border-radius:11px;background:var(--candy);color:#fff;
+  font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .2s;margin-top:4px;letter-spacing:.2px;}
+.auth-btn:hover{background:#e01f68;transform:translateY(-1px);}
+.auth-btn:active{transform:translateY(0);}
+.auth-err{background:rgba(255,45,120,0.1);border:1px solid rgba(255,45,120,0.3);
+  color:#FF6FA6;border-radius:10px;padding:10px 14px;font-size:12px;margin-bottom:12px;display:none;text-align:left;}
+.auth-creds{background:var(--s2);border:1px solid var(--bdr);border-radius:10px;
+  padding:12px 14px;font-size:11px;color:var(--dim);margin-top:16px;text-align:left;line-height:1.9;}
+.auth-creds b{color:var(--txt);}
+
+/* APP */
+#appWrap{display:none;}
+.topbar{position:sticky;top:0;z-index:200;background:rgba(7,7,14,0.95);
+  backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;gap:14px;padding:12px 24px;}
+.tbar-logo{display:flex;align-items:center;gap:9px;}
+.tbar-name{font-size:15px;font-weight:800;letter-spacing:-.3px;}
+.tbar-role{font-size:10px;color:var(--dim);margin-top:1px;}
+.tbar-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.tbar-av{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;
+  justify-content:center;font-weight:800;font-size:12px;color:#fff;flex-shrink:0;}
+.tbar-uname{font-size:12px;font-weight:600;}
+.tb-badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;}
+.ba{background:rgba(255,209,102,.15);color:var(--gold);border:1px solid rgba(255,209,102,.25);}
+.bc{background:var(--cl);color:#FF6FA6;border:1px solid rgba(255,45,120,.2);}
+.bm{background:var(--ml);color:var(--mint);border:1px solid rgba(6,214,160,.2);}
+.logout-btn{padding:6px 14px;border-radius:9px;background:var(--s2);border:1px solid var(--bdr);
+  color:var(--dim);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;}
+.logout-btn:hover{color:var(--txt);}
+
+/* NAV */
+.nav{display:flex;padding:0 24px;background:var(--s1);border-bottom:1px solid var(--bdr);overflow-x:auto;}
+.nav-btn{padding:11px 16px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--dim);
+  border:none;background:transparent;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;}
+.nav-btn:hover{color:var(--txt);}
+.nav-btn.active{color:var(--candy);border-bottom-color:var(--candy);}
+
+/* PAGES */
+.page{display:none;padding:26px;max-width:1280px;margin:0 auto;}
+.page.active{display:block;}
+
+/* PRIMITIVES */
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px;}
+.pt{font-size:17px;font-weight:800;letter-spacing:-.3px;}
+.ps{font-size:11px;color:var(--dim);margin-top:3px;}
+.card{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;padding:20px;}
+.card-title{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+.card-title small{font-size:10px;font-weight:400;color:var(--dim);}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr;}}
+
+/* KPI */
+.kpi{background:var(--s1);border:1px solid var(--bdr);border-radius:13px;padding:18px;
+  position:relative;overflow:hidden;}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--ac,var(--candy));opacity:.7;}
+.kpi-lbl{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;
+  letter-spacing:.07em;margin-bottom:8px;}
+.kpi-val{font-size:28px;font-weight:800;line-height:1;}
+.kpi-sub{font-size:11px;color:var(--mu);margin-top:5px;}
+
+/* NOTICE */
+.notice{background:rgba(255,209,102,.06);border:1px solid rgba(255,209,102,.2);
+  border-radius:11px;padding:12px 15px;font-size:12px;color:#c9a84c;line-height:1.6;
+  display:flex;gap:9px;margin-bottom:18px;}
+
+/* PERF TABLE */
+.perf-wrap{overflow-x:auto;}
+table.pt-t{width:100%;border-collapse:collapse;font-size:12px;}
+table.pt-t th{padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--dim);
+  text-transform:uppercase;letter-spacing:.06em;background:var(--s2);border-bottom:1px solid var(--bdr);}
+table.pt-t td{padding:9px 12px;border-bottom:1px solid var(--bdr);vertical-align:middle;}
+table.pt-t tr:last-child td{border-bottom:none;}
+table.pt-t tr:hover td{background:var(--s2);}
+.score-cell{display:flex;align-items:center;gap:8px;}
+.score-bar{flex:1;height:5px;background:var(--s3);border-radius:3px;overflow:hidden;min-width:50px;}
+.score-fill{height:100%;border-radius:3px;}
+.score-num{font-weight:700;font-size:11px;width:32px;text-align:right;}
+
+/* COACHING */
+.co-list{display:flex;flex-direction:column;gap:11px;}
+.co-entry{background:var(--s1);border:1px solid var(--bdr);border-radius:13px;overflow:hidden;}
+.co-hdr{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;transition:background .15s;user-select:none;}
+.co-hdr:hover{background:var(--s2);}
+.co-av{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:12px;color:#fff;flex-shrink:0;}
+.co-ename{font-weight:700;font-size:13px;}
+.co-emeta{font-size:10.5px;color:var(--dim);margin-top:2px;}
+.co-ebadges{margin-left:auto;display:flex;gap:5px;}
+.cp{padding:3px 9px;border-radius:20px;font-size:9.5px;font-weight:700;}
+.cp-pass{background:var(--ml);color:var(--mint);}
+.cp-coach{background:var(--cl);color:#FF6FA6;}
+.co-chev{color:var(--mu);font-size:16px;transition:transform .22s;margin-left:4px;}
+.co-chev.open{transform:rotate(90deg);}
+.co-body{display:none;padding:0 18px 18px;border-top:1px solid var(--bdr);}
+.co-body.open{display:block;}
+.co-sec{margin-top:14px;}
+.co-sec-lbl{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+.co-box{background:var(--s2);border-radius:9px;padding:11px 13px;font-size:12.5px;color:var(--dim);line-height:1.65;}
+.imp-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:7px;}
+.imp-chip{background:rgba(255,45,120,.06);border:1px solid rgba(255,45,120,.13);border-radius:9px;padding:10px 12px;}
+.imp-lbl{font-size:11px;font-weight:700;color:#FF6FA6;margin-bottom:3px;}
+.imp-note{font-size:11px;color:var(--dim);line-height:1.5;}
+.ac-list{display:flex;flex-direction:column;gap:6px;}
+.ac-item{display:flex;gap:10px;align-items:flex-start;background:var(--s2);
+  border-radius:8px;padding:9px 12px;font-size:11.5px;color:var(--dim);line-height:1.55;}
+.ac-num{width:18px;height:18px;background:var(--cl);color:#FF6FA6;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0;margin-top:2px;}
+.commit-box{background:linear-gradient(135deg,rgba(6,214,160,.07),rgba(96,165,250,.05));
+  border:1px solid rgba(6,214,160,.16);border-radius:10px;padding:12px 14px;margin-top:10px;}
+.commit-lbl{font-size:9px;font-weight:700;color:var(--mint);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;}
+.commit-txt{font-size:12px;color:var(--dim);line-height:1.7;font-style:italic;}
+.kpi-pills{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
+.kp{padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600;}
+.kp-red{background:var(--cl);color:#FF6FA6;}
+.kp-yellow{background:var(--gl);color:var(--gold);}
+.kp-green{background:var(--ml);color:var(--mint);}
+
+/* CHATTER CARDS */
+.cc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:20px;}
+.cc{background:var(--s1);border:1px solid var(--bdr);border-left:3px solid var(--cc,var(--candy));
+  border-radius:13px;padding:16px;transition:transform .2s;}
+.cc:hover{transform:translateY(-2px);}
+.cc-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.cc-av{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:14px;color:#fff;flex-shrink:0;}
+.cc-name{font-weight:800;font-size:14px;}
+.cc-shift{font-size:10px;color:var(--dim);margin-top:1px;}
+.cc-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;text-align:center;}
+.cc-stat{background:var(--s2);border-radius:8px;padding:7px 5px;}
+.cc-stat-val{font-weight:800;font-size:14px;}
+.cc-stat-lbl{font-size:9px;color:var(--dim);margin-top:1px;}
+.cc-bar{height:4px;background:var(--s3);border-radius:2px;overflow:hidden;}
+.cc-bar-fill{height:100%;border-radius:2px;}
+
+/* MODEL SALES */
+.ms-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px;}
+.ms-card{background:var(--s1);border:1px solid var(--bdr);border-radius:13px;padding:18px;
+  text-align:center;transition:transform .2s;border-top:3px solid var(--mc,var(--candy));}
+.ms-card:hover{transform:translateY(-2px);}
+.ms-emoji{font-size:30px;margin-bottom:8px;}
+.ms-name{font-weight:800;font-size:14px;margin-bottom:2px;}
+.ms-rev{font-size:24px;font-weight:800;color:var(--gold);margin:6px 0 3px;}
+.ms-sub{font-size:10px;color:var(--dim);}
+.ms-bar-wrap{height:4px;background:var(--s3);border-radius:2px;overflow:hidden;margin-top:10px;}
+
+/* CHECKLIST */
+.cl-progress{background:var(--s1);border:1px solid var(--bdr);border-radius:13px;padding:18px;margin-bottom:20px;}
+.cl-progress-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.cl-progress-title{font-size:13px;font-weight:700;}
+.cl-pct{font-size:24px;font-weight:800;color:var(--mint);}
+.cl-bar{height:8px;background:var(--s3);border-radius:4px;overflow:hidden;}
+.cl-bar-fill{height:100%;background:linear-gradient(90deg,var(--mint),#06D6A055);border-radius:4px;transition:width .4s;}
+.cl-section{margin-bottom:20px;}
+.cl-sec-title{font-size:12px;font-weight:700;margin-bottom:10px;padding-bottom:8px;
+  border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:6px;}
+.cl-item{display:flex;align-items:flex-start;gap:10px;background:var(--s2);border-radius:9px;
+  padding:10px 13px;border:1px solid var(--bdr);cursor:pointer;transition:all .15s;
+  user-select:none;margin-bottom:6px;}
+.cl-item.done{background:rgba(6,214,160,.05);border-color:rgba(6,214,160,.15);}
+.cl-check{width:18px;height:18px;border-radius:5px;border:2px solid rgba(255,255,255,.15);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:1px;}
+.cl-item.done .cl-check{background:var(--mint);border-color:var(--mint);}
+.cl-check-icon{color:#fff;font-size:10px;display:none;}
+.cl-item.done .cl-check-icon{display:block;}
+.cl-text{font-size:12.5px;color:var(--dim);line-height:1.5;flex:1;}
+.cl-item.done .cl-text{color:var(--mu);text-decoration:line-through;}
+.reset-btn{padding:6px 14px;border-radius:8px;background:var(--s2);border:1px solid var(--bdr);
+  color:var(--dim);font-size:11px;cursor:pointer;transition:all .2s;}
+.reset-btn:hover{color:var(--txt);}
+
+/* SCHEDULE */
+.sched-drop{border:2px dashed var(--bdr);border-radius:13px;padding:40px 32px;text-align:center;
+  cursor:pointer;transition:all .2s;background:var(--s1);}
+.sched-drop:hover,.sched-drop.drag{border-color:rgba(255,45,120,.4);background:rgba(255,45,120,.05);}
+.sched-preview{background:var(--s1);border:1px solid var(--bdr);border-radius:13px;overflow:hidden;}
+.sched-preview-hdr{padding:13px 16px;border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:space-between;}
+.sched-img{width:100%;max-height:600px;object-fit:contain;display:block;}
+
+/* SOPs */
+.sop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;margin-bottom:20px;}
+.sop-card{background:var(--s1);border:1px solid var(--bdr);border-radius:13px;padding:16px;
+  display:flex;flex-direction:column;gap:9px;transition:transform .2s;}
+.sop-card:hover{transform:translateY(-2px);}
+.sop-card.warn{border-color:rgba(255,209,102,.25);}
+.sop-top{display:flex;align-items:flex-start;gap:10px;}
+.sop-icon{width:36px;height:36px;border-radius:9px;background:var(--s2);display:flex;
+  align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.sop-name{font-weight:700;font-size:12.5px;margin-bottom:2px;}
+.sop-type{font-size:9.5px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;}
+.sop-note{font-size:11px;color:var(--dim);line-height:1.55;}
+.sop-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:8px;
+  background:var(--s2);border:1px solid var(--bdr);color:var(--dim);font-size:11px;
+  font-weight:600;text-decoration:none;transition:all .2s;width:fit-content;}
+.sop-btn:hover{color:#FF6FA6;border-color:rgba(255,45,120,.3);background:var(--cl);}
+
+/* SALES GUIDE */
+.sv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:11px;margin-bottom:20px;}
+.sv-card{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:14px;
+  border-left:3px solid var(--svc,var(--bdr));}
+.sv-card[data-s="valid"]{--svc:var(--mint);}
+.sv-card[data-s="invalid"]{--svc:var(--candy);}
+.sv-card[data-s="review"]{--svc:var(--gold);}
+.sv-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.sv-scen{font-size:12.5px;font-weight:600;line-height:1.45;flex:1;}
+.sv-badge{padding:2px 8px;border-radius:20px;font-size:9.5px;font-weight:700;white-space:nowrap;flex-shrink:0;}
+.sv-v{background:var(--ml);color:var(--mint);}
+.sv-i{background:var(--cl);color:#FF6FA6;}
+.sv-r{background:var(--gl);color:var(--gold);}
+.sv-note{font-size:11px;color:var(--dim);line-height:1.6;background:var(--s2);border-radius:7px;padding:7px 10px;}
+
+/* PPV */
+.ppv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:13px;margin-bottom:20px;}
+.ppv-card{background:var(--s1);border:1px solid var(--bdr);border-radius:13px;overflow:hidden;}
+.ppv-hdr{padding:12px 15px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:8px;}
+.ppv-mname{font-weight:800;font-size:13px;}
+.ppv-malias{font-size:9.5px;color:var(--mu);margin-top:1px;}
+.ppv-rule{font-size:10px;color:var(--mu);font-style:italic;padding:6px 15px 0;line-height:1.5;}
+.ppv-sec{padding:10px 15px 0;}
+.ppv-sec-lbl{font-size:9px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.ppv-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.02);gap:10px;}
+.ppv-row:last-child{border-bottom:none;}
+.ppv-item{font-size:11px;color:var(--dim);flex:1;line-height:1.4;}
+.ppv-price{font-size:11px;font-weight:700;color:var(--gold);white-space:nowrap;}
+.ppv-price.ask{color:var(--lav);}
+.ppv-price.hi{color:#FF6FA6;}
+.ppv-spacer{height:10px;}
+
+/* FILTER ROW */
+.fr{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.fb{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;
+  border:1px solid var(--bdr);background:var(--s2);color:var(--dim);transition:all .2s;}
+.fb:hover{color:var(--txt);}
+.fb.active{background:var(--cl);color:#FF6FA6;border-color:rgba(255,45,120,.3);}
+
+/* CHATTER SELECTOR */
+.cs-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.cs-btn{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;
+  border:1px solid var(--bdr);background:var(--s2);color:var(--dim);transition:all .2s;}
+.cs-btn:hover{color:var(--txt);}
+.cs-btn.active{color:#fff;border-color:transparent;}
+
+/* ANNOUNCEMENTS */
+.ann-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.ann-card{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:16px;
+  border-left:3px solid var(--anc,var(--candy));}
+.ann-card.global{--anc:var(--gold);}
+.ann-card.callout{--anc:var(--candy);}
+.ann-card.info{--anc:var(--sky);}
+.ann-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
+.ann-title{font-weight:700;font-size:13px;}
+.ann-date{font-size:10px;color:var(--mu);white-space:nowrap;}
+.ann-body{font-size:12px;color:var(--dim);line-height:1.6;}
+.ann-tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:9.5px;font-weight:700;margin-top:8px;}
+.tag-global{background:var(--gl);color:var(--gold);}
+.tag-callout{background:var(--cl);color:#FF6FA6;}
+.tag-info{background:rgba(96,165,250,.12);color:var(--sky);}
+
+/* REQUESTS */
+.req-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.req-card{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:16px;}
+.req-hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
+.req-title{font-weight:700;font-size:13px;}
+.req-status{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;}
+.st-new{background:rgba(96,165,250,.12);color:var(--sky);}
+.st-pending{background:var(--gl);color:var(--gold);}
+.st-approved{background:var(--ml);color:var(--mint);}
+.st-done{background:rgba(255,255,255,.06);color:var(--dim);}
+.st-rejected{background:var(--cl);color:#FF6FA6;}
+.req-meta{font-size:11px;color:var(--mu);margin-bottom:8px;}
+.req-body{font-size:12px;color:var(--dim);line-height:1.6;}
+.req-form{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:20px;margin-bottom:20px;}
+.req-form-title{font-size:13px;font-weight:700;margin-bottom:16px;}
+.form-group{margin-bottom:12px;}
+.form-label{font-size:11px;font-weight:600;color:var(--dim);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:.05em;}
+.form-input{width:100%;background:var(--s1);border:1px solid var(--bdr);border-radius:9px;
+  padding:10px 13px;color:var(--txt);font-size:13px;outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:rgba(255,45,120,.4);}
+.form-textarea{resize:vertical;min-height:90px;font-family:inherit;}
+.submit-btn{padding:10px 22px;border-radius:10px;background:var(--candy);color:#fff;
+  font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .2s;}
+.submit-btn:hover{background:#e01f68;}
+
+/* AI ASSISTANT */
+.ai-wrap{display:flex;flex-direction:column;height:calc(100vh - 160px);max-height:700px;}
+.ai-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;
+  background:var(--s1);border:1px solid var(--bdr);border-radius:14px 14px 0 0;}
+.ai-msg{max-width:80%;padding:12px 15px;border-radius:12px;font-size:13px;line-height:1.6;}
+.ai-msg.user{background:var(--candy);color:#fff;margin-left:auto;border-radius:12px 12px 3px 12px;}
+.ai-msg.bot{background:var(--s2);color:var(--txt);border-radius:12px 12px 12px 3px;}
+.ai-msg.bot.thinking{color:var(--dim);font-style:italic;}
+.ai-input-row{display:flex;gap:10px;background:var(--s2);border:1px solid var(--bdr);
+  border-top:none;border-radius:0 0 14px 14px;padding:12px;}
+.ai-input{flex:1;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;
+  padding:10px 14px;color:var(--txt);font-size:13px;outline:none;font-family:inherit;}
+.ai-input:focus{border-color:rgba(255,45,120,.4);}
+.ai-send{padding:10px 20px;background:var(--candy);color:#fff;border:none;border-radius:10px;
+  font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.ai-send:hover{background:#e01f68;}
+.ai-send:disabled{opacity:.5;cursor:not-allowed;}
+.ai-key-note{font-size:11px;color:var(--mu);margin-bottom:10px;text-align:center;}
+</style>
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+<div id="authWrap" style="display:none">
+  <div class="auth-box">
+    <span class="auth-logo">🍬</span>
+    <div class="auth-title">EYE KANDI Portal</div>
+    <div class="auth-sub">Sign in to your account</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="authTab('login')">Sign In</button>
+      <button class="auth-tab" onclick="authTab('signup')">Sign Up</button>
+    </div>
+    <div id="authErr" class="auth-err"></div>
+    <div id="loginForm">
+      <input class="af" id="lu" placeholder="Username" autocomplete="username">
+      <input class="af" id="lp" placeholder="Password" type="password" autocomplete="current-password">
+      <button class="auth-btn" onclick="doLogin()">Sign In →</button>
+    </div>
+    <div id="signupForm" style="display:none">
+      <select class="af" id="sc" style="cursor:pointer">
+        <option value="">— Select your chatter name —</option>
+        <option>Jayce</option><option>Sage</option><option>Jammy</option>
+        <option>Adie</option><option>Dale</option><option>Joan</option><option>Fred</option>
+      </select>
+      <input class="af" id="su" placeholder="Choose a username">
+      <input class="af" id="sp" placeholder="Password (min 6 chars)" type="password">
+      <input class="af" id="sp2" placeholder="Confirm password" type="password">
+      <button class="auth-btn" onclick="doSignup()">Create Account →</button>
+    </div>
+    <div class="auth-creds">
+      <b>Admin:</b> admin / EKadmin2026!<br>
+      <b>Chatters:</b> jayce / Jayce2026! &nbsp;·&nbsp; adie / Adie2026!<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dale / Dale2026! &nbsp;·&nbsp; joan / Joan2026!<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sage / Sage2026! &nbsp;·&nbsp; jammy / Jammy2026!
+    </div>
+  </div>
+</div>
+
+<!-- APP SHELL -->
+<div id="appWrap" style="display:block">
+  <div class="topbar">
+    <div class="tbar-logo">
+      <span style="font-size:20px">🍬</span>
+      <div><div class="tbar-name">EYE KANDI</div><div class="tbar-role" id="topRole"></div></div>
+    </div>
+    <div class="tbar-right">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="tbar-av" id="topAv"></div>
+        <div><div class="tbar-uname" id="topUname"></div><div style="margin-top:2px" id="topBadge"></div></div>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">Sign Out</button>
+    </div>
+  </div>
+  <div class="nav" id="navBar"></div>
+  <div id="pages"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════
+// ACCOUNTS — hardcoded, zero storage
+// ═══════════════════════════════════
+const ACCOUNTS = [
+  {u:'admin',    p:'EKadmin2026!', role:'admin',   cn:null},
+  {u:'eyekandi', p:'EK2026!',      role:'admin',   cn:null},
+  {u:'jayce',    p:'Jayce2026!',   role:'chatter', cn:'Jayce'},
+  {u:'sage',     p:'Sage2026!',    role:'chatter', cn:'Sage'},
+  {u:'jammy',    p:'Jammy2026!',   role:'chatter', cn:'Jammy'},
+  {u:'adie',     p:'Adie2026!',    role:'chatter', cn:'Adie'},
+  {u:'dale',     p:'Dale2026!',    role:'chatter', cn:'Dale'},
+  {u:'joan',     p:'Joan2026!',    role:'chatter', cn:'Joan'},
+  {u:'fred',     p:'Fred2026!',    role:'chatter', cn:'Fred'},
+];
+
+// Extra signed-up accounts stored in memory
+const EXTRA_ACCOUNTS = [];
+
+// Safe storage helpers (never throws)
+const _m = {};
+const S = {
+  get:(k)=>{ try{ const v=localStorage.getItem(k); if(v!=null)return v; }catch(e){} return _m[k]||null; },
+  set:(k,v)=>{ try{localStorage.setItem(k,v);}catch(e){} _m[k]=v; },
+  del:(k)=>{ try{localStorage.removeItem(k);}catch(e){} delete _m[k]; }
+};
+
+let CU = null; // current user
+
+// ═══════════════════════════════════
+// COLORS & DATA
+// ═══════════════════════════════════
+const COLORS = {Jayce:'#FF2D78',Sage:'#06D6A0',Jammy:'#FFD166',Adie:'#C084FC',Dale:'#60A5FA',Joan:'#F97316',Fred:'#EC4899'};
+
+const PERF = {
+  Jayce:{shift:'MID/EVE',mms:{total:160,approved:125,pending:35},sales:[1240,1580,1320,980,1650],campaignTips:30,latestScore:55,target:75,
+    kpi:{'Mass Message':88,'Building Rapport':84,'Response Time':95,'Terms of Service':100,'Grammar':95,'PPV Sent':82,'Sales':83,'Retention':85,'Drives Conversation':82,'Fan Satisfaction':84}},
+  Sage:{shift:'AM/MID',mms:{total:151,approved:98,pending:52,rephrase:1},sales:[820,740,910,670,1020],campaignTips:25,latestScore:46,target:75,
+    kpi:{'Mass Message':70,'Building Rapport':83,'Response Time':89,'Terms of Service':100,'Grammar':96,'PPV Sent':86,'Sales':86,'Retention':58,'Drives Conversation':59,'Fan Satisfaction':52}},
+  Jammy:{shift:'AM/MID',mms:{total:275,approved:252,pending:23},sales:[2100,1890,2340,1760,2580],campaignTips:864,latestScore:51,target:75,
+    kpi:{'Mass Message':91,'Building Rapport':87,'Response Time':91,'Terms of Service':100,'Grammar':95,'PPV Sent':88,'Sales':90,'Retention':88,'Drives Conversation':88,'Fan Satisfaction':94}},
+  Adie:{shift:'AM',mms:{total:142,approved:142,pending:0},sales:[3200,3540,3120,2980,3670],campaignTips:168,latestScore:63,target:75,
+    kpi:{'Mass Message':91,'Building Rapport':87,'Response Time':92,'Terms of Service':100,'Grammar':95,'PPV Sent':92,'Sales':94,'Retention':91,'Drives Conversation':94,'Fan Satisfaction':91}},
+  Dale:{shift:'EVE',mms:{total:288,approved:267,pending:21},sales:[4100,4560,3980,3450,4820],campaignTips:689,latestScore:57,target:75,
+    kpi:{'Mass Message':95,'Building Rapport':93,'Response Time':95,'Terms of Service':100,'Grammar':95,'PPV Sent':96,'Sales':97,'Retention':88,'Drives Conversation':95,'Fan Satisfaction':86}},
+  Joan:{shift:'MID',mms:{total:313,approved:307,pending:6},sales:[5200,5870,4980,4320,5640],campaignTips:486,latestScore:55,target:75,
+    kpi:{'Mass Message':93,'Building Rapport':76,'Response Time':93,'Terms of Service':0,'Grammar':95,'PPV Sent':50,'Sales':65,'Retention':55,'Drives Conversation':65,'Fan Satisfaction':55}},
+  Fred:{shift:'EVE',mms:{total:92,approved:77,pending:15},sales:[980,1120,890,760,1040],campaignTips:0,latestScore:53,target:75,
+    kpi:{'Mass Message':81,'Building Rapport':65,'Response Time':95,'Terms of Service':50,'Grammar':95,'PPV Sent':79,'Sales':77,'Retention':69,'Drives Conversation':71,'Fan Satisfaction':81}},
+};
+
+const MODELS = [
+  {id:'Sabrina',emoji:'👑',color:'#FF2D78',rev:38420,subs:163,trend:'+12%'},
+  {id:'Omi',emoji:'🔥',color:'#FFD166',rev:9840,subs:254,trend:'+8%'},
+  {id:'Maddy',emoji:'💋',color:'#C084FC',rev:7230,subs:238,trend:'+5%'},
+  {id:'Bee',emoji:'🐝',color:'#60A5FA',rev:5610,subs:215,trend:'+3%'},
+  {id:'Izana',emoji:'💎',color:'#06D6A0',rev:4190,subs:247,trend:'+6%'},
+];
+
+const COACHING = {
+  Jayce:[{period:'Apr 1–15, 2024',date:'Apr 16, 2024',status:'PASSED',coach:'AJ',behavior:'Inconsistent performance — multiple unattended chats observed.',rca:'Unattended chats led to dropped conversations and missed sales.',areas:[{l:'Grammar',n:'Message construction needs polish — unclear to fans.'},{l:'Drives Conversation',n:'One-line responses — not enough depth.'},{l:'Fan Satisfaction',n:'No post-fan care — conversations closed abruptly.'}],actions:['Live coaching — Grammarly utilization and timer management.','Extra effort: back-read previous conversations, ask about hobbies.','Concern about lowballing raised — to be addressed in team meeting.','Address low-sales outlier — specific action plan advised.'],commitment:"I will utilize Grammarly consistently and put extra effort on back-reading and asking about fans' hobbies.",kpi:{'Mass Message':'red','Building Rapport':'red','Response Time':'yellow','Terms of Service':'green','Grammar':'red','PPV Sent':'yellow','Sales':'red','Retention':'yellow','Drives Conversation':'red','Fan Satisfaction':'red'}}],
+  Sage:[{period:'Feb 1–15, 2024',date:'Feb 16, 2024',status:'COACHING',coach:'AJ',behavior:'Low scores in engagement and grammar — fan confusion observed.',rca:'Insufficient rapport building and grammar errors causing early drop-off.',areas:[{l:'Grammar',n:'Grammar issues kept fans confused — Grammarly enforcement needed.'},{l:'Building Rapport',n:'Conversations felt transactional — needs personalization.'}],actions:['Increase open-ended questions.','Implement sexting transition framework.','Daily Grammarly check before shift.'],commitment:'I will focus on building genuine connections and use Grammarly consistently.',kpi:{'Mass Message':'yellow','Building Rapport':'red','Response Time':'yellow','Terms of Service':'green','Grammar':'red','PPV Sent':'yellow','Sales':'yellow','Retention':'red','Drives Conversation':'red','Fan Satisfaction':'yellow'}}],
+  Jammy:[{period:'Jan 1–15, 2024',date:'Jan 16, 2024',status:'COACHING',coach:'AJ',behavior:'1st warning — grammar issues consistently confusing fans.',rca:'Broken sentences and incomplete thoughts leading to fan disengagement.',areas:[{l:'Grammar',n:'Incomplete thoughts and poor sentence construction.'},{l:'Building Rapport',n:'Rushing to sell without adequate engagement first.'}],actions:['Mandatory Grammarly use before any message.','Practice engage → transition → sell framework.','Weekly 1-on-1 check-in for 4 weeks.'],commitment:"I will not send any message without Grammarly and always build rapport before pitching PPVs.",kpi:{'Mass Message':'yellow','Building Rapport':'red','Response Time':'green','Terms of Service':'green','Grammar':'red','PPV Sent':'yellow','Sales':'yellow','Retention':'yellow','Drives Conversation':'red','Fan Satisfaction':'yellow'}}],
+  Adie:[{period:'Jan 1–15, 2024',date:'Jan 16, 2024',status:'PASSED',coach:'AJ',behavior:'Strong consistent performer — session focused on optimization.',rca:'No critical issues. Aimed at reaching higher performance tier.',areas:[{l:'Retention',n:'Minor dip — explore post-chat follow-up strategies.'}],actions:['Continue current framework.','Experiment with post-fan care messages.','Share best practices in next calibration.'],commitment:'I will continue my current approach and experiment with post-fan care to push retention higher.',kpi:{'Mass Message':'green','Building Rapport':'green','Response Time':'green','Terms of Service':'green','Grammar':'green','PPV Sent':'green','Sales':'green','Retention':'yellow','Drives Conversation':'green','Fan Satisfaction':'green'}}],
+  Dale:[{period:'Jan 1–15, 2024',date:'Jan 16, 2024',status:'PASSED',coach:'AJ',behavior:'Solid performer with minor attendance flag.',rca:'Attendance gap in Week 3 affected shift coverage.',areas:[{l:'Attendance',n:'Week 3 gap — need clear advance notice for schedule changes.'}],actions:['Always provide 1 week advance notice for any absence.','Maintain current sales and engagement approach.','Avoid terminal breaks in final shift hour.'],commitment:"I will communicate schedule changes at least a week in advance.",kpi:{'Mass Message':'green','Building Rapport':'green','Response Time':'green','Terms of Service':'yellow','Grammar':'green','PPV Sent':'green','Sales':'green','Retention':'green','Drives Conversation':'green','Fan Satisfaction':'yellow'}}],
+  Joan:[{period:'Jan 1–15, 2024',date:'Jan 16, 2024',status:'PASSED',coach:'AJ',behavior:'Top performer — coaching focused on maintaining standards.',rca:'No critical issues. Minor note on post-fan care consistency.',areas:[{l:'Fan Satisfaction',n:'Occasionally skipping post-fan care at end of long sessions.'}],actions:['Checklist reminder for post-fan care before closing every chat.','Consider mentoring newer chatters.'],commitment:'I will add a mental checklist for post-fan care before closing every chat.',kpi:{'Mass Message':'green','Building Rapport':'green','Response Time':'green','Terms of Service':'green','Grammar':'green','PPV Sent':'green','Sales':'green','Retention':'green','Drives Conversation':'green','Fan Satisfaction':'yellow'}}],
+  Fred:[{period:'Feb 1–15, 2024',date:'Feb 16, 2024',status:'COACHING',coach:'AJ',behavior:'1st warning — inconsistent TOS compliance and low PPV push rate.',rca:'Unfamiliarity with updated TOS and hesitancy in pitching PPVs.',areas:[{l:'Terms of Service',n:'TOS violations noted — re-read updated SOP immediately.'},{l:'PPV Sent',n:'Low PPV pitch rate — hesitant to transition from chat to sell.'}],actions:['Re-read and sign off on current TOS SOP immediately.','Practice PPV transition scripts.','Minimum 3 PPV pitches per shift for next 2 weeks.'],commitment:'I will re-read the SOP today and pitch at least 3 PPVs per shift while staying TOS-compliant.',kpi:{'Mass Message':'yellow','Building Rapport':'green','Response Time':'green','Terms of Service':'red','Grammar':'green','PPV Sent':'red','Sales':'yellow','Retention':'yellow','Drives Conversation':'yellow','Fan Satisfaction':'green'}}],
+};
+
+const SOPS = [
+  {icon:'📋',name:'Main SOP',type:'Google Sheets',note:'Attendance, Idle/Break, Sales & Compliance rules. Updated Jan 31, 2024.',url:'https://docs.google.com/spreadsheets/d/1CwPKLRT-HBr4j7i6uERxijaX6yydyVsxDi4JR4ymP_4/edit',warn:false},
+  {icon:'🏷️',name:'Tagging SOP',type:'Google Docs',note:'How to tag collaborator content in Infloww — screenshots and verification steps.',url:'https://docs.google.com/document/d/1YuSxnAMnFNysG2m0HIgWd3wcv_fcLWJ2Wp3hBfNPvxU/edit',warn:false},
+  {icon:'💬',name:'Mass Message Library',type:'Google Docs',note:'All approved captions and mass message templates for shifts.',url:'https://docs.google.com/document/d/13wFYOi6F_yissaoKrr3qvWoGC9I4efTkBQwhi7JesGg/edit',warn:false},
+  {icon:'💰',name:'PPV Pricing Reference',type:'Google Sheets',note:'Official per-model PPV pricing. Can go higher, never lower.',url:'https://docs.google.com/spreadsheets/d/1_LbogJfEjxUDSxtG6tO8BaKonrU85R71L2G_nqJcFwU/edit',warn:false},
+  {icon:'🎬',name:'How to Add a Story',type:'Loom Video',note:'Step-by-step video for adding a story to the model's OnlyFans account.',url:'https://www.loom.com/share/cd12861e17f645e4aa3152d2c422827d',warn:true,wn:'Link may redirect to Loom library — contact admin if inaccessible.'},
+];
+
+const SALES_REF = [
+  {s:'valid',sc:'Getting good engagement before asking fan to unlock a PPV',n:'Build rapport first — valid when you earn the right to sell.'},
+  {s:'valid',sc:'Asking fan to unlock during an active sexting session',n:'Fan is engaged and content is relevant — valid.'},
+  {s:'valid',sc:'Asking fan to unlock as payment for a service (sexting, custom, VC)',n:'Transactional exchange for a service = valid.'},
+  {s:'valid',sc:'Encouraging fan to unlock after getting to know their preferences',n:'Personalized pitch based on fan preferences = valid influenced sale.'},
+  {s:'valid',sc:'Persuading fan to unlock a PPV (not as service payment)',n:'Direct persuasion-driven sale = valid.'},
+  {s:'valid',sc:'Chatter sent PPV and fan unlocked it during the same shift',n:'Sent and unlocked in same shift = clean valid sale.'},
+  {s:'valid',sc:'Chatter hinted for tips and fan tipped via post or content',n:'Tip-hinting that converts = valid influenced sale.'},
+  {s:'valid',sc:'Subscription payments',n:'All subscription payments count as valid sales.'},
+  {s:'invalid',sc:'Fan unlocks scheduled PPV from main feed without chatter engagement',n:'No chatter engagement = organic, not credited to chatter.'},
+  {s:'invalid',sc:'Fan sends tip from post or campaign without chatter interaction',n:'Organic tip not influenced by chatter — not credited.'},
+  {s:'invalid',sc:'Fan tips influenced by QA/executive/manager stepping in',n:'Management-driven tip = not attributed to chatter on shift.'},
+  {s:'invalid',sc:'Fan unlocks PPV sent by QA/executive/manager during shift support',n:'Must include screenshot proof if PPV was sent by someone else.'},
+  {s:'review',sc:'Sending a mass message to prompt random/scheduled PPV unlocks',n:'Not to be sent daily. QA reviews validity case by case.'},
+  {s:'review',sc:'Fan asks what type of content it is and chatter explains',n:'Valid if descriptive and convincing — QA will confirm.'},
+];
+
+const PPV_MODELS = [
+  {id:'Omi',name:'Omi',alias:'Dominique Pichette / Flowmi',emoji:'🔥',color:'#FF2D78',rule:'Topless=lower end · Fully nude close-up=higher end · Nude posed (tits visible)=mid range',secs:[{l:'Photos',items:[{n:'Single photo',p:'$10–$45'},{n:'Photo set (3–5)',p:'$15–$55'}]},{l:'Videos',items:[{n:'Teaser clip',p:'$15–$40'},{n:'Full-length (≤10 min)',p:'$45–$80'},{n:'Sexy outfit video',p:'$20–$35'},{n:'Masturbation video',p:'MIN $200',c:'hi'},{n:'Pussy play <3 min',p:'From $150',c:'hi'},{n:'Pussy play >3 min',p:'MIN $200',c:'hi'},{n:'Male partner video',p:'$400–$600',c:'hi'}]},{l:'Bundles',items:[{n:'Bundle w/ masturbation',p:'$250+',c:'hi'},{n:'Bundle w/o masturbation',p:'$100–$150'}]}]},
+  {id:'Bee',name:'Bee',alias:'',emoji:'🐝',color:'#FFD166',rule:'Can go higher but never lower.',secs:[{l:'Photos',items:[{n:'Single photo',p:'$3–$10'},{n:'Photo set (3–5)',p:'$5–$20'}]},{l:'Videos',items:[{n:'Teaser clip',p:'$5–$20'},{n:'Full-length (≤10 min)',p:'$15–$50'},{n:'Bundle',p:'$50–$100'},{n:'Showing boobs',p:'$90 max'},{n:'<1 min undressing/playing',p:'$50–$70'},{n:'1 min+ undressing/playing',p:'$80–$90+'}]}]},
+  {id:'Maddy',name:'Maddy',alias:'Daisy',emoji:'💋',color:'#C084FC',rule:'Can go higher but never lower.',secs:[{l:'Photos',items:[{n:'Single photo',p:'$3–$10'},{n:'Photo set (3–5)',p:'$5–$20'}]},{l:'Videos',items:[{n:'Teaser clip',p:'$5–$20'},{n:'Full-length (≤10 min)',p:'$15–$50'},{n:'Bundle',p:'$50–$100'}]}]},
+  {id:'Sabrina',name:'Sabrina',alias:'Can ask for pricing on anything!',emoji:'👑',color:'#06D6A0',rule:'Content with partner → vault pricing. Partner videos = $400–$600 regardless of length.',secs:[{l:'Photos',items:[{n:'Single photo',p:'$10'},{n:'3-photo set',p:'$20'},{n:'5-photo set',p:'$35–$40'}]},{l:'Videos',items:[{n:'Teaser clip',p:'Ask Sab',c:'ask'},{n:'Full-length',p:'Ask Sab',c:'ask'},{n:'Bundle',p:'$300–$500',c:'hi'},{n:'Male partner video',p:'$400–$600',c:'hi'}]},{l:'Specific — Always Ask Sab',items:[{n:'Tits playing (panties on/off)',p:'Ask Sab',c:'ask'},{n:'Stripping top/bottom',p:'Ask Sab',c:'ask'},{n:'Blowjob content',p:'Ask Sab',c:'ask'},{n:'Shaking ass (panties on/off)',p:'Ask Sab',c:'ask'},{n:'JOI content',p:'Ask Sab',c:'ask'}]}]},
+];
+
+const CHECKLIST = {
+  pre:['Log in to Time Doctor before opening any pages','Check Discord for announcements or urgent messages','Review the daily model notes and any content restrictions','Check PPV pricing reference if sending PPVs today','Review your previous shift's open conversations','Read any new coaching notes or SOP updates'],
+  during:['Respond to all DMs within 15 minutes','Send at least 1 mass message during your shift','Push at least 3 PPVs per shift (or more per target)','Build rapport before pitching — no cold selling','Always do post-fan care before closing any conversation','Log any influenced sales in the sales tracker with screenshot','If content has a collab tag — check Tagging SOP before sending'],
+  post:['Submit your EOD (End of Day) sales report','Tag any open chats for follow-up on next shift','Log off Time Doctor only after fully clocked out','Report any fan issues or flags to QA in Discord'],
+};
+
+const ANNOUNCEMENTS = [
+  {type:'global',title:'🎯 Truth or Dare Campaign — ONGOING',date:'Jun 1, 2026',body:'Campaign is live! Push Truth or Dare to all active fans. Entry tip starts at $10. Escalate through the tiers. Remember to log every entry in the Campaign Tracker.'},
+  {type:'global',title:'📋 MMS Tracker Reminder',date:'Jun 3, 2026',body:'All MMS must be submitted to the May 2026 MMS Tracker before end of shift. Pending submissions are blocking QA review.'},
+  {type:'callout',title:'⚠️ TOS Compliance Check',date:'Jun 5, 2026',body:'All chatters — please re-read the updated TOS SOP. There have been a few compliance flags this week. Any violations going forward will result in a formal coaching session.'},
+  {type:'info',title:'✅ New PPV Pricing Updated',date:'May 31, 2026',body:'PPV pricing reference has been updated. Check the PPV Pricing tab for all current rates. Remember: can go higher, never lower.'},
+];
+
+// Requests stored in memory (no backend)
+let REQUESTS = [
+  {id:'REQ-001',title:'Schedule Change Request — June 12',role:'chatter',by:'Adie',category:'Schedule',status:'approved',priority:'medium',date:'Jun 4, 2026',desc:'Requesting to swap my AM shift on June 12 with Dale's EVE shift. Both parties agree.'},
+  {id:'REQ-002',title:'PPV Price Clarification for Custom Video',role:'chatter',by:'Jammy',category:'Pricing',status:'done',priority:'low',date:'Jun 3, 2026',desc:'Need clarification on pricing for a custom 15-min video for Sabrina page. Fan is asking.'},
+  {id:'REQ-003',title:'Grammarly Access — Account Issue',role:'chatter',by:'Sage',category:'Tech Support',status:'new',priority:'high',date:'Jun 6, 2026',desc:'Grammarly is not working on my device. Getting a login error. Need help accessing it before my next shift.'},
+  {id:'REQ-004',title:'Campaign Ideas — Roll the Dice Relaunch',role:'chatter',by:'Joan',category:'Campaign',status:'pending',priority:'medium',date:'Jun 5, 2026',desc:'Suggest relaunching Roll the Dice campaign for the summer. High fan engagement last time.'},
+];
+
+// ═══════════════════════════════════
+// AUTH
+// ═══════════════════════════════════
+function authTab(t){
+  document.querySelectorAll('.auth-tab').forEach((b,i)=>b.classList.toggle('active',i===(t==='login'?0:1)));
+  id('loginForm').style.display=t==='login'?'block':'none';
+  id('signupForm').style.display=t==='signup'?'block':'none';
+  hideErr();
+}
+function showErr(m){const e=id('authErr');e.textContent=m;e.style.display='block';}
+function hideErr(){id('authErr').style.display='none';}
+function id(x){return document.getElementById(x);}
+
+function doLogin(){
+  const u=(id('lu').value||'').trim().toLowerCase();
+  const p=(id('lp').value||'');
+  if(!u||!p){showErr('Please fill in all fields.');return;}
+  // Check hardcoded first
+  const match = ACCOUNTS.find(a=>a.u.toLowerCase()===u && a.p===p);
+  if(match){launchApp({username:match.u,role:match.role,chatterName:match.cn});return;}
+  // Check extra signed-up accounts
+  const match2 = EXTRA_ACCOUNTS.find(a=>a.username.toLowerCase()===u && a.password===p);
+  if(match2){launchApp(match2);return;}
+  showErr('Incorrect username or password.');
+}
+
+function doSignup(){
+  const ch=id('sc').value, u=(id('su').value||'').trim(), p=id('sp').value, p2=id('sp2').value;
+  if(!ch){showErr('Please select your chatter name.');return;}
+  if(!u){showErr('Please choose a username.');return;}
+  if(p.length<6){showErr('Password must be at least 6 characters.');return;}
+  if(p!==p2){showErr('Passwords do not match.');return;}
+  const all=[...ACCOUNTS,...EXTRA_ACCOUNTS];
+  if(all.find(a=>(a.u||a.username||'').toLowerCase()===u.toLowerCase())){showErr('Username already taken.');return;}
+  if(all.find(a=>(a.cn||a.chatterName)===ch&&a.role==='chatter')){showErr('This chatter already has an account.');return;}
+  const newAcc={username:u,password:p,role:'chatter',chatterName:ch};
+  EXTRA_ACCOUNTS.push(newAcc);
+  launchApp(newAcc);
+}
+
+function doLogout(){
+  CU=null;
+  id('authWrap').style.display='flex';
+  id('appWrap').style.display='none';
+  ['lu','lp','su','sp','sp2'].forEach(x=>{const e=id(x);if(e)e.value='';});
+  id('sc').value='';
+  hideErr();
+}
+
+function launchApp(user){
+  CU=user;
+  id('authWrap').style.display='none';
+  id('appWrap').style.display='block';
+  const color=user.role==='admin'?'#FFD166':(COLORS[user.chatterName]||'#FF2D78');
+  const av=id('topAv'); av.style.background=`linear-gradient(135deg,${color},${color}88)`; av.textContent=user.username[0].toUpperCase();
+  id('topUname').textContent=user.username;
+  id('topRole').textContent=user.role==='admin'?'Administrator':`Chatter · ${user.chatterName}`;
+  id('topBadge').innerHTML=user.role==='admin'?'<span class="tb-badge ba">⭐ Admin</span>':'<span class="tb-badge bc">🍬 Chatter</span>';
+  buildNav(user.role);
+  buildPages(user.role,user.chatterName);
+  switchPage('dashboard');
+}
+
+// ═══════════════════════════════════
+// NAV
+// ═══════════════════════════════════
+function buildNav(role){
+  const pages=role==='admin'
+    ?[{id:'dashboard',l:'📊 Overview'},{id:'chatters',l:'👥 Chatters'},{id:'performance',l:'📈 Performance'},{id:'coaching',l:'🎯 Coaching'},{id:'model_sales',l:'💸 Model Sales'},{id:'announcements',l:'📣 Announcements'},{id:'requests',l:'🎫 Requests'},{id:'checklist',l:'✅ Checklist'},{id:'schedule',l:'📅 Schedule'},{id:'sops',l:'📋 SOPs'},{id:'sales_ref',l:'💲 Sales Guide'},{id:'ppv',l:'💰 PPV Pricing'},{id:'ai',l:'🤖 AI Assistant'}]
+    :[{id:'dashboard',l:'📊 My Dashboard'},{id:'performance',l:'📈 Performance'},{id:'coaching',l:'🎯 My Coaching'},{id:'announcements',l:'📣 Announcements'},{id:'requests',l:'🎫 Requests'},{id:'checklist',l:'✅ Checklist'},{id:'schedule',l:'📅 Schedule'},{id:'sops',l:'📋 SOPs'},{id:'sales_ref',l:'💲 Sales Guide'},{id:'ppv',l:'💰 PPV Pricing'},{id:'ai',l:'🤖 AI Assistant'}];
+  id('navBar').innerHTML=pages.map(p=>`<button class="nav-btn" id="nav-${p.id}" onclick="switchPage('${p.id}')">${p.l}</button>`).join('');
+}
+
+function switchPage(pid){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const nb=id('nav-'+pid), pg=id('page-'+pid);
+  if(nb)nb.classList.add('active');
+  if(pg)pg.classList.add('active');
+}
+
+// ═══════════════════════════════════
+// PAGE BUILDER
+// ═══════════════════════════════════
+function mkPage(pid){const p=document.createElement('div');p.className='page';p.id='page-'+pid;return p;}
+
+function buildPages(role,cn){
+  const c=id('pages'); c.innerHTML='';
+  if(role==='admin'){
+    c.appendChild(pAdminDash());
+    c.appendChild(pAdminChatters());
+    c.appendChild(pAdminPerf());
+    c.appendChild(pAdminCoaching());
+    c.appendChild(pModelSales());
+    c.appendChild(pAnnouncements(role,cn));
+    c.appendChild(pRequests(role,cn));
+    c.appendChild(pChecklist('admin'));
+    c.appendChild(pSchedule());
+    c.appendChild(pSOPs());
+    c.appendChild(pSalesRef());
+    c.appendChild(pPPV());
+    c.appendChild(pAI());
+  } else {
+    c.appendChild(pChatterDash(cn));
+    c.appendChild(pChatterPerf(cn));
+    c.appendChild(pChatterCoaching(cn));
+    c.appendChild(pAnnouncements(role,cn));
+    c.appendChild(pRequests(role,cn));
+    c.appendChild(pChecklist(cn));
+    c.appendChild(pSchedule());
+    c.appendChild(pSOPs());
+    c.appendChild(pSalesRef());
+    c.appendChild(pPPV());
+    c.appendChild(pAI());
+  }
+}
+
+// ─── CHATTER DASHBOARD ───
+function pChatterDash(n){
+  const p=mkPage('dashboard'), d=PERF[n], color=COLORS[n]||'#FF2D78';
+  const rate=Math.round((d.mms.approved/d.mms.total)*100);
+  const totalSales=d.sales.reduce((a,b)=>a+b,0);
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt" style="display:flex;align-items:center;gap:9px">
+    <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,${color},${color}77);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff">${n[0]}</div>${n}
+  </div><div class="ps">${d.shift} Shift · May 2026</div></div></div>
+  <div class="g4" style="margin-bottom:18px">
+    <div class="kpi" style="--ac:${color}"><div class="kpi-lbl">MMS Submitted</div><div class="kpi-val">${d.mms.total}</div><div class="kpi-sub">May 2026</div></div>
+    <div class="kpi" style="--ac:var(--mint)"><div class="kpi-lbl">Approved</div><div class="kpi-val" style="color:var(--mint)">${d.mms.approved}</div><div class="kpi-sub">${rate}% approval</div></div>
+    <div class="kpi" style="--ac:var(--gold)"><div class="kpi-lbl">Pending QA</div><div class="kpi-val" style="color:var(--gold)">${d.mms.pending}</div><div class="kpi-sub">${d.mms.pending===0?'🎉 All clear':'Awaiting review'}</div></div>
+    <div class="kpi" style="--ac:var(--lav)"><div class="kpi-lbl">Latest QA Score</div><div class="kpi-val" style="color:var(--lav)">${d.latestScore}</div><div class="kpi-sub">Target: ${d.target}</div></div>
+  </div>
+  <div class="g2">
+    <div class="card"><div class="card-title">Sales Trend <small>Jan–May 2026</small></div>
+      <div style="display:flex;align-items:flex-end;gap:6px;height:140px;padding-top:10px">
+        ${d.sales.map((v,i)=>{const max=Math.max(...d.sales);const h=Math.round((v/max)*120);const months=['Jan','Feb','Mar','Apr','May'];return`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px"><div style="width:100%;height:${h}px;background:linear-gradient(180deg,${color},${color}66);border-radius:5px 5px 0 0"></div><div style="font-size:10px;color:var(--mu)">${months[i]}</div><div style="font-size:10px;font-weight:700;color:${color}">$${(v/1000).toFixed(1)}k</div></div>`;}).join('')}
+      </div>
+    </div>
+    <div class="card"><div class="card-title">Quick Stats</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--s2);border-radius:9px">
+          <span style="font-size:12px;color:var(--dim)">Total Sales (Jan–May)</span>
+          <span style="font-weight:800;color:var(--gold)">$${totalSales.toLocaleString()}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--s2);border-radius:9px">
+          <span style="font-size:12px;color:var(--dim)">Campaign Tips Earned</span>
+          <span style="font-weight:800;color:var(--mint)">$${d.campaignTips.toLocaleString()}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--s2);border-radius:9px">
+          <span style="font-size:12px;color:var(--dim)">MMS Approval Rate</span>
+          <span style="font-weight:800;color:${rate>=90?'var(--mint)':rate>=75?'var(--gold)':'var(--candy)'}">${rate}%</span>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  return p;
+}
+
+// ─── CHATTER PERFORMANCE ───
+function pChatterPerf(n){
+  const p=mkPage('performance'), d=PERF[n], color=COLORS[n]||'#FF2D78';
+  const kpiRows=Object.entries(d.kpi).map(([k,v])=>{
+    const col=v>=90?'var(--mint)':v>=75?'var(--gold)':'var(--candy)';
+    return`<tr><td style="color:var(--dim)">${k}</td><td><div class="score-cell"><div class="score-bar"><div class="score-fill" style="width:${v}%;background:${col}"></div></div><div class="score-num" style="color:${col}">${v}%</div></div></td></tr>`;
+  }).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">📈 My Performance</div><div class="ps">${n} · From QA scoring sheets</div></div>
+    <a href="https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit" target="_blank" class="sop-btn">↗ Full Tracker</a>
+  </div>
+  <div class="g2">
+    <div class="card"><div class="card-title">KPI Breakdown</div>
+      <div class="perf-wrap"><table class="pt-t"><thead><tr><th>Metric</th><th>Score</th></tr></thead><tbody>${kpiRows}</tbody></table></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:14px"><div class="card-title">Latest QA Score</div>
+        <div style="text-align:center;padding:16px 0">
+          <div style="font-size:56px;font-weight:800;color:${d.latestScore>=60?'var(--mint)':d.latestScore>=50?'var(--gold)':'var(--candy)'}">${d.latestScore}</div>
+          <div style="font-size:12px;color:var(--dim);margin-top:6px">Target: <b style="color:var(--gold)">${d.target}</b></div>
+          <div style="width:80%;height:6px;background:var(--s3);border-radius:3px;overflow:hidden;margin:12px auto 0">
+            <div style="height:100%;width:${Math.min((d.latestScore/75)*100,100)}%;background:${d.latestScore>=60?'var(--mint)':d.latestScore>=50?'var(--gold)':'var(--candy)'};border-radius:3px"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card"><div class="card-title">Campaign Tips</div>
+        <div style="font-size:32px;font-weight:800;color:var(--gold)">$${d.campaignTips.toLocaleString()}</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:4px">Truth or Dare & other campaigns</div>
+      </div>
+    </div>
+  </div>`;
+  return p;
+}
+
+// ─── CHATTER COACHING ───
+function pChatterCoaching(n){
+  const p=mkPage('coaching'), logs=COACHING[n]||[];
+  p.innerHTML=`<div class="ph"><div><div class="pt">🎯 My Coaching Log</div><div class="ps">Your personal coaching history</div></div></div>
+  ${logs.length===0?'<div class="card" style="text-align:center;padding:36px;color:var(--dim)">No coaching sessions on record yet.</div>'
+    :`<div class="co-list">${logs.map((l,i)=>coCard(l,i,n,false)).join('')}</div>`}`;
+  return p;
+}
+
+// ─── ADMIN DASHBOARD ───
+function pAdminDash(){
+  const p=mkPage('dashboard');
+  const chatters=Object.keys(PERF);
+  const totalMMS=chatters.reduce((s,c)=>s+PERF[c].mms.total,0);
+  const totalApproved=chatters.reduce((s,c)=>s+PERF[c].mms.approved,0);
+  const totalPending=chatters.reduce((s,c)=>s+PERF[c].mms.pending,0);
+  const totalSales=chatters.reduce((s,c)=>s+PERF[c].sales.reduce((a,b)=>a+b,0),0);
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">Admin Overview</div><div class="ps">EYE KANDI · May 2026</div></div></div>
+  <div class="g4" style="margin-bottom:20px">
+    <div class="kpi" style="--ac:var(--candy)"><div class="kpi-lbl">Total MMS</div><div class="kpi-val">1,421</div><div class="kpi-sub">All chatters</div></div>
+    <div class="kpi" style="--ac:var(--mint)"><div class="kpi-lbl">Approved</div><div class="kpi-val" style="color:var(--mint)">1,268</div><div class="kpi-sub">89.2% rate</div></div>
+    <div class="kpi" style="--ac:var(--gold)"><div class="kpi-lbl">Pending QA</div><div class="kpi-val" style="color:var(--gold)">152</div><div class="kpi-sub">Awaiting review</div></div>
+    <div class="kpi" style="--ac:var(--sky)"><div class="kpi-lbl">Active Chatters</div><div class="kpi-val">7</div><div class="kpi-sub">All shifts</div></div>
+  </div>
+  <div class="g3" style="margin-bottom:20px">
+    ${Object.keys(PERF).map(n=>{const d=PERF[n];const color=COLORS[n];const rate=Math.round((d.mms.approved/d.mms.total)*100);
+      return`<div class="card" style="border-left:3px solid ${color}">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,${color},${color}77);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff">${n[0]}</div>
+          <div><div style="font-weight:800;font-size:14px">${n}</div><div style="font-size:10px;color:var(--dim)">${d.shift}</div></div>
+          <div style="margin-left:auto;text-align:right"><div style="font-weight:800;font-size:18px;color:${color}">${rate}%</div><div style="font-size:9px;color:var(--mu)">approval</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+          <div style="background:var(--s2);border-radius:7px;padding:7px;text-align:center"><div style="font-weight:800;font-size:15px">${d.mms.total}</div><div style="font-size:9px;color:var(--dim)">MMS</div></div>
+          <div style="background:var(--s2);border-radius:7px;padding:7px;text-align:center"><div style="font-weight:800;font-size:15px;color:${d.latestScore>=60?'var(--mint)':d.latestScore>=50?'var(--gold)':'var(--candy)'}">${d.latestScore}</div><div style="font-size:9px;color:var(--dim)">QA Score</div></div>
+        </div>
+        <div style="height:4px;background:var(--s3);border-radius:2px;overflow:hidden"><div style="height:100%;width:${rate}%;background:${color};border-radius:2px"></div></div>
+      </div>`;}).join('')}
+  </div>`;
+  return p;
+}
+
+// ─── ADMIN CHATTERS ───
+function pAdminChatters(){
+  const p=mkPage('chatters');
+  const rows=Object.keys(PERF).map(n=>{
+    const d=PERF[n],color=COLORS[n];
+    const rate=Math.round((d.mms.approved/d.mms.total)*100);
+    const ts=d.sales.reduce((a,b)=>a+b,0);
+    const kpiVals=Object.values(d.kpi);
+    const avg=Math.round(kpiVals.reduce((a,b)=>a+b,0)/kpiVals.length);
+    return`<tr>
+      <td><div style="display:flex;align-items:center;gap:8px"><div style="width:26px;height:26px;border-radius:7px;background:${color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:10px;color:#fff">${n[0]}</div><span style="font-weight:700">${n}</span></div></td>
+      <td style="color:var(--dim)">${d.shift}</td>
+      <td><span style="font-weight:700;color:${d.latestScore>=60?'var(--mint)':d.latestScore>=50?'var(--gold)':'var(--candy)'}">${d.latestScore}</span></td>
+      <td><span style="font-weight:700;color:${avg>=90?'var(--mint)':avg>=75?'var(--gold)':'var(--candy)'}">${avg}%</span></td>
+      <td>${d.mms.total}</td>
+      <td style="color:var(--gold);font-weight:700">$${(ts/1000).toFixed(1)}k</td>
+      <td><span style="font-weight:700;color:${rate>=90?'var(--mint)':rate>=75?'var(--gold)':'var(--candy)'}">${rate}%</span></td>
+    </tr>`;
+  }).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">👥 All Chatters</div><div class="ps">Performance overview</div></div></div>
+  <div class="card">
+    <div class="perf-wrap"><table class="pt-t">
+      <thead><tr><th>Chatter</th><th>Shift</th><th>QA Score</th><th>Avg KPI</th><th>MMS</th><th>Sales</th><th>Approval</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+  </div>`;
+  return p;
+}
+
+// ─── ADMIN PERFORMANCE ───
+function pAdminPerf(){
+  const p=mkPage('performance');
+  const chatters=Object.keys(PERF);
+  const kpiKeys=Object.keys(PERF.Jayce.kpi);
+  const headers=kpiKeys.map(k=>`<th style="font-size:9px">${k.split(' ')[0]}</th>`).join('');
+  const rows=chatters.map(n=>{
+    const d=PERF[n],color=COLORS[n];
+    const cells=Object.values(d.kpi).map(v=>{
+      const c=v>=90?'var(--mint)':v>=75?'var(--gold)':'var(--candy)';
+      return`<td style="color:${c};font-weight:600;font-size:11px">${v}%</td>`;
+    }).join('');
+    return`<tr><td><div style="display:flex;align-items:center;gap:7px"><div style="width:22px;height:22px;border-radius:6px;background:${color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:9px;color:#fff">${n[0]}</div><span style="font-weight:600">${n}</span></div></td>
+    <td style="font-weight:800;color:${d.latestScore>=60?'var(--mint)':d.latestScore>=50?'var(--gold)':'var(--candy)'}">${d.latestScore}</td>${cells}</tr>`;
+  }).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">📈 Team Performance</div><div class="ps">KPI scores from TRACKER_EK1&2</div></div>
+    <a href="https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit" target="_blank" class="sop-btn">↗ Full Sheet</a>
+  </div>
+  <div class="card" style="margin-bottom:18px">
+    <div class="perf-wrap"><table class="pt-t"><thead><tr><th>Chatter</th><th>Score</th>${headers}</tr></thead><tbody>${rows}</tbody></table></div>
+  </div>
+  <div class="ph" style="margin-bottom:12px"><div><div class="pt" style="font-size:14px">Individual Reports</div></div></div>
+  <div class="cs-bar" id="perfBar">${chatters.map(n=>`<button class="cs-btn" onclick="showChatterPerf('${n}',this)">${n}</button>`).join('')}</div>
+  <div id="perfDetail"></div>`;
+  return p;
+}
+
+function showChatterPerf(n,btn){
+  document.querySelectorAll('#perfBar .cs-btn').forEach(b=>{b.classList.remove('active');b.style.background='';});
+  btn.classList.add('active'); btn.style.background=COLORS[n];
+  const d=PERF[n],color=COLORS[n];
+  const kpiRows=Object.entries(d.kpi).map(([k,v])=>{
+    const col=v>=90?'var(--mint)':v>=75?'var(--gold)':'var(--candy)';
+    return`<tr><td style="color:var(--dim)">${k}</td><td><div class="score-cell"><div class="score-bar"><div class="score-fill" style="width:${v}%;background:${col}"></div></div><div class="score-num" style="color:${col}">${v}%</div></div></td></tr>`;
+  }).join('');
+  id('perfDetail').innerHTML=`
+  <div class="g2">
+    <div class="card"><div class="card-title">KPI Breakdown — ${n}</div>
+      <div class="perf-wrap"><table class="pt-t"><thead><tr><th>Metric</th><th>Score</th></tr></thead><tbody>${kpiRows}</tbody></table></div>
+    </div>
+    <div class="card"><div class="card-title">Sales Trend — ${n}</div>
+      <div style="display:flex;align-items:flex-end;gap:6px;height:140px;padding-top:10px">
+        ${d.sales.map((v,i)=>{const max=Math.max(...d.sales);const h=Math.round((v/max)*120);const months=['Jan','Feb','Mar','Apr','May'];return`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px"><div style="width:100%;height:${h}px;background:linear-gradient(180deg,${color},${color}66);border-radius:5px 5px 0 0"></div><div style="font-size:10px;color:var(--mu)">${months[i]}</div><div style="font-size:10px;font-weight:700;color:${color}">$${(v/1000).toFixed(1)}k</div></div>`;}).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ─── ADMIN COACHING ───
+function pAdminCoaching(){
+  const p=mkPage('coaching');
+  const all=Object.keys(COACHING).flatMap((n,ni)=>COACHING[n].map((l,i)=>coCard(l,i,n,true))).join('');
+  const btns=['All',...Object.keys(COACHING)].map(n=>`<button class="cs-btn${n==='All'?' active':''}" onclick="filterCo('${n}',this)">${n}</button>`).join('');
+  p.innerHTML=`<div class="ph"><div><div class="pt">🎯 All Coaching Logs</div><div class="ps">Full team history</div></div></div>
+  <div class="cs-bar" style="margin-bottom:18px">${btns}</div>
+  <div class="co-list" id="coList">${all}</div>`;
+  return p;
+}
+function filterCo(n,btn){
+  document.querySelectorAll('.cs-bar .cs-btn').forEach(b=>{b.classList.remove('active');b.style.background='';});
+  btn.classList.add('active'); if(n!=='All')btn.style.background=COLORS[n];
+  document.querySelectorAll('#coList .co-entry').forEach(el=>{el.style.display=(n==='All'||el.dataset.chatter===n)?''  :'none';});
+}
+
+// ─── MODEL SALES ───
+function pModelSales(){
+  const p=mkPage('model_sales');
+  const total=MODELS.reduce((a,m)=>a+m.rev,0);
+  const cards=MODELS.map(m=>`
+    <div class="ms-card" style="--mc:${m.color}">
+      <div class="ms-emoji">${m.emoji}</div>
+      <div class="ms-name">${m.id}</div>
+      <div class="ms-rev">$${m.rev.toLocaleString()}</div>
+      <div class="ms-sub">${m.subs} subs · ${m.trend} MoM</div>
+      <div class="ms-bar-wrap"><div style="height:100%;width:${Math.min(Math.round((m.rev/total)*100)*2,100)}%;background:${m.color};border-radius:2px"></div></div>
+    </div>`).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">💸 Model Sales</div><div class="ps">Current revenue per model · May 2026</div></div>
+    <div style="display:flex;gap:8px">
+      <a href="https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit?gid=2121828189" target="_blank" class="sop-btn">↗ VIP Tracker</a>
+      <a href="https://docs.google.com/spreadsheets/d/1KcgGQNfdcvMFEoNoImLp7ITurci2vAwc_AveKz8u6rU/edit" target="_blank" class="sop-btn">↗ Campaign Tracker</a>
+    </div>
+  </div>
+  <div class="kpi" style="--ac:var(--gold);display:inline-flex;flex-direction:column;gap:4px;min-width:200px;margin-bottom:18px">
+    <div class="kpi-lbl">Total Revenue</div>
+    <div class="kpi-val" style="color:var(--gold)">$${total.toLocaleString()}</div>
+    <div class="kpi-sub">Across all 5 models</div>
+  </div>
+  <div class="ms-grid">${cards}</div>`;
+  return p;
+}
+
+// ─── ANNOUNCEMENTS ───
+function pAnnouncements(role,cn){
+  const p=mkPage('announcements');
+  const cards=ANNOUNCEMENTS.map(a=>`
+    <div class="ann-card ${a.type}">
+      <div class="ann-top"><div class="ann-title">${a.title}</div><div class="ann-date">${a.date}</div></div>
+      <div class="ann-body">${a.body}</div>
+      <span class="ann-tag tag-${a.type}">${a.type==='global'?'📢 Global':a.type==='callout'?'⚠️ Call-Out':'ℹ️ Info'}</span>
+    </div>`).join('');
+
+  const adminForm = role==='admin'?`
+    <div class="req-form" style="margin-bottom:20px">
+      <div class="req-form-title">📣 Post Announcement</div>
+      <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="ann_title" placeholder="Announcement title"></div>
+      <div class="form-group"><label class="form-label">Message</label><textarea class="form-input form-textarea" id="ann_body" placeholder="Write your announcement..."></textarea></div>
+      <div class="form-group"><label class="form-label">Type</label>
+        <select class="form-input" id="ann_type">
+          <option value="global">📢 Global</option>
+          <option value="callout">⚠️ Call-Out</option>
+          <option value="info">ℹ️ Info</option>
+        </select>
+      </div>
+      <button class="submit-btn" onclick="postAnnouncement()">Post Announcement</button>
+    </div>`:''  ;
+
+  p.innerHTML=`<div class="ph"><div><div class="pt">📣 Announcements</div><div class="ps">Team-wide updates and call-outs</div></div></div>
+  ${adminForm}
+  <div class="ann-list" id="annList">${cards}</div>`;
+  return p;
+}
+
+window.postAnnouncement=()=>{
+  const t=id('ann_title').value.trim(), b=id('ann_body').value.trim(), type=id('ann_type').value;
+  if(!t||!b){alert('Please fill in title and message.');return;}
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  ANNOUNCEMENTS.unshift({type,title:t,date:dateStr,body:b});
+  const newCard=`<div class="ann-card ${type}"><div class="ann-top"><div class="ann-title">${t}</div><div class="ann-date">${dateStr}</div></div><div class="ann-body">${b}</div><span class="ann-tag tag-${type}">${type==='global'?'📢 Global':type==='callout'?'⚠️ Call-Out':'ℹ️ Info'}</span></div>`;
+  id('annList').insertAdjacentHTML('afterbegin',newCard);
+  id('ann_title').value=''; id('ann_body').value='';
+  alert('Announcement posted!');
+};
+
+// ─── REQUESTS ───
+function pRequests(role,cn){
+  const p=mkPage('requests');
+  const myRequests=role==='admin'?REQUESTS:REQUESTS.filter(r=>r.by===cn);
+  const statusColors={new:'st-new',pending:'st-pending',approved:'st-approved',done:'st-done',rejected:'st-rejected'};
+  const cards=myRequests.map(r=>`
+    <div class="req-card">
+      <div class="req-hdr"><div class="req-title">${r.title}</div><span class="req-status ${statusColors[r.status]||'st-new'}">${r.status.toUpperCase()}</span></div>
+      <div class="req-meta">${r.id} · ${r.category} · ${r.date} · Submitted by: <b>${r.by}</b></div>
+      <div class="req-body">${r.desc}</div>
+      ${role==='admin'?`<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+        <select onchange="updateReqStatus('${r.id}',this.value)" style="background:var(--s2);border:1px solid var(--bdr);border-radius:8px;padding:5px 10px;color:var(--txt);font-size:11px;cursor:pointer">
+          <option value="">Change status...</option>
+          <option value="new">New</option><option value="pending">Pending</option>
+          <option value="approved">Approved</option><option value="done">Done</option><option value="rejected">Rejected</option>
+        </select>
+      </div>`:''}
+    </div>`).join('');
+
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">🎫 ${role==='admin'?'All Requests':'My Requests'}</div><div class="ps">${role==='admin'?'Manage team requests':'Your submitted requests'}</div></div></div>
+  <div class="req-form">
+    <div class="req-form-title">➕ New Request</div>
+    <div class="g2">
+      <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="req_title" placeholder="Brief title for your request"></div>
+      <div class="form-group"><label class="form-label">Category</label>
+        <select class="form-input" id="req_cat">
+          <option>Schedule</option><option>Tech Support</option><option>Pricing</option><option>Campaign</option><option>Coaching</option><option>Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Description</label><textarea class="form-input form-textarea" id="req_desc" placeholder="Describe your request in detail..."></textarea></div>
+    <button class="submit-btn" onclick="submitRequest('${cn||'admin'}','${role}')">Submit Request</button>
+  </div>
+  <div class="req-list" id="reqList">${cards}</div>`;
+  return p;
+}
+
+window.submitRequest=(cn,role)=>{
+  const t=id('req_title').value.trim(), d=id('req_desc').value.trim(), cat=id('req_cat').value;
+  if(!t||!d){alert('Please fill in title and description.');return;}
+  const req={id:'REQ-'+String(REQUESTS.length+1).padStart(3,'0'),title:t,role,by:cn,category:cat,
+    status:'new',priority:'medium',date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),desc:d};
+  REQUESTS.push(req);
+  const card=`<div class="req-card"><div class="req-hdr"><div class="req-title">${t}</div><span class="req-status st-new">NEW</span></div><div class="req-meta">${req.id} · ${cat} · ${req.date} · Submitted by: <b>${cn}</b></div><div class="req-body">${d}</div></div>`;
+  id('reqList').insertAdjacentHTML('afterbegin',card);
+  id('req_title').value=''; id('req_desc').value='';
+  alert('Request submitted!');
+};
+
+window.updateReqStatus=(reqId,status)=>{
+  if(!status)return;
+  const req=REQUESTS.find(r=>r.id===reqId);
+  if(req){req.status=status; alert(`Request ${reqId} updated to: ${status.toUpperCase()}`);}
+};
+
+// ─── CHECKLIST ───
+function pChecklist(cn){
+  const p=mkPage('checklist');
+  const sk='ek_cl_'+cn;
+  const state={};
+
+  function render(){
+    let total=0,done=0;
+    Object.values(CHECKLIST).forEach(items=>items.forEach(()=>total++));
+    Object.keys(state).forEach(k=>{if(state[k])done++;});
+    const pct=total?Math.round((done/total)*100):0;
+
+    const section=(title,icon,items,key)=>`
+      <div class="cl-section">
+        <div class="cl-sec-title">${icon} ${title}</div>
+        ${items.map((item,i)=>{
+          const iid=`${key}_${i}`, isDone=!!state[iid];
+          return`<div class="cl-item${isDone?' done':''}" onclick="toggleCL_${cn.replace(/[^a-z]/gi,'')}('${iid}')">
+            <div class="cl-check"><span class="cl-check-icon">✓</span></div>
+            <div class="cl-text">${item}</div>
+          </div>`;}).join('')}
+      </div>`;
+
+    p.innerHTML=`
+    <div class="ph"><div><div class="pt">✅ Shift Checklist</div><div class="ps">${cn} · Resets manually each shift</div></div></div>
+    <div class="cl-progress">
+      <div class="cl-progress-hdr">
+        <div class="cl-progress-title">Shift Progress</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <button class="reset-btn" onclick="resetCL_${cn.replace(/[^a-z]/gi,'')}()">Reset</button>
+          <div class="cl-pct">${pct}%</div>
+        </div>
+      </div>
+      <div class="cl-bar"><div class="cl-bar-fill" style="width:${pct}%"></div></div>
+      <div style="font-size:11px;color:var(--dim);margin-top:8px">${done} of ${total} tasks completed</div>
+    </div>
+    ${section('Pre-Shift','🌅',CHECKLIST.pre,'pre')}
+    ${section('During Shift','⚡',CHECKLIST.during,'during')}
+    ${section('Post-Shift','🌙',CHECKLIST.post,'post')}`;
+  }
+
+  const safeCn=cn.replace(/[^a-z]/gi,'');
+  window[`toggleCL_${safeCn}`]=(iid)=>{state[iid]=!state[iid]; render();};
+  window[`resetCL_${safeCn}`]=()=>{if(confirm("Reset all checklist items?")){Object.keys(state).forEach(k=>delete state[k]);render();}};
+  render();
+  return p;
+}
+
+// ─── SCHEDULE ───
+function pSchedule(){
+  const p=mkPage('schedule');
+  let schedData=null;
+
+  function render(){
+    if(schedData){
+      p.innerHTML=`
+      <div class="ph"><div><div class="pt">📅 Weekly Schedule</div><div class="ps">Current uploaded schedule</div></div>
+        <button class="reset-btn" onclick="clearSched_()">Replace</button>
+      </div>
+      <div class="sched-preview">
+        <div class="sched-preview-hdr"><div style="font-weight:700">Current Schedule</div></div>
+        <img style="width:100%;max-height:600px;object-fit:contain;display:block" src="${schedData}" alt="Schedule">
+      </div>`;
+    } else {
+      p.innerHTML=`
+      <div class="ph"><div><div class="pt">📅 Weekly Schedule</div><div class="ps">Upload the weekly shift schedule</div></div></div>
+      <div class="sched-drop" id="schedDrop" onclick="id('schedFile').click()"
+        ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')"
+        ondrop="event.preventDefault();this.classList.remove('drag');handleSched_(event.dataTransfer.files[0])">
+        <input type="file" id="schedFile" accept="image/*,.pdf" style="display:none" onchange="handleSched_(this.files[0])">
+        <div style="font-size:36px;margin-bottom:12px">📅</div>
+        <div style="font-weight:700;font-size:15px;margin-bottom:6px">Upload Weekly Schedule</div>
+        <div style="font-size:12px;color:var(--dim)">Drag & drop or click · JPG, PNG, or PDF</div>
+      </div>`;
+    }
+  }
+
+  window.handleSched_=(file)=>{if(!file)return; const r=new FileReader(); r.onload=(e)=>{schedData=e.target.result;render();}; r.readAsDataURL(file);};
+  window.clearSched_=()=>{if(confirm("Replace current schedule?")){schedData=null;render();}};
+  render();
+  return p;
+}
+
+// ─── SOPs ───
+function pSOPs(){
+  const p=mkPage('sops');
+  const cards=SOPS.map(s=>`
+    <div class="sop-card${s.warn?' warn':''}" >
+      <div class="sop-top"><div class="sop-icon">${s.icon}</div>
+        <div><div class="sop-name">${s.name}</div><div class="sop-type">${s.type}</div></div>
+      </div>
+      <div class="sop-note">${s.note}${s.wn?`<br><span style="color:var(--gold);font-size:10px">⚠️ ${s.wn}</span>`:''}</div>
+      <a class="sop-btn" href="${s.url}" target="_blank" rel="noopener">↗ Open</a>
+    </div>`).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">📋 SOPs</div><div class="ps">Standard Operating Procedures — read before every shift</div></div></div>
+  <div class="notice">📌 SOPs are updated regularly. Always check the latest version before your shift.</div>
+  <div class="sop-grid">${cards}</div>`;
+  return p;
+}
+
+// ─── SALES REF ───
+function pSalesRef(){
+  const p=mkPage('sales_ref');
+  const cards=SALES_REF.map(s=>{
+    const [cls,lbl]=s.s==='valid'?['sv-v','✅ Valid']:s.s==='invalid'?['sv-i','❌ Invalid']:['sv-r','⚠️ Review'];
+    return`<div class="sv-card" data-s="${s.s}"><div class="sv-top"><div class="sv-scen">${s.sc}</div><span class="sv-badge ${cls}">${lbl}</span></div><div class="sv-note">${s.n}</div></div>`;
+  }).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">💲 Sales Validity Guide</div><div class="ps">Reference every shift — know what counts</div></div></div>
+  <div class="notice">📌 For scheduled PPVs or PPVs sent by someone else — always include a <b>screenshot</b> in the tracker as proof.</div>
+  <div class="fr"><button class="fb active" onclick="fSV('all',this)">All</button><button class="fb" onclick="fSV('valid',this)">✅ Valid</button><button class="fb" onclick="fSV('invalid',this)">❌ Invalid</button><button class="fb" onclick="fSV('review',this)">⚠️ Review</button></div>
+  <div class="sv-grid" id="svGrid">${cards}</div>`;
+  return p;
+}
+window.fSV=(v,btn)=>{
+  document.querySelectorAll('#page-sales_ref .fr .fb').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  document.querySelectorAll('#svGrid .sv-card').forEach(c=>{c.style.display=(v==='all'||c.dataset.s===v)?''  :'none';});
+};
+
+// ─── PPV ───
+function pPPV(){
+  const p=mkPage('ppv');
+  const cards=PPV_MODELS.map(m=>{
+    const secs=m.secs.map(s=>`<div class="ppv-sec"><div class="ppv-sec-lbl">${s.l}</div>
+      ${s.items.map(i=>`<div class="ppv-row"><div class="ppv-item">${i.n}</div><div class="ppv-price ${i.c||''}">${i.p}</div></div>`).join('')}
+      </div><div class="ppv-spacer"></div>`).join('');
+    return`<div class="ppv-card" data-ppv="${m.id}">
+      <div class="ppv-hdr" style="border-left:4px solid ${m.color}">
+        <span style="font-size:20px">${m.emoji}</span>
+        <div><div class="ppv-mname">${m.name}</div>${m.alias?`<div class="ppv-malias">${m.alias}</div>`:''}</div>
+      </div>
+      ${m.rule?`<div class="ppv-rule">⚡ ${m.rule}</div>`:''}${secs}
+    </div>`;
+  }).join('');
+  const btns=PPV_MODELS.map(m=>`<button class="fb" onclick="fPPV('${m.id}',this)">${m.emoji} ${m.name}</button>`).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">💰 PPV Pricing Reference</div><div class="ps">Can go higher — NEVER lower</div></div></div>
+  <div class="notice">⬆ You can go higher than these prices but <b>NEVER lower</b>. Items marked "Ask Sab" — confirm with management first.</div>
+  <div class="fr"><button class="fb active" onclick="fPPV('all',this)">All Models</button>${btns}</div>
+  <div class="ppv-grid" id="ppvGrid">${cards}</div>`;
+  return p;
+}
+window.fPPV=(v,btn)=>{
+  document.querySelectorAll('#page-ppv .fr .fb').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  document.querySelectorAll('#ppvGrid .ppv-card').forEach((c,i)=>{c.style.display=(v==='all'||PPV_MODELS[i].id===v)?''  :'none';});
+};
+
+// ─── AI ASSISTANT ───
+function pAI(){
+  const p=mkPage('ai');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">🤖 AI Assistant</div><div class="ps">Ask anything about EYE KANDI operations</div></div></div>
+  <div class="ai-key-note">Powered by Claude AI · Context-aware about your portal data</div>
+  <div style="margin-bottom:12px">
+    <label class="form-label" style="font-size:11px;color:var(--dim);display:block;margin-bottom:6px">API KEY (paste your Anthropic API key — stays in your browser only)</label>
+    <input class="form-input" id="aiKey" type="password" placeholder="sk-ant-..." style="font-size:12px">
+  </div>
+  <div class="ai-wrap">
+    <div class="ai-messages" id="aiMessages">
+      <div class="ai-msg bot">👋 Hi! I'm your EYE KANDI AI assistant. I know all about your chatters, performance data, SOPs, PPV pricing, and campaigns. Ask me anything!</div>
+    </div>
+    <div class="ai-input-row">
+      <input class="ai-input" id="aiInput" placeholder="Ask about performance, SOPs, sales, campaigns..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI();}">
+      <button class="ai-send" id="aiSendBtn" onclick="sendAI()">Send</button>
+    </div>
+  </div>`;
+  return p;
+}
+
+window.sendAI=async()=>{
+  const input=id('aiInput'), msgs=id('aiMessages'), btn=id('aiSendBtn');
+  const apiKey=(id('aiKey').value||S.get('ek_ai_key')||'').trim();
+  const text=input.value.trim();
+  if(!text)return;
+  if(!apiKey){msgs.innerHTML+='<div class="ai-msg bot">⚠️ Please paste your Anthropic API key above to use the AI assistant.</div>';msgs.scrollTop=msgs.scrollHeight;return;}
+
+  // Save key for session
+  S.set('ek_ai_key',apiKey);
+
+  msgs.innerHTML+=`<div class="ai-msg user">${text}</div>`;
+  msgs.innerHTML+='<div class="ai-msg bot thinking" id="aiThinking">Thinking...</div>';
+  msgs.scrollTop=msgs.scrollHeight;
+  input.value=''; btn.disabled=true;
+
+  // Build context
+  const context=`You are an AI assistant for EYE KANDI, an OnlyFans agency. Here is current data:
+CHATTERS: ${Object.keys(PERF).join(', ')}
+PERFORMANCE SCORES (latest QA): ${Object.entries(PERF).map(([n,d])=>`${n}:${d.latestScore}`).join(', ')}
+MMS STATS: ${Object.entries(PERF).map(([n,d])=>`${n}:${d.mms.total} submitted,${d.mms.approved} approved,${d.mms.pending} pending`).join(' | ')}
+MODELS: ${MODELS.map(m=>`${m.id}($${m.rev.toLocaleString()})`).join(', ')}
+ACTIVE CAMPAIGN: Truth or Dare (ongoing)
+OPEN REQUESTS: ${REQUESTS.filter(r=>r.status==='new'||r.status==='pending').length} open
+Answer helpfully and concisely. Use data above when relevant.`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system:context,messages:[{role:'user',content:text}]})
+    });
+    const data=await res.json();
+    const reply=data.content?.[0]?.text||'Sorry, I could not get a response.';
+    id('aiThinking').remove();
+    msgs.innerHTML+=`<div class="ai-msg bot">${reply.replace(/\n/g,'<br>')}</div>`;
+  }catch(e){
+    id('aiThinking').remove();
+    msgs.innerHTML+=`<div class="ai-msg bot">⚠️ Error: ${e.message}. Check your API key and internet connection.</div>`;
+  }
+  btn.disabled=false;
+  msgs.scrollTop=msgs.scrollHeight;
+};
+
+// ─── COACHING CARD HELPER ───
+function coCard(l,i,n,showName){
+  const color=COLORS[n]||'#FF2D78';
+  const stsCls=l.status==='PASSED'?'cp-pass':'cp-coach';
+  const kpiPills=Object.entries(l.kpi||{}).map(([k,v])=>`<span class="kp kp-${v}">${k}</span>`).join('');
+  const areas=l.areas.map(a=>`<div class="imp-chip"><div class="imp-lbl">${a.l}</div><div class="imp-note">${a.n}</div></div>`).join('');
+  const actions=l.actions.map((a,n)=>`<div class="ac-item"><div class="ac-num">${n+1}</div><div>${a}</div></div>`).join('');
+  const uid=`co_${n}_${i}`;
+  return`<div class="co-entry" id="${uid}" data-chatter="${n}">
+    <div class="co-hdr" onclick="toggleCo('${uid}')">
+      <div class="co-av" style="background:linear-gradient(135deg,${color},${color}77)">${n[0]}</div>
+      <div><div class="co-ename">${showName?n+' — ':''} ${l.period}</div><div class="co-emeta">Coach: ${l.coach} · ${l.date}</div></div>
+      <div class="co-ebadges"><span class="cp ${stsCls}">${l.status}</span></div>
+      <span class="co-chev" id="chev_${uid}">›</span>
+    </div>
+    <div class="co-body" id="body_${uid}">
+      <div class="co-sec"><div class="co-sec-lbl">KPI Focus Areas</div><div class="kpi-pills">${kpiPills}</div></div>
+      <div class="co-sec"><div class="co-sec-lbl">Identified Behavior</div><div class="co-box">${l.behavior}</div></div>
+      <div class="co-sec"><div class="co-sec-lbl">Root Cause</div><div class="co-box">${l.rca}</div></div>
+      ${l.areas.length?`<div class="co-sec"><div class="co-sec-lbl">Areas to Improve</div><div class="imp-row">${areas}</div></div>`:''}
+      <div class="co-sec"><div class="co-sec-lbl">Action Plans</div><div class="ac-list">${actions}</div></div>
+      <div class="commit-box"><div class="commit-lbl">Chatter Commitment</div><div class="commit-txt">"${l.commitment}"</div></div>
+    </div>
+  </div>`;
+}
+
+window.toggleCo=(uid)=>{
+  const body=id('body_'+uid), chev=id('chev_'+uid);
+  const open=body.classList.toggle('open'); chev.classList.toggle('open',open);
+};
+</script>
+
+<script>
+// AUTO-LAUNCH AS ADMIN - no login required
+window.addEventListener('DOMContentLoaded', function() {
+  launchApp({username:'admin', role:'admin', chatterName:null});
+});
+</script>
+</body>
+</html>
