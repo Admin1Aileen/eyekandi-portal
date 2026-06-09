@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍬 EYE KANDI — Operations Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --candy:#FF2D78;--cl:rgba(255,45,120,0.13);
+  --gold:#FFD166;--gl:rgba(255,209,102,0.13);
+  --mint:#06D6A0;--ml:rgba(6,214,160,0.13);
+  --sky:#60A5FA;--lav:#C084FC;--ora:#F97316;
+  --bg:#07070E;--s1:#0F0F18;--s2:#16161F;--s3:#1C1C28;
+  --bdr:rgba(255,255,255,0.07);--bdr2:rgba(255,255,255,0.11);
+  --txt:#EDE8FF;--dim:#65657F;--mu:#3A3A58;
+  --ff:'DM Sans',system-ui,sans-serif;--fh:'Syne',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--ff);background:var(--bg);color:var(--txt);min-height:100vh;font-size:14px;line-height:1.5;}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--s1)}
+::-webkit-scrollbar-thumb{background:var(--s3);border-radius:3px}
+
+/* ── AUTH ── */
+#authWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse 80% 50% at 50% -5%,rgba(255,45,120,0.18) 0%,transparent 70%);}
+.abox{width:400px;background:var(--s1);border:1px solid var(--bdr);border-radius:24px;
+  padding:42px 38px;text-align:center;box-shadow:0 40px 100px rgba(0,0,0,0.6);}
+.alogo{font-size:44px;margin-bottom:14px;display:block;}
+.atitle{font-family:var(--fh);font-size:22px;font-weight:800;margin-bottom:4px;letter-spacing:-.3px;}
+.asub{font-size:12px;color:var(--dim);margin-bottom:28px;}
+.atabs{display:flex;background:var(--s2);border-radius:12px;padding:4px;margin-bottom:22px;gap:4px;}
+.atab{flex:1;padding:8px;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;
+  border:none;background:transparent;color:var(--dim);font-family:var(--ff);transition:all .2s;}
+.atab.on{background:var(--s3);color:var(--txt);}
+.af{width:100%;background:var(--s2);border:1px solid var(--bdr);border-radius:11px;
+  padding:12px 15px;color:var(--txt);font-size:13px;font-family:var(--ff);outline:none;
+  margin-bottom:10px;transition:border-color .2s;}
+.af:focus{border-color:rgba(255,45,120,.5);}
+.af::placeholder{color:var(--mu);}
+.abtn{width:100%;padding:13px;border-radius:11px;background:var(--candy);color:#fff;
+  font-size:14px;font-weight:700;font-family:var(--ff);border:none;cursor:pointer;
+  transition:all .2s;margin-top:4px;letter-spacing:.2px;}
+.abtn:hover{background:#e0205e;transform:translateY(-1px);}
+.aerr{background:rgba(255,45,120,.1);border:1px solid rgba(255,45,120,.3);color:#FF6FA6;
+  border-radius:10px;padding:10px 14px;font-size:12px;margin-bottom:12px;display:none;text-align:left;}
+.ahint{background:var(--s2);border:1px solid var(--bdr);border-radius:11px;padding:14px;
+  font-size:11px;color:var(--dim);margin-top:16px;text-align:left;line-height:2;}
+.ahint b{color:var(--txt);}
+
+/* ── SHELL ── */
+#app{display:none;}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(7,7,14,.94);
+  backdrop-filter:blur(24px);border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;gap:14px;padding:12px 28px;}
+.t-logo{display:flex;align-items:center;gap:10px;}
+.t-name{font-family:var(--fh);font-weight:800;font-size:15px;}
+.t-role{font-size:10px;color:var(--dim);margin-top:1px;}
+.t-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.t-av{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;
+  justify-content:center;font-family:var(--fh);font-weight:800;font-size:12px;color:#fff;}
+.t-uname{font-size:12px;font-weight:600;}
+.t-badge{font-size:10px;padding:2px 9px;border-radius:20px;font-weight:700;}
+.ba{background:rgba(255,209,102,.14);color:var(--gold);border:1px solid rgba(255,209,102,.25);}
+.bc{background:var(--cl);color:#FF6FA6;border:1px solid rgba(255,45,120,.2);}
+.t-out{padding:6px 14px;border-radius:9px;background:var(--s2);border:1px solid var(--bdr);
+  color:var(--dim);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--ff);transition:all .2s;}
+.t-out:hover{color:var(--txt);}
+
+/* ── NAV ── */
+.nav{display:flex;padding:0 28px;background:var(--s1);border-bottom:1px solid var(--bdr);overflow-x:auto;flex-shrink:0;}
+.nav::-webkit-scrollbar{height:0;}
+.nb{padding:11px 16px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--dim);
+  border:none;background:transparent;font-family:var(--ff);border-bottom:2px solid transparent;
+  white-space:nowrap;transition:all .2s;}
+.nb:hover{color:var(--txt);}
+.nb.on{color:var(--candy);border-bottom-color:var(--candy);}
+
+/* ── PAGES ── */
+.page{display:none;padding:28px;max-width:1300px;margin:0 auto;}
+.page.on{display:block;}
+
+/* ── PRIMITIVES ── */
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px;}
+.pt{font-family:var(--fh);font-size:17px;font-weight:800;letter-spacing:-.3px;}
+.ps{font-size:11px;color:var(--dim);margin-top:3px;}
+.card{background:var(--s1);border:1px solid var(--bdr);border-radius:16px;padding:20px;}
+.ctitle{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:14px;
+  display:flex;align-items:center;gap:7px;}
+.ctitle small{font-size:10px;font-weight:400;color:var(--dim);font-family:var(--ff);}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr;}}
+.kpi{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;padding:18px;
+  position:relative;overflow:hidden;}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ac,var(--candy));opacity:.7;}
+.kl{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+.kv{font-family:var(--fh);font-size:28px;font-weight:800;line-height:1;}
+.ks{font-size:11px;color:var(--mu);margin-top:5px;}
+.notice{background:rgba(255,209,102,.07);border:1px solid rgba(255,209,102,.22);
+  border-radius:11px;padding:12px 15px;font-size:12px;color:#c9a84c;line-height:1.6;
+  display:flex;gap:9px;align-items:flex-start;margin-bottom:18px;}
+.fr{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.fb{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;
+  border:1px solid var(--bdr);background:var(--s2);color:var(--dim);font-family:var(--ff);transition:all .2s;}
+.fb:hover{color:var(--txt);}
+.fb.on{background:var(--cl);color:#FF6FA6;border-color:rgba(255,45,120,.3);}
+.lnk{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:9px;
+  background:var(--s2);border:1px solid var(--bdr);color:var(--dim);font-size:12px;font-weight:600;
+  text-decoration:none;font-family:var(--ff);transition:all .2s;}
+.lnk:hover{color:#FF6FA6;border-color:rgba(255,45,120,.3);background:var(--cl);}
+
+/* ── PERF TABLE ── */
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--dim);
+  text-transform:uppercase;letter-spacing:.06em;background:var(--s2);border-bottom:1px solid var(--bdr);white-space:nowrap;}
+td{padding:9px 12px;border-bottom:1px solid var(--bdr);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--s2);}
+.sbar{display:flex;align-items:center;gap:8px;}
+.sbg{flex:1;height:5px;background:var(--s3);border-radius:3px;overflow:hidden;min-width:50px;}
+.sfi{height:100%;border-radius:3px;}
+.snum{font-weight:700;font-size:11px;width:32px;text-align:right;}
+
+/* ── COACHING ── */
+.col{display:flex;flex-direction:column;gap:11px;}
+.coe{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;}
+.coh{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;
+  transition:background .15s;user-select:none;}
+.coh:hover{background:var(--s2);}
+.coav{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;
+  justify-content:center;font-family:var(--fh);font-weight:800;font-size:12px;color:#fff;flex-shrink:0;}
+.con{font-weight:700;font-size:13px;}
+.com{font-size:10.5px;color:var(--dim);margin-top:2px;}
+.cob2{margin-left:auto;display:flex;gap:5px;align-items:center;}
+.cp{padding:3px 9px;border-radius:20px;font-size:9.5px;font-weight:700;}
+.cpp{background:var(--ml);color:var(--mint);}
+.cpc{background:var(--cl);color:#FF6FA6;}
+.chv{color:var(--mu);font-size:16px;transition:transform .22s;margin-left:4px;}
+.chv.op{transform:rotate(90deg);}
+.cob{display:none;padding:0 18px 18px;border-top:1px solid var(--bdr);}
+.cob.op{display:block;}
+.cosl{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;
+  letter-spacing:.07em;margin:14px 0 8px;}
+.cobox{background:var(--s2);border-radius:9px;padding:11px 13px;font-size:12.5px;color:var(--dim);line-height:1.65;}
+.imr{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:7px;}
+.imc{background:rgba(255,45,120,.06);border:1px solid rgba(255,45,120,.13);border-radius:9px;padding:10px 12px;}
+.iml{font-size:11px;font-weight:700;color:#FF6FA6;margin-bottom:3px;}
+.imn{font-size:11px;color:var(--dim);line-height:1.5;}
+.acl{display:flex;flex-direction:column;gap:6px;}
+.aci{display:flex;gap:10px;align-items:flex-start;background:var(--s2);
+  border-radius:8px;padding:9px 12px;font-size:11.5px;color:var(--dim);line-height:1.55;}
+.acn{width:18px;height:18px;background:var(--cl);color:#FF6FA6;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0;margin-top:2px;}
+.cmb{background:linear-gradient(135deg,rgba(6,214,160,.07),rgba(96,165,250,.05));
+  border:1px solid rgba(6,214,160,.18);border-radius:10px;padding:12px 14px;margin-top:10px;}
+.cml{font-size:9px;font-weight:700;color:var(--mint);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;}
+.cmt{font-size:12px;color:var(--dim);line-height:1.7;font-style:italic;}
+.kpp{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
+.kp{padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600;}
+.kr{background:var(--cl);color:#FF6FA6;}.ky{background:var(--gl);color:var(--gold);}.kg{background:var(--ml);color:var(--mint);}
+
+/* ── CARDS GRID ── */
+.ccg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:20px;}
+.cc{background:var(--s1);border:1px solid var(--bdr);border-left:3px solid var(--cc,var(--candy));
+  border-radius:14px;padding:16px;transition:transform .2s;}
+.cc:hover{transform:translateY(-2px);}
+.cch{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.ccav{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--fh);font-weight:800;font-size:14px;color:#fff;flex-shrink:0;}
+.ccn{font-family:var(--fh);font-weight:800;font-size:14px;}
+.ccs{font-size:10px;color:var(--dim);margin-top:1px;}
+.ccst{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;text-align:center;}
+.ccsv{background:var(--s2);border-radius:8px;padding:7px 5px;}
+.ccvn{font-family:var(--fh);font-weight:800;font-size:14px;}
+.ccvl{font-size:9px;color:var(--dim);margin-top:1px;}
+.ccb{height:4px;background:var(--s3);border-radius:2px;overflow:hidden;}
+
+/* ── MODEL SALES ── */
+.msg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px;}
+.msc{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;padding:18px;
+  text-align:center;transition:transform .2s;border-top:3px solid var(--mc,var(--candy));}
+.msc:hover{transform:translateY(-2px);}
+.mse{font-size:30px;margin-bottom:8px;}
+.msn{font-family:var(--fh);font-weight:800;font-size:14px;margin-bottom:2px;}
+.msr{font-family:var(--fh);font-size:24px;font-weight:800;color:var(--gold);margin:6px 0 3px;}
+.mss{font-size:10px;color:var(--dim);}
+.msb{height:4px;background:var(--s3);border-radius:2px;overflow:hidden;margin-top:10px;}
+
+/* ── CHECKLIST ── */
+.clpw{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;padding:18px;margin-bottom:20px;}
+.clph{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.clpt{font-family:var(--fh);font-size:13px;font-weight:700;}
+.clpct{font-family:var(--fh);font-size:24px;font-weight:800;color:var(--mint);}
+.clpb{height:8px;background:var(--s3);border-radius:4px;overflow:hidden;}
+.clpf{height:100%;background:linear-gradient(90deg,var(--mint),#06D6A055);border-radius:4px;transition:width .4s;}
+.clsec{margin-bottom:20px;}
+.clst{font-family:var(--fh);font-size:12px;font-weight:700;margin-bottom:10px;
+  padding-bottom:8px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:6px;}
+.cli{display:flex;align-items:flex-start;gap:10px;background:var(--s2);border-radius:9px;
+  padding:10px 13px;border:1px solid var(--bdr);cursor:pointer;transition:all .15s;
+  user-select:none;margin-bottom:6px;}
+.cli.dn{background:rgba(6,214,160,.05);border-color:rgba(6,214,160,.15);}
+.clck{width:18px;height:18px;border-radius:5px;border:2px solid var(--bdr2);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:1px;}
+.cli.dn .clck{background:var(--mint);border-color:var(--mint);}
+.clci{color:#fff;font-size:10px;display:none;}
+.cli.dn .clci{display:block;}
+.cltx{font-size:12.5px;color:var(--dim);line-height:1.5;flex:1;}
+.cli.dn .cltx{color:var(--mu);text-decoration:line-through;}
+.rbtn{padding:6px 14px;border-radius:8px;background:var(--s2);border:1px solid var(--bdr);
+  color:var(--dim);font-size:11px;cursor:pointer;font-family:var(--ff);transition:all .2s;}
+.rbtn:hover{color:var(--txt);}
+
+/* ── SCHEDULE ── */
+.sdrop{border:2px dashed var(--bdr);border-radius:14px;padding:48px 32px;text-align:center;
+  cursor:pointer;transition:all .2s;background:var(--s1);}
+.sdrop:hover,.sdrop.drag{border-color:rgba(255,45,120,.4);background:rgba(255,45,120,.05);}
+.sprev{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;}
+.sprh{padding:13px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
+.simg{width:100%;max-height:600px;object-fit:contain;display:block;}
+
+/* ── SOPs ── */
+.sopg{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;margin-bottom:20px;}
+.sopc{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;padding:16px;
+  display:flex;flex-direction:column;gap:9px;transition:transform .2s;}
+.sopc:hover{transform:translateY(-2px);}
+.sopc.wn{border-color:rgba(255,209,102,.25);}
+.sopt{display:flex;align-items:flex-start;gap:10px;}
+.sopico{width:36px;height:36px;border-radius:9px;background:var(--s2);display:flex;
+  align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.sopn{font-family:var(--fh);font-weight:700;font-size:12.5px;margin-bottom:2px;}
+.sopy{font-size:9.5px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;}
+.sopno{font-size:11px;color:var(--dim);line-height:1.55;}
+
+/* ── SALES GUIDE ── */
+.svg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:11px;margin-bottom:20px;}
+.svc{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:14px;
+  border-left:3px solid var(--sv,var(--bdr));}
+.svc[data-s=valid]{--sv:var(--mint);}
+.svc[data-s=invalid]{--sv:var(--candy);}
+.svc[data-s=review]{--sv:var(--gold);}
+.svt{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.svsc{font-size:12.5px;font-weight:600;line-height:1.45;flex:1;}
+.svb{padding:2px 8px;border-radius:20px;font-size:9.5px;font-weight:700;white-space:nowrap;flex-shrink:0;}
+.svv{background:var(--ml);color:var(--mint);}
+.svi{background:var(--cl);color:#FF6FA6;}
+.svr{background:var(--gl);color:var(--gold);}
+.svno{font-size:11px;color:var(--dim);line-height:1.6;background:var(--s2);border-radius:7px;padding:7px 10px;}
+
+/* ── PPV ── */
+.ppvg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:13px;margin-bottom:20px;}
+.ppvc{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;}
+.ppvh{padding:12px 15px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:8px;}
+.ppvn{font-family:var(--fh);font-weight:800;font-size:13px;}
+.ppva{font-size:9.5px;color:var(--mu);margin-top:1px;}
+.ppvrl{font-size:10px;color:var(--mu);font-style:italic;padding:6px 15px 0;line-height:1.5;}
+.ppvs{padding:10px 15px 0;}
+.ppvsl{font-size:9px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.ppvr{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.02);gap:10px;}
+.ppvr:last-child{border-bottom:none;}
+.ppvi{font-size:11px;color:var(--dim);flex:1;line-height:1.4;}
+.ppvp{font-size:11px;font-weight:700;color:var(--gold);white-space:nowrap;}
+.ppvp.ask{color:var(--lav);}.ppvp.hi{color:#FF6FA6;}
+.ppvsp{height:10px;}
+
+/* ── ANNOUNCEMENTS ── */
+.anl{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.anc{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:16px;
+  border-left:3px solid var(--an,var(--candy));}
+.anc.global{--an:var(--gold);}.anc.callout{--an:var(--candy);}.anc.info{--an:var(--sky);}
+.ant{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
+.ants{font-weight:700;font-size:13px;}
+.antd{font-size:10px;color:var(--mu);white-space:nowrap;}
+.anb{font-size:12px;color:var(--dim);line-height:1.6;}
+.antag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:9.5px;font-weight:700;margin-top:8px;}
+.tg{background:var(--gl);color:var(--gold);}
+.tc{background:var(--cl);color:#FF6FA6;}
+.ti{background:rgba(96,165,250,.12);color:var(--sky);}
+
+/* ── REQUESTS ── */
+.rql{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.rqc{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:16px;}
+.rqh{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px;}
+.rqt{font-weight:700;font-size:13px;}
+.rqst{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;}
+.stnew{background:rgba(96,165,250,.12);color:var(--sky);}
+.stpend{background:var(--gl);color:var(--gold);}
+.stappr{background:var(--ml);color:var(--mint);}
+.stdone{background:rgba(255,255,255,.06);color:var(--dim);}
+.strej{background:var(--cl);color:#FF6FA6;}
+.rqm{font-size:11px;color:var(--mu);margin-bottom:8px;}
+.rqb{font-size:12px;color:var(--dim);line-height:1.6;}
+.fform{background:var(--s2);border:1px solid var(--bdr);border-radius:14px;padding:20px;margin-bottom:20px;}
+.ffl{font-size:10px;font-weight:700;color:var(--dim);display:block;margin-bottom:5px;
+  text-transform:uppercase;letter-spacing:.05em;}
+.ffi{width:100%;background:var(--s1);border:1px solid var(--bdr);border-radius:9px;
+  padding:10px 13px;color:var(--txt);font-size:13px;outline:none;font-family:var(--ff);
+  transition:border-color .2s;margin-bottom:10px;}
+.ffi:focus{border-color:rgba(255,45,120,.4);}
+.ffta{resize:vertical;min-height:80px;}
+.sbmt{padding:10px 22px;border-radius:10px;background:var(--candy);color:#fff;
+  font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:var(--ff);transition:all .2s;}
+.sbmt:hover{background:#e0205e;}
+
+/* ── AI ── */
+.aiw{display:flex;flex-direction:column;height:calc(100vh - 200px);max-height:650px;}
+.aim{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;
+  background:var(--s1);border:1px solid var(--bdr);border-radius:14px 14px 0 0;}
+.aimsg{max-width:80%;padding:12px 15px;border-radius:12px;font-size:13px;line-height:1.6;}
+.aimsg.u{background:var(--candy);color:#fff;margin-left:auto;border-radius:12px 12px 3px 12px;}
+.aimsg.b{background:var(--s2);color:var(--txt);border-radius:12px 12px 12px 3px;}
+.aimsg.b.th{color:var(--dim);font-style:italic;}
+.airow{display:flex;gap:10px;background:var(--s2);border:1px solid var(--bdr);
+  border-top:none;border-radius:0 0 14px 14px;padding:12px;}
+.aiinp{flex:1;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;
+  padding:10px 14px;color:var(--txt);font-size:13px;outline:none;font-family:var(--ff);}
+.aiinp:focus{border-color:rgba(255,45,120,.4);}
+.aisnd{padding:10px 20px;background:var(--candy);color:#fff;border:none;border-radius:10px;
+  font-size:13px;font-weight:700;cursor:pointer;font-family:var(--ff);transition:all .2s;}
+.aisnd:hover{background:#e0205e;}
+.aisnd:disabled{opacity:.5;cursor:not-allowed;}
+
+/* ── CS BAR ── */
+.csb{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.csbtn{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;
+  border:1px solid var(--bdr);background:var(--s2);color:var(--dim);font-family:var(--ff);transition:all .2s;}
+.csbtn:hover{color:var(--txt);}
+.csbtn.on{color:#fff;border-color:transparent;}
+
+/* BAR CHART */
+.bars{display:flex;align-items:flex-end;gap:6px;height:140px;padding-top:10px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bar-fill{width:100%;border-radius:5px 5px 0 0;transition:height .5s;}
+.bar-lbl{font-size:10px;color:var(--mu);}
+.bar-val{font-size:10px;font-weight:700;}
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="authWrap">
+<div class="abox">
+  <span class="alogo">🍬</span>
+  <div class="atitle">EYE KANDI Portal</div>
+  <div class="asub">Sign in to your account</div>
+  <div class="atabs">
+    <button class="atab on" onclick="authTab('login')">Sign In</button>
+    <button class="atab" onclick="authTab('signup')">Sign Up</button>
+  </div>
+  <div id="aerr" class="aerr"></div>
+  <div id="loginForm">
+    <input class="af" id="lu" placeholder="Username" autocomplete="username">
+    <input class="af" id="lp" placeholder="Password" type="password" autocomplete="current-password">
+    <button class="abtn" onclick="doLogin()">Sign In →</button>
+  </div>
+  <div id="signupForm" style="display:none">
+    <select class="af" id="sc">
+      <option value="">— Select your chatter name —</option>
+      <option>Jayce</option><option>Sage</option><option>Jammy</option>
+      <option>Adie</option><option>Dale</option><option>Joan</option><option>Fred</option>
+    </select>
+    <input class="af" id="su" placeholder="Choose a username">
+    <input class="af" id="sp" placeholder="Password (min 6 chars)" type="password">
+    <input class="af" id="sp2" placeholder="Confirm password" type="password">
+    <button class="abtn" onclick="doSignup()">Create Account →</button>
+  </div>
+  <div class="ahint">
+    <b>Admin:</b> admin / EKadmin2026!<br>
+    <b>Chatters:</b> jayce / Jayce2026! &nbsp;·&nbsp; sage / Sage2026!<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jammy / Jammy2026! &nbsp;·&nbsp; adie / Adie2026!<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dale / Dale2026! &nbsp;·&nbsp; joan / Joan2026! &nbsp;·&nbsp; fred / Fred2026!
+  </div>
+</div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="t-logo">
+      <span style="font-size:20px">🍬</span>
+      <div><div class="t-name">EYE KANDI</div><div class="t-role" id="tRole"></div></div>
+    </div>
+    <div class="t-right">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="t-av" id="tAv"></div>
+        <div><div class="t-uname" id="tUname"></div><div style="margin-top:2px" id="tBadge"></div></div>
+      </div>
+      <button class="t-out" onclick="doLogout()">Sign Out</button>
+    </div>
+  </div>
+  <div class="nav" id="nav"></div>
+  <div id="pages"></div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// ACCOUNTS — pure in-memory, zero deps
+// ════════════════════════════════════════
+const ACCS=[
+  {u:'admin',    p:'EKadmin2026!', r:'admin',   cn:null},
+  {u:'eyekandi', p:'EK2026!',      r:'admin',   cn:null},
+  {u:'jayce',    p:'Jayce2026!',   r:'chatter', cn:'Jayce'},
+  {u:'sage',     p:'Sage2026!',    r:'chatter', cn:'Sage'},
+  {u:'jammy',    p:'Jammy2026!',   r:'chatter', cn:'Jammy'},
+  {u:'adie',     p:'Adie2026!',    r:'chatter', cn:'Adie'},
+  {u:'dale',     p:'Dale2026!',    r:'chatter', cn:'Dale'},
+  {u:'joan',     p:'Joan2026!',    r:'chatter', cn:'Joan'},
+  {u:'fred',     p:'Fred2026!',    r:'chatter', cn:'Fred'},
+];
+const XACCS=[]; // signed up accounts
+let CU=null;
+
+// ════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════
+const CLR={Jayce:'#FF2D78',Sage:'#06D6A0',Jammy:'#FFD166',Adie:'#C084FC',Dale:'#60A5FA',Joan:'#F97316',Fred:'#EC4899'};
+const MONTHS=['Jan','Feb','Mar','Apr','May'];
+
+const PERF={
+  Jayce:{sh:'MID/EVE',mms:{t:160,ok:125,pend:35},sales:[1240,1580,1320,980,1650],tips:30,qs:55,qt:75,
+    kpi:{'Mass Message':88,'Building Rapport':84,'Response Time':95,'Terms of Service':100,'Grammar':95,'PPV Sent':82,'Sales':83,'Retention':85,'Drives Conversation':82,'Fan Satisfaction':84}},
+  Sage:{sh:'AM/MID',mms:{t:151,ok:98,pend:52,rep:1},sales:[820,740,910,670,1020],tips:25,qs:46,qt:75,
+    kpi:{'Mass Message':70,'Building Rapport':83,'Response Time':89,'Terms of Service':100,'Grammar':96,'PPV Sent':86,'Sales':86,'Retention':58,'Drives Conversation':59,'Fan Satisfaction':52}},
+  Jammy:{sh:'AM/MID',mms:{t:275,ok:252,pend:23},sales:[2100,1890,2340,1760,2580],tips:864,qs:51,qt:75,
+    kpi:{'Mass Message':91,'Building Rapport':87,'Response Time':91,'Terms of Service':100,'Grammar':95,'PPV Sent':88,'Sales':90,'Retention':88,'Drives Conversation':88,'Fan Satisfaction':94}},
+  Adie:{sh:'AM',mms:{t:142,ok:142,pend:0},sales:[3200,3540,3120,2980,3670],tips:168,qs:63,qt:75,
+    kpi:{'Mass Message':91,'Building Rapport':87,'Response Time':92,'Terms of Service':100,'Grammar':95,'PPV Sent':92,'Sales':94,'Retention':91,'Drives Conversation':94,'Fan Satisfaction':91}},
+  Dale:{sh:'EVE',mms:{t:288,ok:267,pend:21},sales:[4100,4560,3980,3450,4820],tips:689,qs:57,qt:75,
+    kpi:{'Mass Message':95,'Building Rapport':93,'Response Time':95,'Terms of Service':100,'Grammar':95,'PPV Sent':96,'Sales':97,'Retention':88,'Drives Conversation':95,'Fan Satisfaction':86}},
+  Joan:{sh:'MID',mms:{t:313,ok:307,pend:6},sales:[5200,5870,4980,4320,5640],tips:486,qs:55,qt:75,
+    kpi:{'Mass Message':93,'Building Rapport':76,'Response Time':93,'Terms of Service':0,'Grammar':95,'PPV Sent':50,'Sales':65,'Retention':55,'Drives Conversation':65,'Fan Satisfaction':55}},
+  Fred:{sh:'EVE',mms:{t:92,ok:77,pend:15},sales:[980,1120,890,760,1040],tips:0,qs:53,qt:75,
+    kpi:{'Mass Message':81,'Building Rapport':65,'Response Time':95,'Terms of Service':50,'Grammar':95,'PPV Sent':79,'Sales':77,'Retention':69,'Drives Conversation':71,'Fan Satisfaction':81}},
+};
+
+const MODELS=[
+  {id:'Sabrina',e:'👑',c:'#FF2D78',rev:38420,subs:163,tr:'+12%'},
+  {id:'Omi',    e:'🔥',c:'#FFD166',rev:9840, subs:254,tr:'+8%'},
+  {id:'Maddy',  e:'💋',c:'#C084FC',rev:7230, subs:238,tr:'+5%'},
+  {id:'Bee',    e:'🐝',c:'#60A5FA',rev:5610, subs:215,tr:'+3%'},
+  {id:'Izana',  e:'💎',c:'#06D6A0',rev:4190, subs:247,tr:'+6%'},
+];
+
+const COACHING={
+  Jayce:[{per:'Apr 1–15, 2024',dt:'Apr 16, 2024',st:'PASSED',co:'AJ',
+    beh:'Inconsistent performance — multiple unattended chats observed.',
+    rca:'Unattended chats led to dropped conversations and missed sales.',
+    areas:[{l:'Grammar',n:'Message construction needs polish — unclear to fans.'},{l:'Drives Conversation',n:'One-line responses — not enough depth.'},{l:'Fan Satisfaction',n:'No post-fan care — conversations closed abruptly.'}],
+    acts:['Live coaching — Grammarly utilization and timer management.','Extra effort: back-read previous conversations, ask about hobbies.','Concern about lowballing raised — to be addressed in team meeting.','Address low-sales outlier — specific action plan advised.'],
+    com:"I will utilize Grammarly consistently and put extra effort on back-reading and asking about fans hobbies to keep conversations alive.",
+    kpi:{'Mass Message':'r','Building Rapport':'r','Response Time':'y','Terms of Service':'g','Grammar':'r','PPV Sent':'y','Sales':'r','Retention':'y','Drives Conversation':'r','Fan Satisfaction':'r'}}],
+  Sage:[{per:'Feb 1–15, 2024',dt:'Feb 16, 2024',st:'COACHING',co:'AJ',
+    beh:'Low scores in engagement and grammar — fan confusion observed.',
+    rca:'Insufficient rapport building and grammar errors causing early drop-off.',
+    areas:[{l:'Grammar',n:'Grammar issues kept fans confused — Grammarly enforcement needed.'},{l:'Building Rapport',n:'Conversations felt transactional — needs personalization.'}],
+    acts:['Increase open-ended questions for deeper fan engagement.','Implement sexting transition framework from coaching playbook.','Daily Grammarly check before starting shift.'],
+    com:'I will focus on building genuine connections and use Grammarly consistently.',
+    kpi:{'Mass Message':'y','Building Rapport':'r','Response Time':'y','Terms of Service':'g','Grammar':'r','PPV Sent':'y','Sales':'y','Retention':'r','Drives Conversation':'r','Fan Satisfaction':'y'}}],
+  Jammy:[{per:'Jan 1–15, 2024',dt:'Jan 16, 2024',st:'COACHING',co:'AJ',
+    beh:'1st warning — grammar issues consistently confusing fans.',
+    rca:'Broken sentences and incomplete thoughts leading to fan disengagement.',
+    areas:[{l:'Grammar',n:'Incomplete thoughts and poor sentence construction.'},{l:'Building Rapport',n:'Rushing to sell without adequate engagement first.'}],
+    acts:['Mandatory Grammarly use before sending any message.','Practice engage-transition-sell framework daily.','Weekly 1-on-1 check-in for next 4 weeks.'],
+    com:"I will not send any message without Grammarly and always build rapport before pitching PPVs.",
+    kpi:{'Mass Message':'y','Building Rapport':'r','Response Time':'g','Terms of Service':'g','Grammar':'r','PPV Sent':'y','Sales':'y','Retention':'y','Drives Conversation':'r','Fan Satisfaction':'y'}}],
+  Adie:[{per:'Jan 1–15, 2024',dt:'Jan 16, 2024',st:'PASSED',co:'AJ',
+    beh:'Strong consistent performer — session focused on optimization.',
+    rca:'No critical issues. Session aimed at reaching higher performance tier.',
+    areas:[{l:'Retention',n:'Minor dip — explore post-chat follow-up strategies.'}],
+    acts:['Continue current framework — performing well.','Experiment with post-fan care messages.','Share best practices in next calibration.'],
+    com:'I will continue my current approach and experiment with post-fan care to push my retention higher.',
+    kpi:{'Mass Message':'g','Building Rapport':'g','Response Time':'g','Terms of Service':'g','Grammar':'g','PPV Sent':'g','Sales':'g','Retention':'y','Drives Conversation':'g','Fan Satisfaction':'g'}}],
+  Dale:[{per:'Jan 1–15, 2024',dt:'Jan 16, 2024',st:'PASSED',co:'AJ',
+    beh:'Solid performer with a minor attendance flag in Week 3.',
+    rca:'Attendance gap in Week 3 affected shift coverage and sales continuity.',
+    areas:[{l:'Attendance',n:'Week 3 gap — need clear advance notice for schedule changes.'}],
+    acts:['Always provide 1 week advance notice for any absence.','Maintain current sales and engagement approach.','Avoid terminal breaks in final hour of shift.'],
+    com:"I will communicate schedule changes at least a week in advance.",
+    kpi:{'Mass Message':'g','Building Rapport':'g','Response Time':'g','Terms of Service':'y','Grammar':'g','PPV Sent':'g','Sales':'g','Retention':'g','Drives Conversation':'g','Fan Satisfaction':'y'}}],
+  Joan:[{per:'Jan 1–15, 2024',dt:'Jan 16, 2024',st:'PASSED',co:'AJ',
+    beh:'Top performer — coaching focused on maintaining standards.',
+    rca:'No critical issues. Minor note on post-fan care consistency.',
+    areas:[{l:'Fan Satisfaction',n:'Occasionally skipping post-fan care at end of long sessions.'}],
+    acts:['Checklist reminder for post-fan care before closing every chat.','Consider mentoring newer chatters.'],
+    com:'I will add a mental checklist for post-fan care before closing every chat.',
+    kpi:{'Mass Message':'g','Building Rapport':'g','Response Time':'g','Terms of Service':'g','Grammar':'g','PPV Sent':'g','Sales':'g','Retention':'g','Drives Conversation':'g','Fan Satisfaction':'y'}}],
+  Fred:[{per:'Feb 1–15, 2024',dt:'Feb 16, 2024',st:'COACHING',co:'AJ',
+    beh:'1st warning — inconsistent TOS compliance and low PPV push rate.',
+    rca:'Unfamiliarity with updated TOS guidelines and hesitancy in pitching PPVs.',
+    areas:[{l:'Terms of Service',n:'TOS violations noted — re-read updated SOP immediately.'},{l:'PPV Sent',n:'Low PPV pitch rate — hesitant to transition from chat to sell.'}],
+    acts:['Re-read and sign off on current TOS SOP immediately.','Practice PPV transition scripts from coaching playbook.','Minimum 3 PPV pitches per shift for next 2 weeks.'],
+    com:'I will re-read the SOP today and pitch at least 3 PPVs per shift while staying TOS-compliant.',
+    kpi:{'Mass Message':'y','Building Rapport':'g','Response Time':'g','Terms of Service':'r','Grammar':'g','PPV Sent':'r','Sales':'y','Retention':'y','Drives Conversation':'y','Fan Satisfaction':'g'}}],
+};
+
+const SOPS=[
+  {i:'📋',n:'Main SOP',t:'Google Sheets',note:'Attendance, Idle/Break, Sales & Compliance rules. Updated Jan 31, 2024.',url:'https://docs.google.com/spreadsheets/d/1CwPKLRT-HBr4j7i6uERxijaX6yydyVsxDi4JR4ymP_4/edit',w:false},
+  {i:'🏷️',n:'Tagging SOP',t:'Google Docs',note:'How to tag collaborator content in Infloww.',url:'https://docs.google.com/document/d/1YuSxnAMnFNysG2m0HIgWd3wcv_fcLWJ2Wp3hBfNPvxU/edit',w:false},
+  {i:'💬',n:'Mass Message Library',t:'Google Docs',note:'All approved captions and mass message templates.',url:'https://docs.google.com/document/d/13wFYOi6F_yissaoKrr3qvWoGC9I4efTkBQwhi7JesGg/edit',w:false},
+  {i:'💰',n:'PPV Pricing Reference',t:'Google Sheets',note:'Official per-model PPV pricing. Can go higher, never lower.',url:'https://docs.google.com/spreadsheets/d/1_LbogJfEjxUDSxtG6tO8BaKonrU85R71L2G_nqJcFwU/edit',w:false},
+  {i:'🎬',n:'How to Add a Story',t:'Loom Video',note:'Step-by-step video for adding a story to the model\'s OnlyFans.',url:'https://www.loom.com/share/cd12861e17f645e4aa3152d2c422827d',w:true,wn:'May redirect to Loom library — contact admin if inaccessible.'},
+];
+
+const SVS=[
+  {s:'valid',  sc:'Getting good engagement before asking fan to unlock a PPV',n:'Build rapport first — valid when you earn the right to sell.'},
+  {s:'valid',  sc:'Asking fan to unlock during an active sexting session',n:'Fan is engaged and content is relevant — valid.'},
+  {s:'valid',  sc:'Asking fan to unlock as payment for a service (sexting, custom, VC)',n:'Transactional exchange for a service = valid.'},
+  {s:'valid',  sc:'Encouraging fan to unlock after getting to know their preferences',n:'Personalized pitch = valid influenced sale.'},
+  {s:'valid',  sc:'Persuading fan to unlock a PPV (not as service payment)',n:'Direct persuasion-driven sale = valid.'},
+  {s:'valid',  sc:'Chatter sent PPV and fan unlocked it during the same shift',n:'Sent and unlocked same shift = valid.'},
+  {s:'valid',  sc:'Chatter hinted for tips and fan tipped via post or content',n:'Tip-hinting that converts = valid influenced sale.'},
+  {s:'valid',  sc:'Subscription payments',n:'All subscription payments = valid sales.'},
+  {s:'invalid',sc:'Fan unlocks scheduled PPV from main feed without chatter engagement',n:'No chatter engagement = not credited.'},
+  {s:'invalid',sc:'Fan sends tip from post or campaign without chatter interaction',n:'Organic tip — not credited.'},
+  {s:'invalid',sc:'Fan tips influenced by QA/executive/manager stepping in',n:'Management-driven tip = not attributed to chatter on shift.'},
+  {s:'invalid',sc:'Fan unlocks PPV sent by QA/executive/manager during shift support',n:'Must include screenshot proof if PPV was sent by someone else.'},
+  {s:'review', sc:'Sending a mass message to prompt random/scheduled PPV unlocks',n:'Not to be sent daily. QA reviews validity case by case.'},
+  {s:'review', sc:'Fan asks what type of content it is and chatter explains',n:'Valid if descriptive and convincing — QA will confirm.'},
+];
+
+const PPVM=[
+  {id:'Omi',n:'Omi',al:'Dominique Pichette / Flowmi',e:'🔥',c:'#FF2D78',
+   rl:'Topless=lower · Fully nude close-up=higher · Nude posed (tits visible)=mid',
+   secs:[{l:'Photos',items:[{n:'Single photo',p:'$10–$45'},{n:'Photo set (3–5)',p:'$15–$55'}]},
+    {l:'Videos',items:[{n:'Teaser clip',p:'$15–$40'},{n:'Full-length (≤10 min)',p:'$45–$80'},{n:'Sexy outfit video',p:'$20–$35'},{n:'Masturbation video',p:'MIN $200',c:'hi'},{n:'Pussy play <3 min',p:'From $150',c:'hi'},{n:'Pussy play >3 min',p:'MIN $200',c:'hi'},{n:'Male partner video',p:'$400–$600',c:'hi'}]},
+    {l:'Bundles',items:[{n:'Bundle w/ masturbation',p:'$250+',c:'hi'},{n:'Bundle w/o masturbation',p:'$100–$150'}]}]},
+  {id:'Bee',n:'Bee',al:'',e:'🐝',c:'#FFD166',rl:'Can go higher but never lower.',
+   secs:[{l:'Photos',items:[{n:'Single photo',p:'$3–$10'},{n:'Photo set (3–5)',p:'$5–$20'}]},
+    {l:'Videos',items:[{n:'Teaser clip',p:'$5–$20'},{n:'Full-length (≤10 min)',p:'$15–$50'},{n:'Bundle',p:'$50–$100'},{n:'Showing boobs',p:'$90 max'},{n:'<1 min undressing/playing',p:'$50–$70'},{n:'1 min+ undressing/playing',p:'$80–$90+'}]}]},
+  {id:'Maddy',n:'Maddy',al:'Daisy',e:'💋',c:'#C084FC',rl:'Can go higher but never lower.',
+   secs:[{l:'Photos',items:[{n:'Single photo',p:'$3–$10'},{n:'Photo set (3–5)',p:'$5–$20'}]},
+    {l:'Videos',items:[{n:'Teaser clip',p:'$5–$20'},{n:'Full-length (≤10 min)',p:'$15–$50'},{n:'Bundle',p:'$50–$100'}]}]},
+  {id:'Sabrina',n:'Sabrina',al:'Can ask for pricing on anything!',e:'👑',c:'#06D6A0',
+   rl:'Content with partner → vault pricing. Partner videos = $400–$600 regardless of length.',
+   secs:[{l:'Photos',items:[{n:'Single photo',p:'$10'},{n:'3-photo set',p:'$20'},{n:'5-photo set',p:'$35–$40'}]},
+    {l:'Videos',items:[{n:'Teaser clip',p:'Ask Sab',c:'ask'},{n:'Full-length video',p:'Ask Sab',c:'ask'},{n:'Bundle',p:'$300–$500',c:'hi'},{n:'Male partner video',p:'$400–$600',c:'hi'}]},
+    {l:'Specific — Always Ask Sab',items:[{n:'Tits playing (panties on/off)',p:'Ask Sab',c:'ask'},{n:'Stripping top/bottom',p:'Ask Sab',c:'ask'},{n:'Blowjob content',p:'Ask Sab',c:'ask'},{n:'Shaking ass (panties on/off)',p:'Ask Sab',c:'ask'},{n:'JOI content',p:'Ask Sab',c:'ask'}]}]},
+];
+
+const CKL={
+  pre:['Log in to Time Doctor before opening any pages','Check Discord for announcements or urgent messages','Review the daily model notes and any content restrictions','Check PPV pricing reference if sending PPVs today','Review your previous shift open conversations','Read any new coaching notes or SOP updates'],
+  during:['Respond to all DMs within 15 minutes','Send at least 1 mass message during your shift','Push at least 3 PPVs per shift','Build rapport before pitching — no cold selling','Always do post-fan care before closing any conversation','Log any influenced sales in the tracker with screenshot','Check Tagging SOP before sending any collab content'],
+  post:['Submit your EOD sales report','Tag any open chats for follow-up on next shift','Log off Time Doctor only after fully clocked out','Report any fan issues or flags to QA in Discord'],
+};
+
+let ANNS=[
+  {ty:'global', ti:'Truth or Dare Campaign — ONGOING',dt:'Jun 1, 2026',bo:'Campaign is live! Push Truth or Dare to all active fans. Entry tip starts at $10. Log every entry in the Campaign Tracker.'},
+  {ty:'global', ti:'MMS Tracker Reminder',dt:'Jun 3, 2026',bo:'All MMS must be submitted to the May 2026 MMS Tracker before end of shift. Pending submissions are blocking QA review.'},
+  {ty:'callout',ti:'TOS Compliance Check',dt:'Jun 5, 2026',bo:'All chatters — please re-read the updated TOS SOP. There have been a few compliance flags this week.'},
+  {ty:'info',   ti:'New PPV Pricing Updated',dt:'May 31, 2026',bo:'PPV pricing reference has been updated. Check the PPV Pricing tab. Remember: can go higher, never lower.'},
+];
+
+let REQS=[
+  {id:'REQ-001',ti:'Schedule Change Request — June 12',r:'chatter',by:'Adie',cat:'Schedule',st:'approved',dt:'Jun 4, 2026',de:'Requesting to swap AM shift on June 12 with Dale EVE shift. Both parties agree.'},
+  {id:'REQ-002',ti:'PPV Price Clarification for Custom Video',r:'chatter',by:'Jammy',cat:'Pricing',st:'done',dt:'Jun 3, 2026',de:'Need clarification on pricing for a custom 15-min video for Sabrina page.'},
+  {id:'REQ-003',ti:'Grammarly Access — Account Issue',r:'chatter',by:'Sage',cat:'Tech Support',st:'new',dt:'Jun 6, 2026',de:'Grammarly is not working on my device. Getting a login error. Need help before my next shift.'},
+  {id:'REQ-004',ti:'Campaign Ideas — Roll the Dice Relaunch',r:'chatter',by:'Joan',cat:'Campaign',st:'pending',dt:'Jun 5, 2026',de:'Suggest relaunching Roll the Dice campaign for the summer. High fan engagement last time.'},
+];
+
+// in-memory checklist state per chatter
+const CLST={};
+// in-memory schedule
+let SCHED=null;
+
+// ════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════
+const $=id=>document.getElementById(id);
+const mkPage=id=>{const p=document.createElement('div');p.className='page';p.id='page-'+id;return p;};
+const col=v=>v>=90?'var(--mint)':v>=75?'var(--gold)':'var(--candy)';
+const barHtml=(sales,color)=>{
+  const mx=Math.max(...sales);
+  return `<div class="bars">${sales.map((v,i)=>`<div class="bar-col">
+    <div class="bar-fill" style="height:${Math.round((v/mx)*120)}px;background:linear-gradient(180deg,${color},${color}66)"></div>
+    <div class="bar-lbl">${MONTHS[i]}</div>
+    <div class="bar-val" style="color:${color}">$${(v/1000).toFixed(1)}k</div>
+  </div>`).join('')}</div>`;
+};
+
+// ════════════════════════════════════════
+// AUTH
+// ════════════════════════════════════════
+function authTab(t){
+  document.querySelectorAll('.atab').forEach((b,i)=>b.classList.toggle('on',i===(t==='login'?0:1)));
+  $('loginForm').style.display=t==='login'?'block':'none';
+  $('signupForm').style.display=t==='signup'?'block':'none';
+  $('aerr').style.display='none';
+}
+function showErr(m){const e=$('aerr');e.textContent=m;e.style.display='block';}
+
+function doLogin(){
+  const u=($('lu').value||'').trim().toLowerCase();
+  const p=($('lp').value||'');
+  if(!u||!p){showErr('Please fill in all fields.');return;}
+  const match=ACCS.find(a=>a.u===u&&a.p===p)||XACCS.find(a=>a.u===u&&a.p===p);
+  if(match){launch({username:match.u,role:match.r,cn:match.cn});return;}
+  showErr('Incorrect username or password.');
+}
+
+function doSignup(){
+  const ch=$('sc').value,u=($('su').value||'').trim(),p=$('sp').value,p2=$('sp2').value;
+  if(!ch){showErr('Please select your chatter name.');return;}
+  if(!u){showErr('Please choose a username.');return;}
+  if(p.length<6){showErr('Password must be at least 6 characters.');return;}
+  if(p!==p2){showErr('Passwords do not match.');return;}
+  if([...ACCS,...XACCS].find(a=>a.u===u.toLowerCase())){showErr('Username already taken.');return;}
+  if([...ACCS,...XACCS].find(a=>a.cn===ch&&a.r==='chatter')){showErr('This chatter already has an account.');return;}
+  const a={u:u.toLowerCase(),p,r:'chatter',cn:ch};
+  XACCS.push(a);
+  launch({username:a.u,role:'chatter',cn:ch});
+}
+
+function doLogout(){
+  CU=null;
+  $('authWrap').style.display='flex';
+  $('app').style.display='none';
+  ['lu','lp','su','sp','sp2'].forEach(x=>{const e=$(x);if(e)e.value='';});
+  $('sc').value='';
+  $('aerr').style.display='none';
+}
+
+function launch(user){
+  CU=user;
+  $('authWrap').style.display='none';
+  $('app').style.display='block';
+  const c=user.role==='admin'?'#FFD166':(CLR[user.cn]||'#FF2D78');
+  $('tAv').style.background=`linear-gradient(135deg,${c},${c}88)`;
+  $('tAv').textContent=user.username[0].toUpperCase();
+  $('tUname').textContent=user.username;
+  $('tRole').textContent=user.role==='admin'?'Administrator':`Chatter · ${user.cn}`;
+  $('tBadge').innerHTML=user.role==='admin'
+    ?'<span class="t-badge ba">⭐ Admin</span>'
+    :'<span class="t-badge bc">🍬 Chatter</span>';
+  buildNav();
+  buildPages();
+  goPage('dashboard');
+}
+
+// ════════════════════════════════════════
+// NAV
+// ════════════════════════════════════════
+function buildNav(){
+  const ADMIN_TABS=[
+    ['dashboard','📊 Overview'],['chatters','👥 Chatters'],['performance','📈 Performance'],
+    ['coaching','🎯 Coaching'],['model_sales','💸 Model Sales'],['announcements','📣 Announcements'],
+    ['requests','🎫 Requests'],['checklist','✅ Checklist'],['schedule','📅 Schedule'],
+    ['sops','📋 SOPs'],['sales_ref','💲 Sales Guide'],['ppv','💰 PPV Pricing'],['ai','🤖 AI Assistant']
+  ];
+  const CHATTER_TABS=[
+    ['dashboard','📊 My Dashboard'],['performance','📈 Performance'],['coaching','🎯 My Coaching'],
+    ['announcements','📣 Announcements'],['requests','🎫 Requests'],['checklist','✅ Checklist'],
+    ['schedule','📅 Schedule'],['sops','📋 SOPs'],['sales_ref','💲 Sales Guide'],
+    ['ppv','💰 PPV Pricing'],['ai','🤖 AI Assistant']
+  ];
+  const tabs=CU.role==='admin'?ADMIN_TABS:CHATTER_TABS;
+  $('nav').innerHTML=tabs.map(([id,lbl])=>
+    `<button class="nb" id="nb-${id}" onclick="goPage('${id}')">${lbl}</button>`
+  ).join('');
+}
+
+function goPage(id){
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  const nb=$('nb-'+id),pg=$('page-'+id);
+  if(nb)nb.classList.add('on');
+  if(pg)pg.classList.add('on');
+}
+
+// ════════════════════════════════════════
+// PAGES
+// ════════════════════════════════════════
+function buildPages(){
+  const c=$('pages'); c.innerHTML='';
+  if(CU.role==='admin'){
+    [pAdminDash,pAdminChatters,pAdminPerf,pAdminCoaching,pModelSales,
+     pAnnouncements,pRequests,()=>pChecklist('admin'),pSchedule,pSOPs,pSalesRef,pPPV,pAI
+    ].forEach(fn=>c.appendChild(fn()));
+  } else {
+    [()=>pChatterDash(CU.cn),()=>pChatterPerf(CU.cn),()=>pChatterCoaching(CU.cn),
+     pAnnouncements,()=>pRequests(CU.cn),()=>pChecklist(CU.cn),pSchedule,pSOPs,pSalesRef,pPPV,pAI
+    ].forEach(fn=>c.appendChild(fn()));
+  }
+}
+
+// ─── CHATTER DASHBOARD ───
+function pChatterDash(n){
+  const p=mkPage('dashboard'),d=PERF[n],c=CLR[n]||'#FF2D78';
+  const rate=Math.round((d.mms.ok/d.mms.t)*100);
+  const ts=d.sales.reduce((a,b)=>a+b,0);
+  p.innerHTML=`
+  <div class="ph"><div>
+    <div class="pt" style="display:flex;align-items:center;gap:9px">
+      <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,${c},${c}77);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:13px;color:#fff">${n[0]}</div>${n}
+    </div>
+    <div class="ps">${d.sh} Shift · EYE KANDI May 2026</div>
+  </div></div>
+  <div class="g4" style="margin-bottom:18px">
+    <div class="kpi" style="--ac:${c}"><div class="kl">MMS Submitted</div><div class="kv">${d.mms.t}</div><div class="ks">May 2026</div></div>
+    <div class="kpi" style="--ac:var(--mint)"><div class="kl">Approved</div><div class="kv" style="color:var(--mint)">${d.mms.ok}</div><div class="ks">${rate}% approval rate</div></div>
+    <div class="kpi" style="--ac:var(--gold)"><div class="kl">Pending QA</div><div class="kv" style="color:var(--gold)">${d.mms.pend}</div><div class="ks">${d.mms.pend===0?'🎉 All clear':'Awaiting review'}</div></div>
+    <div class="kpi" style="--ac:var(--lav)"><div class="kl">Latest QA Score</div><div class="kv" style="color:var(--lav)">${d.qs}</div><div class="ks">Target: ${d.qt}</div></div>
+  </div>
+  <div class="g2">
+    <div class="card"><div class="ctitle">Sales Trend <small>Jan–May 2026</small></div>${barHtml(d.sales,c)}</div>
+    <div class="card"><div class="ctitle">Quick Stats</div>
+      <div style="display:flex;flex-direction:column;gap:10px;padding-top:4px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--s2);border-radius:9px">
+          <span style="font-size:12px;color:var(--dim)">Total Sales (Jan–May)</span>
+          <span style="font-family:var(--fh);font-weight:800;color:var(--gold)">$${ts.toLocaleString()}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--s2);border-radius:9px">
+          <span style="font-size:12px;color:var(--dim)">Campaign Tips Earned</span>
+          <span style="font-family:var(--fh);font-weight:800;color:var(--mint)">$${d.tips.toLocaleString()}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--s2);border-radius:9px">
+          <span style="font-size:12px;color:var(--dim)">MMS Approval Rate</span>
+          <span style="font-family:var(--fh);font-weight:800;color:${col(rate)}">${rate}%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--s2);border-radius:9px">
+          <span style="font-size:12px;color:var(--dim)">QA Score vs Target</span>
+          <span style="font-family:var(--fh);font-weight:800;color:${d.qs>=d.qt?'var(--mint)':'var(--candy)'}">
+            ${d.qs} <span style="font-size:11px;color:var(--mu)">/ ${d.qt}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  return p;
+}
+
+// ─── CHATTER PERFORMANCE ───
+function pChatterPerf(n){
+  const p=mkPage('performance'),d=PERF[n],c=CLR[n]||'#FF2D78';
+  const rows=Object.entries(d.kpi).map(([k,v])=>`<tr>
+    <td style="color:var(--dim)">${k}</td>
+    <td><div class="sbar"><div class="sbg"><div class="sfi" style="width:${v}%;background:${col(v)}"></div></div>
+    <div class="snum" style="color:${col(v)}">${v}%</div></div></td>
+  </tr>`).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">📈 My Performance</div><div class="ps">${n} · From QA Scoring Sheets</div></div>
+    <a href="https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit" target="_blank" class="lnk">↗ Full Tracker</a>
+  </div>
+  <div class="g2">
+    <div class="card"><div class="ctitle">KPI Breakdown</div>
+      <div class="tw"><table><thead><tr><th>Metric</th><th>Score</th></tr></thead><tbody>${rows}</tbody></table></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card"><div class="ctitle">QA Score</div>
+        <div style="text-align:center;padding:20px 0">
+          <div style="font-family:var(--fh);font-size:60px;font-weight:800;color:${col(d.qs)}">${d.qs}</div>
+          <div style="font-size:12px;color:var(--dim);margin-top:6px">Target: <b style="color:var(--gold)">${d.qt}</b></div>
+          <div style="width:80%;height:6px;background:var(--s3);border-radius:3px;overflow:hidden;margin:12px auto 0">
+            <div style="height:100%;width:${Math.min((d.qs/d.qt)*100,100)}%;background:${col(d.qs)};border-radius:3px"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card"><div class="ctitle">Campaign Tips</div>
+        <div style="font-family:var(--fh);font-size:32px;font-weight:800;color:var(--gold)">$${d.tips.toLocaleString()}</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:4px">Truth or Dare & other campaigns</div>
+      </div>
+      <div class="card"><div class="ctitle">Sales Trend</div>${barHtml(d.sales,c)}</div>
+    </div>
+  </div>`;
+  return p;
+}
+
+// ─── CHATTER COACHING ───
+function pChatterCoaching(n){
+  const p=mkPage('coaching'),logs=COACHING[n]||[];
+  p.innerHTML=`<div class="ph"><div><div class="pt">🎯 My Coaching Log</div><div class="ps">Your personal coaching history</div></div></div>
+  ${logs.length===0?'<div class="card" style="text-align:center;padding:40px;color:var(--dim)">No coaching sessions on record yet.</div>'
+    :`<div class="col">${logs.map((l,i)=>coCard(l,i,n,false)).join('')}</div>`}`;
+  return p;
+}
+
+// ─── ADMIN DASHBOARD ───
+function pAdminDash(){
+  const p=mkPage('dashboard'),cns=Object.keys(PERF);
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">Admin Overview</div><div class="ps">EYE KANDI · May 2026</div></div></div>
+  <div class="g4" style="margin-bottom:20px">
+    <div class="kpi" style="--ac:var(--candy)"><div class="kl">Total MMS</div><div class="kv">1,421</div><div class="ks">All chatters</div></div>
+    <div class="kpi" style="--ac:var(--mint)"><div class="kl">Approved</div><div class="kv" style="color:var(--mint)">1,268</div><div class="ks">89.2% approval rate</div></div>
+    <div class="kpi" style="--ac:var(--gold)"><div class="kl">Pending QA</div><div class="kv" style="color:var(--gold)">152</div><div class="ks">Awaiting review</div></div>
+    <div class="kpi" style="--ac:var(--sky)"><div class="kl">Active Chatters</div><div class="kv">7</div><div class="ks">All shifts</div></div>
+  </div>
+  <div class="g3">
+    ${cns.map(n=>{const d=PERF[n],c=CLR[n],r=Math.round((d.mms.ok/d.mms.t)*100);
+      return`<div class="card" style="border-left:3px solid ${c}">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,${c},${c}77);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:13px;color:#fff">${n[0]}</div>
+          <div><div style="font-family:var(--fh);font-weight:800;font-size:14px">${n}</div><div style="font-size:10px;color:var(--dim)">${d.sh}</div></div>
+          <div style="margin-left:auto;text-align:right"><div style="font-family:var(--fh);font-weight:800;font-size:18px;color:${c}">${r}%</div><div style="font-size:9px;color:var(--mu)">approval</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px">
+          <div style="background:var(--s2);border-radius:7px;padding:7px;text-align:center"><div style="font-family:var(--fh);font-weight:800;font-size:14px">${d.mms.t}</div><div style="font-size:9px;color:var(--dim)">MMS</div></div>
+          <div style="background:var(--s2);border-radius:7px;padding:7px;text-align:center"><div style="font-family:var(--fh);font-weight:800;font-size:14px;color:${col(d.qs)}">${d.qs}</div><div style="font-size:9px;color:var(--dim)">QA</div></div>
+          <div style="background:var(--s2);border-radius:7px;padding:7px;text-align:center"><div style="font-family:var(--fh);font-weight:800;font-size:14px;color:var(--gold)">$${(d.sales.reduce((a,b)=>a+b,0)/1000).toFixed(1)}k</div><div style="font-size:9px;color:var(--dim)">Sales</div></div>
+        </div>
+        <div style="height:4px;background:var(--s3);border-radius:2px;overflow:hidden">
+          <div style="height:100%;width:${r}%;background:${c};border-radius:2px"></div>
+        </div>
+      </div>`;}).join('')}
+  </div>`;
+  return p;
+}
+
+// ─── ADMIN CHATTERS ───
+function pAdminChatters(){
+  const p=mkPage('chatters'),cns=Object.keys(PERF);
+  const rows=cns.map(n=>{
+    const d=PERF[n],c=CLR[n],r=Math.round((d.mms.ok/d.mms.t)*100),ts=d.sales.reduce((a,b)=>a+b,0);
+    const avg=Math.round(Object.values(d.kpi).reduce((a,b)=>a+b,0)/10);
+    return`<tr>
+      <td><div style="display:flex;align-items:center;gap:8px"><div style="width:26px;height:26px;border-radius:7px;background:${c};display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:10px;color:#fff">${n[0]}</div><span style="font-weight:700">${n}</span></div></td>
+      <td style="color:var(--dim)">${d.sh}</td>
+      <td><span style="font-weight:700;color:${col(d.qs)}">${d.qs}</span></td>
+      <td><span style="font-weight:700;color:${col(avg)}">${avg}%</span></td>
+      <td>${d.mms.t}</td><td style="color:var(--gold);font-weight:700">$${(ts/1000).toFixed(1)}k</td>
+      <td><span style="font-weight:700;color:${col(r)}">${r}%</span></td>
+    </tr>`;
+  }).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">👥 All Chatters</div><div class="ps">Full performance overview</div></div></div>
+  <div class="card">
+    <div class="tw"><table><thead><tr><th>Chatter</th><th>Shift</th><th>QA Score</th><th>Avg KPI</th><th>MMS</th><th>Sales</th><th>Approval</th></tr></thead><tbody>${rows}</tbody></table></div>
+  </div>`;
+  return p;
+}
+
+// ─── ADMIN PERFORMANCE ───
+function pAdminPerf(){
+  const p=mkPage('performance'),cns=Object.keys(PERF);
+  const kpis=Object.keys(PERF.Jayce.kpi);
+  const rows=cns.map(n=>{
+    const d=PERF[n],c=CLR[n];
+    const cells=Object.values(d.kpi).map(v=>`<td style="color:${col(v)};font-weight:600;font-size:11px">${v}%</td>`).join('');
+    return`<tr><td><div style="display:flex;align-items:center;gap:7px"><div style="width:22px;height:22px;border-radius:6px;background:${c};display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:9px;color:#fff">${n[0]}</div><b>${n}</b></div></td>
+    <td style="font-family:var(--fh);font-weight:800;color:${col(d.qs)}">${d.qs}</td>${cells}</tr>`;
+  }).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">📈 Team Performance</div><div class="ps">Latest QA scores</div></div>
+    <a href="https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit" target="_blank" class="lnk">↗ Full Sheet</a>
+  </div>
+  <div class="card" style="margin-bottom:18px">
+    <div class="tw"><table><thead><tr><th>Chatter</th><th>Score</th>${kpis.map(k=>`<th>${k.split(' ')[0]}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>
+  </div>
+  <div class="pt" style="font-size:14px;margin-bottom:12px">Individual Reports</div>
+  <div class="csb" id="perfBar">${cns.map(n=>`<button class="csbtn" onclick="showPerf('${n}',this)">${n}</button>`).join('')}</div>
+  <div id="perfDetail"></div>`;
+  return p;
+}
+
+function showPerf(n,btn){
+  document.querySelectorAll('#perfBar .csbtn').forEach(b=>{b.classList.remove('on');b.style.background='';});
+  btn.classList.add('on');btn.style.background=CLR[n];
+  const d=PERF[n],c=CLR[n];
+  const rows=Object.entries(d.kpi).map(([k,v])=>`<tr>
+    <td style="color:var(--dim)">${k}</td>
+    <td><div class="sbar"><div class="sbg"><div class="sfi" style="width:${v}%;background:${col(v)}"></div></div><div class="snum" style="color:${col(v)}">${v}%</div></div></td>
+  </tr>`).join('');
+  $('perfDetail').innerHTML=`<div class="g2">
+    <div class="card"><div class="ctitle">KPI Breakdown — ${n}</div>
+      <div class="tw"><table><thead><tr><th>Metric</th><th>Score</th></tr></thead><tbody>${rows}</tbody></table></div>
+    </div>
+    <div class="card"><div class="ctitle">Sales Trend — ${n}</div>${barHtml(d.sales,c)}</div>
+  </div>`;
+}
+
+// ─── ADMIN COACHING ───
+function pAdminCoaching(){
+  const p=mkPage('coaching');
+  const all=Object.keys(COACHING).flatMap((n,i)=>COACHING[n].map((l,j)=>coCard(l,j,n,true))).join('');
+  const btns=['All',...Object.keys(COACHING)].map(n=>`<button class="csbtn${n==='All'?' on':''}" onclick="filterCo('${n}',this)">${n}</button>`).join('');
+  p.innerHTML=`<div class="ph"><div><div class="pt">🎯 All Coaching Logs</div><div class="ps">Full team history</div></div></div>
+  <div class="csb" style="margin-bottom:18px">${btns}</div>
+  <div class="col" id="coList">${all}</div>`;
+  return p;
+}
+function filterCo(n,btn){
+  document.querySelectorAll('.csb .csbtn').forEach(b=>{b.classList.remove('on');b.style.background='';});
+  btn.classList.add('on');if(n!=='All')btn.style.background=CLR[n];
+  document.querySelectorAll('#coList .coe').forEach(el=>{
+    el.style.display=(n==='All'||el.dataset.c===n)?'':'none';
+  });
+}
+
+// ─── MODEL SALES ───
+function pModelSales(){
+  const p=mkPage('model_sales'),tot=MODELS.reduce((a,m)=>a+m.rev,0);
+  const cards=MODELS.map(m=>`<div class="msc" style="--mc:${m.c}">
+    <div class="mse">${m.e}</div><div class="msn">${m.id}</div>
+    <div class="msr">$${m.rev.toLocaleString()}</div>
+    <div class="mss">${m.subs} subs · ${m.tr} MoM</div>
+    <div class="msb"><div style="height:100%;width:${Math.min(Math.round((m.rev/tot)*200),100)}%;background:${m.c};border-radius:2px"></div></div>
+  </div>`).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">💸 Model Sales</div><div class="ps">Current revenue · May 2026</div></div>
+    <div style="display:flex;gap:8px">
+      <a href="https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit?gid=2121828189" target="_blank" class="lnk">↗ VIP Tracker</a>
+      <a href="https://docs.google.com/spreadsheets/d/1KcgGQNfdcvMFEoNoImLp7ITurci2vAwc_AveKz8u6rU/edit" target="_blank" class="lnk">↗ Campaign Tracker</a>
+    </div>
+  </div>
+  <div class="kpi" style="--ac:var(--gold);display:inline-flex;flex-direction:column;gap:4px;min-width:200px;margin-bottom:18px">
+    <div class="kl">Total Revenue</div><div class="kv" style="color:var(--gold)">$${tot.toLocaleString()}</div>
+    <div class="ks">All 5 models combined</div>
+  </div>
+  <div class="msg">${cards}</div>`;
+  return p;
+}
+
+// ─── ANNOUNCEMENTS ───
+function pAnnouncements(){
+  const p=mkPage('announcements');
+  const renderAnns=()=>{
+    const cards=ANNS.map(a=>`<div class="anc ${a.ty}">
+      <div class="ant"><div class="ants">${a.ti}</div><div class="antd">${a.dt}</div></div>
+      <div class="anb">${a.bo}</div>
+      <span class="antag ${a.ty==='global'?'tg':a.ty==='callout'?'tc':'ti'}">${a.ty==='global'?'📢 Global':a.ty==='callout'?'⚠️ Call-Out':'ℹ️ Info'}</span>
+    </div>`).join('');
+    const form=CU.role==='admin'?`
+      <div class="fform" style="margin-bottom:20px">
+        <div style="font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:14px">📣 Post Announcement</div>
+        <label class="ffl">Title</label><input class="ffi" id="ati" placeholder="Announcement title">
+        <label class="ffl">Message</label><textarea class="ffi ffta" id="abo" placeholder="Write your message..."></textarea>
+        <label class="ffl">Type</label>
+        <select class="ffi" id="aty"><option value="global">📢 Global</option><option value="callout">⚠️ Call-Out</option><option value="info">ℹ️ Info</option></select>
+        <button class="sbmt" onclick="postAnn()">Post →</button>
+      </div>`:'';
+    p.innerHTML=`<div class="ph"><div><div class="pt">📣 Announcements</div><div class="ps">Team updates and call-outs</div></div></div>
+    ${form}<div class="anl">${cards}</div>`;
+  };
+  renderAnns();
+  window.postAnn=()=>{
+    const ti=($('ati').value||'').trim(),bo=($('abo').value||'').trim(),ty=$('aty').value;
+    if(!ti||!bo){alert('Please fill in title and message.');return;}
+    const dt=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    ANNS.unshift({ty,ti,dt,bo});
+    renderAnns();
+  };
+  return p;
+}
+
+// ─── REQUESTS ───
+function pRequests(cn){
+  const p=mkPage('requests');
+  const isAdmin=CU.role==='admin';
+  const stCls={new:'stnew',pending:'stpend',approved:'stappr',done:'stdone',rejected:'strej'};
+  const renderReqs=()=>{
+    const list=(isAdmin?REQS:REQS.filter(r=>r.by===cn)).map(r=>`
+      <div class="rqc">
+        <div class="rqh"><div class="rqt">${r.ti}</div><span class="rqst ${stCls[r.st]||'stnew'}">${r.st.toUpperCase()}</span></div>
+        <div class="rqm">${r.id} · ${r.cat} · ${r.dt} · By: <b>${r.by}</b></div>
+        <div class="rqb">${r.de}</div>
+        ${isAdmin?`<div style="margin-top:10px">
+          <select onchange="updReq('${r.id}',this.value)" style="background:var(--s2);border:1px solid var(--bdr);border-radius:8px;padding:5px 10px;color:var(--txt);font-size:11px;cursor:pointer;font-family:var(--ff)">
+            <option value="">Change status...</option>
+            <option>new</option><option>pending</option><option>approved</option><option>done</option><option>rejected</option>
+          </select>
+        </div>`:''}
+      </div>`).join('');
+    p.innerHTML=`
+    <div class="ph"><div><div class="pt">🎫 ${isAdmin?'All Requests':'My Requests'}</div><div class="ps">${isAdmin?'Manage team requests':'Your submitted requests'}</div></div></div>
+    <div class="fform">
+      <div style="font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:14px">➕ Submit a Request</div>
+      <div class="g2" style="margin-bottom:0">
+        <div><label class="ffl">Title</label><input class="ffi" id="rti" placeholder="Brief title"></div>
+        <div><label class="ffl">Category</label>
+          <select class="ffi" id="rca"><option>Schedule</option><option>Tech Support</option><option>Pricing</option><option>Campaign</option><option>Coaching</option><option>Other</option></select>
+        </div>
+      </div>
+      <label class="ffl">Description</label><textarea class="ffi ffta" id="rde" placeholder="Describe your request..."></textarea>
+      <button class="sbmt" onclick="submitReq()">Submit Request →</button>
+    </div>
+    <div class="rql">${list}</div>`;
+  };
+  renderReqs();
+  window.submitReq=()=>{
+    const ti=($('rti').value||'').trim(),de=($('rde').value||'').trim(),ca=$('rca').value;
+    if(!ti||!de){alert('Please fill in title and description.');return;}
+    const dt=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    REQS.push({id:`REQ-${String(REQS.length+1).padStart(3,'0')}`,ti,r:CU.role,by:cn||'admin',cat:ca,st:'new',dt,de});
+    renderReqs();
+  };
+  window.updReq=(id,st)=>{
+    if(!st)return;
+    const r=REQS.find(x=>x.id===id);
+    if(r){r.st=st;renderReqs();}
+  };
+  return p;
+}
+
+// ─── CHECKLIST ───
+function pChecklist(cn){
+  const p=mkPage('checklist');
+  if(!CLST[cn])CLST[cn]={};
+  const s=CLST[cn];
+  const render=()=>{
+    let tot=0,dn=0;
+    Object.values(CKL).forEach(items=>items.forEach(()=>tot++));
+    Object.values(s).forEach(v=>{if(v)dn++;});
+    const pct=tot?Math.round((dn/tot)*100):0;
+    const sec=(ti,icon,items,key)=>`<div class="clsec">
+      <div class="clst">${icon} ${ti}</div>
+      ${items.map((it,i)=>{const id=`${key}_${i}`,done=!!s[id];
+        return`<div class="cli${done?' dn':''}" onclick="tgCL('${cn}','${id}')">
+          <div class="clck"><span class="clci">✓</span></div>
+          <div class="cltx">${it}</div>
+        </div>`;}).join('')}
+    </div>`;
+    p.innerHTML=`
+    <div class="ph"><div><div class="pt">✅ Shift Checklist</div><div class="ps">${cn} · Track your shift tasks</div></div></div>
+    <div class="clpw">
+      <div class="clph"><div class="clpt">Shift Progress</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <button class="rbtn" onclick="rstCL('${cn}')">Reset</button>
+          <div class="clpct">${pct}%</div>
+        </div>
+      </div>
+      <div class="clpb"><div class="clpf" style="width:${pct}%"></div></div>
+      <div style="font-size:11px;color:var(--dim);margin-top:8px">${dn} of ${tot} completed</div>
+    </div>
+    ${sec('Pre-Shift','🌅',CKL.pre,'pre')}
+    ${sec('During Shift','⚡',CKL.during,'during')}
+    ${sec('Post-Shift','🌙',CKL.post,'post')}`;
+  };
+  window.tgCL=(c,id)=>{CLST[c][id]=!CLST[c][id];if(CU&&CU.cn===c||CU.role==='admin'){const pg=$('page-checklist');if(pg&&pg.classList.contains('on')){const fn=CU.role==='admin'?pChecklist('admin'):pChecklist(CU.cn);pg.replaceWith(fn);fn.classList.add('on');$('nb-checklist').classList.add('on');}}};
+  window.rstCL=(c)=>{if(confirm('Reset all checklist items?')){CLST[c]={};render();}};
+  render();
+  return p;
+}
+
+// ─── SCHEDULE ───
+function pSchedule(){
+  const p=mkPage('schedule');
+  const render=()=>{
+    if(SCHED){
+      p.innerHTML=`
+      <div class="ph"><div><div class="pt">📅 Weekly Schedule</div><div class="ps">Current uploaded schedule</div></div>
+        <button class="rbtn" onclick="SCHED=null;const pg=pSchedule();pg.classList.add('on');$('page-schedule').replaceWith(pg);$('nb-schedule').classList.add('on')">Replace</button>
+      </div>
+      <div class="sprev">
+        <div class="sprh"><div style="font-family:var(--fh);font-weight:700">Current Schedule</div></div>
+        <img class="simg" src="${SCHED}" alt="Schedule">
+      </div>`;
+    } else {
+      p.innerHTML=`
+      <div class="ph"><div><div class="pt">📅 Weekly Schedule</div><div class="ps">Upload the weekly shift schedule for the team</div></div></div>
+      <div class="sdrop" onclick="$('sfi').click()"
+        ondragover="event.preventDefault();this.classList.add('drag')"
+        ondragleave="this.classList.remove('drag')"
+        ondrop="event.preventDefault();this.classList.remove('drag');ldSched(event.dataTransfer.files[0])">
+        <input type="file" id="sfi" accept="image/*,.pdf" style="display:none" onchange="ldSched(this.files[0])">
+        <div style="font-size:40px;margin-bottom:12px">📅</div>
+        <div style="font-family:var(--fh);font-size:16px;font-weight:700;margin-bottom:6px">Upload Weekly Schedule</div>
+        <div style="font-size:12px;color:var(--dim)">Drag & drop or click to browse · JPG, PNG, PDF</div>
+      </div>`;
+    }
+  };
+  window.ldSched=(f)=>{if(!f)return;const r=new FileReader();r.onload=(e)=>{SCHED=e.target.result;render();};r.readAsDataURL(f);};
+  render();
+  return p;
+}
+
+// ─── SOPs ───
+function pSOPs(){
+  const p=mkPage('sops');
+  const cards=SOPS.map(s=>`<div class="sopc${s.w?' wn':''}">
+    <div class="sopt"><div class="sopico">${s.i}</div>
+      <div><div class="sopn">${s.n}</div><div class="sopy">${s.t}</div></div>
+    </div>
+    <div class="sopno">${s.note}${s.wn?`<br><span style="color:var(--gold);font-size:10px">⚠️ ${s.wn}</span>`:''}</div>
+    <a class="lnk" href="${s.url}" target="_blank" rel="noopener">↗ Open</a>
+  </div>`).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">📋 SOPs</div><div class="ps">Standard Operating Procedures — read before every shift</div></div></div>
+  <div class="notice">📌 SOPs are updated regularly. Always check the latest version before your shift. Questions? Ask your QA in Discord.</div>
+  <div class="sopg">${cards}</div>`;
+  return p;
+}
+
+// ─── SALES REF ───
+function pSalesRef(){
+  const p=mkPage('sales_ref');
+  const cards=SVS.map(s=>{
+    const [cls,lbl]=s.s==='valid'?['svv','✅ Valid']:s.s==='invalid'?['svi','❌ Invalid']:['svr','⚠️ Review'];
+    return`<div class="svc" data-s="${s.s}"><div class="svt"><div class="svsc">${s.sc}</div><span class="svb ${cls}">${lbl}</span></div><div class="svno">${s.n}</div></div>`;
+  }).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">💲 Sales Validity Guide</div><div class="ps">Know exactly what counts — reference every shift</div></div></div>
+  <div class="notice">📌 For scheduled PPVs or PPVs sent by someone else — always include a <b>screenshot</b> in the tracker as proof.</div>
+  <div class="fr">
+    <button class="fb on" onclick="fSV('all',this)">All</button>
+    <button class="fb" onclick="fSV('valid',this)">✅ Valid</button>
+    <button class="fb" onclick="fSV('invalid',this)">❌ Invalid</button>
+    <button class="fb" onclick="fSV('review',this)">⚠️ Review</button>
+  </div>
+  <div class="svg" id="svg">${cards}</div>`;
+  return p;
+}
+window.fSV=(v,btn)=>{
+  document.querySelectorAll('#page-sales_ref .fr .fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.querySelectorAll('#svg .svc').forEach(c=>{c.style.display=(v==='all'||c.dataset.s===v)?'':'none';});
+};
+
+// ─── PPV ───
+function pPPV(){
+  const p=mkPage('ppv');
+  const cards=PPVM.map(m=>{
+    const secs=m.secs.map(s=>`<div class="ppvs"><div class="ppvsl">${s.l}</div>
+      ${s.items.map(i=>`<div class="ppvr"><div class="ppvi">${i.n}</div><div class="ppvp ${i.c||''}">${i.p}</div></div>`).join('')}
+      </div><div class="ppvsp"></div>`).join('');
+    return`<div class="ppvc" data-ppv="${m.id}">
+      <div class="ppvh" style="border-left:4px solid ${m.c}">
+        <span style="font-size:20px">${m.e}</span>
+        <div><div class="ppvn">${m.n}</div>${m.al?`<div class="ppva">${m.al}</div>`:''}</div>
+      </div>
+      ${m.rl?`<div class="ppvrl">⚡ ${m.rl}</div>`:''}${secs}
+    </div>`;
+  }).join('');
+  const btns=PPVM.map(m=>`<button class="fb" onclick="fPPV('${m.id}',this)">${m.e} ${m.n}</button>`).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">💰 PPV Pricing Reference</div><div class="ps">Can go higher — NEVER lower</div></div></div>
+  <div class="notice">⬆ You can <b>go higher</b> than these prices but <b>NEVER lower</b>. Items marked "Ask Sab" — confirm with management first.</div>
+  <div class="fr"><button class="fb on" onclick="fPPV('all',this)">All Models</button>${btns}</div>
+  <div class="ppvg" id="ppvg">${cards}</div>`;
+  return p;
+}
+window.fPPV=(v,btn)=>{
+  document.querySelectorAll('#page-ppv .fr .fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.querySelectorAll('#ppvg .ppvc').forEach((c,i)=>{c.style.display=(v==='all'||PPVM[i].id===v)?'':'none';});
+};
+
+// ─── AI ASSISTANT ───
+function pAI(){
+  const p=mkPage('ai');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">🤖 AI Assistant</div><div class="ps">Powered by Claude — context-aware about EYE KANDI operations</div></div></div>
+  <div style="margin-bottom:10px">
+    <label style="font-size:11px;font-weight:600;color:var(--dim);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em">Anthropic API Key</label>
+    <input class="ffi" id="aiKey" type="password" placeholder="sk-ant-api03-..." style="margin-bottom:0">
+    <div style="font-size:11px;color:var(--mu);margin-top:5px">Paste your Anthropic API key above. It stays in your browser — never stored anywhere.</div>
+  </div>
+  <div class="aiw">
+    <div class="aim" id="aiMsgs">
+      <div class="aimsg b">👋 Hi! I am your EYE KANDI AI assistant. I know about your chatters, performance data, SOPs, PPV pricing, and campaigns. Ask me anything!</div>
+    </div>
+    <div class="airow">
+      <input class="aiinp" id="aiInp" placeholder="Ask about performance, SOPs, sales, campaigns..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI();}">
+      <button class="aisnd" id="aiBtn" onclick="sendAI()">Send</button>
+    </div>
+  </div>`;
+  return p;
+}
+
+window.sendAI=async()=>{
+  const inp=$('aiInp'),msgs=$('aiMsgs'),btn=$('aiBtn');
+  const key=($('aiKey').value||'').trim();
+  const txt=(inp.value||'').trim();
+  if(!txt)return;
+  if(!key){
+    msgs.innerHTML+=`<div class="aimsg b">⚠️ Please paste your Anthropic API key above to use the AI assistant. Get one at <a href="https://console.anthropic.com" target="_blank" style="color:var(--candy)">console.anthropic.com</a></div>`;
+    msgs.scrollTop=msgs.scrollHeight;return;
+  }
+  msgs.innerHTML+=`<div class="aimsg u">${txt}</div>`;
+  msgs.innerHTML+=`<div class="aimsg b th" id="aiThink">Thinking...</div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+  inp.value='';btn.disabled=true;
+  const ctx=`You are an AI assistant for EYE KANDI, a professional OnlyFans management agency.
+Current data:
+- Chatters: ${Object.keys(PERF).join(', ')}
+- Latest QA scores: ${Object.entries(PERF).map(([n,d])=>`${n}:${d.qs}`).join(', ')}
+- MMS stats: ${Object.entries(PERF).map(([n,d])=>`${n}: ${d.mms.t} submitted, ${d.mms.ok} approved, ${d.mms.pend} pending`).join(' | ')}
+- Models revenue: ${MODELS.map(m=>`${m.id}:$${m.rev.toLocaleString()}`).join(', ')}
+- Active campaign: Truth or Dare (ongoing, entry tip from $10)
+- Open requests: ${REQS.filter(r=>r.st==='new'||r.st==='pending').length}
+Be helpful, concise, and professional.`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system:ctx,messages:[{role:'user',content:txt}]})
+    });
+    const data=await res.json();
+    const reply=data.content?.[0]?.text||'Sorry, no response received.';
+    $('aiThink').remove();
+    msgs.innerHTML+=`<div class="aimsg b">${reply.replace(/\n/g,'<br>')}</div>`;
+  }catch(e){
+    $('aiThink').remove();
+    msgs.innerHTML+=`<div class="aimsg b">⚠️ Error: ${e.message}</div>`;
+  }
+  btn.disabled=false;msgs.scrollTop=msgs.scrollHeight;
+};
+
+// ─── COACHING CARD ───
+function coCard(l,i,n,showName){
+  const c=CLR[n]||'#FF2D78',sc=l.st==='PASSED'?'cpp':'cpc';
+  const pills=Object.entries(l.kpi||{}).map(([k,v])=>`<span class="kp k${v}">${k}</span>`).join('');
+  const areas=l.areas.map(a=>`<div class="imc"><div class="iml">${a.l}</div><div class="imn">${a.n}</div></div>`).join('');
+  const acts=l.acts.map((a,n)=>`<div class="aci"><div class="acn">${n+1}</div><div>${a}</div></div>`).join('');
+  const uid=`co_${n}_${i}`;
+  return`<div class="coe" id="${uid}" data-c="${n}">
+    <div class="coh" onclick="tgCo('${uid}')">
+      <div class="coav" style="background:linear-gradient(135deg,${c},${c}77)">${n[0]}</div>
+      <div><div class="con">${showName?n+' — ':''}${l.per}</div><div class="com">Coach: ${l.co} · ${l.dt}</div></div>
+      <div class="cob2"><span class="cp ${sc}">${l.st}</span></div>
+      <span class="chv" id="chv_${uid}">›</span>
+    </div>
+    <div class="cob" id="body_${uid}">
+      <div class="cosl">KPI Focus Areas</div><div class="kpp">${pills}</div>
+      <div class="cosl">Identified Behavior</div><div class="cobox">${l.beh}</div>
+      <div class="cosl">Root Cause</div><div class="cobox">${l.rca}</div>
+      ${l.areas.length?`<div class="cosl">Areas to Improve</div><div class="imr">${areas}</div>`:''}
+      <div class="cosl">Action Plans</div><div class="acl">${acts}</div>
+      <div class="cmb"><div class="cml">Chatter Commitment</div><div class="cmt">"${l.com}"</div></div>
+    </div>
+  </div>`;
+}
+window.tgCo=(uid)=>{
+  const b=$('body_'+uid),h=$('chv_'+uid);
+  const o=b.classList.toggle('op');h.classList.toggle('op',o);
+};
+</script>
+</body>
+</html>
