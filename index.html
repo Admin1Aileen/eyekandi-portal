@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🍬 EYE KANDI — Operations Portal</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- System fonts — no CDN dependency -->
 <style>
 :root{
   --candy:#FF2D78;--cl:rgba(255,45,120,0.13);
@@ -2105,10 +2104,10 @@ function pCoverage() {
         + '<div class="cov-shift" style="color:'+shiftColor+'">'+r.shift+' Shift</div>'
         + '<div class="cov-reason">' + r.reason + '</div>'
         + '<div class="cov-actions">'
-        + (canClaim ? '<button class="cov-btn claim" onclick="claimCoverage(''+r.id+'')">✋ I Can Cover</button>' : '')
-        + (isAdmin && r.status==='claimed' ? '<button class="cov-btn approve" onclick="approveCov(''+r.id+'')">✅ Approve</button>' : '')
-        + (isAdmin && r.status==='open' ? '<button class="cov-btn approve" onclick="approveCov(''+r.id+'')">✅ Approve</button>' : '')
-        + (isAdmin ? '<button class="cov-btn reject" onclick="rejectCov(''+r.id+'')">✕ Reject</button>' : '')
+        + (canClaim ? '<button class=\'cov-btn claim\' onclick=\'claimCoverage("'+r.id+'")\'>✋ I Can Cover</button>' : '')
+        + (isAdmin && r.status==='claimed' ? '<button class=\'cov-btn approve\' onclick=\'approveCov("'+r.id+'")\'>✅ Approve</button>' : '')
+        + (isAdmin && r.status==='open' ? '<button class=\'cov-btn approve\' onclick=\'approveCov("'+r.id+'")\'>✅ Approve</button>' : '')
+        + (isAdmin ? '<button class=\'cov-btn reject\' onclick=\'rejectCov("'+r.id+'")\'>✕ Reject</button>' : '')
         + '</div></div>';
     }).join('');
 
@@ -2221,7 +2220,7 @@ function pGoalSetting() {
       + '<div class="goal-progress-row"><div class="goal-progress-label">Sales</div><div class="goal-progress-pct" style="color:'+barColor(salesP)+'">$'+actualSales.toLocaleString()+' / $'+g.sales.toLocaleString()+'</div></div>'
       + '<div class="goal-bar"><div class="goal-bar-fill" style="width:'+salesP+'%;background:'+barColor(salesP)+'"></div></div>'
       + '</div>'
-      + (canEdit ? '<button class="goal-save-btn" onclick="saveGoal(''+name+'')">💾 Save Goals</button>' : '')
+      + (canEdit ? '<button class="goal-save-btn" onclick=\'saveGoal("'+name+'")\'>💾 Save Goals</button>' : '')
       + '</div></div>';
   }
 
@@ -2247,7 +2246,7 @@ function pGoalSetting() {
       + '<div class="goal-row"><div class="goal-label">🎨 Custom Content Goal</div>'
       + (isAdmin ? '<input class="goal-input" id="gm_cust_'+name+'" value="'+g.customs+'" type="number">' : '<span style="font-weight:700">'+g.customs+'</span>')
       + '</div>'
-      + (isAdmin ? '<button class="goal-save-btn" onclick="saveModelGoal(''+name+'')">💾 Save Goals</button>' : '')
+      + (isAdmin ? '<button class="goal-save-btn" onclick=\'saveModelGoal("'+name+'")\'>💾 Save Goals</button>' : '')
       + '</div></div>';
   }
 
@@ -2317,332 +2316,324 @@ window.saveModelGoal = function(name) {
 // SESSION 16: EOD REPORT
 // ════════════════════════════════════════
 var EOD_STATE = {};
+var EOD_CN = '';
+
+var MODELS_EOD = [
+  {key:'sabVIP',  label:'SABRINA VIP',   emoji:'👑'},
+  {key:'sabFree', label:'SAB FREE',      emoji:'🔓'},
+  {key:'omi',     label:'OMI',           emoji:'🔥'},
+  {key:'bee',     label:'BEE',           emoji:'🐝'},
+  {key:'izana',   label:'IZANA',         emoji:'💎'},
+  {key:'maddy',   label:'MADDY (DAISY)', emoji:'💋'},
+];
+var CKL_LEFT = [
+  'LOG IN / CONFIRM ACCESS','USE TIMEDOCTOR','CHECK SOP CHANNEL',
+  "CHECK MODEL'S FF UP CHANNEL",'CHECK ENDORSEMENT & QA CHANNEL',
+  'POSTED STORIES / MID SHIFT','UPDATE FAN NOTES',
+  '4MM ON SAB','4MM ON OMI','4MM ON BEE','4MM ON IZANA','4MM ON MADDY/DAISY',
+];
+var CKL_RIGHT = [
+  'OFFERED VIP','OFFERED CUSTOM','OFFERED VC','OFFERED GFE','SEXTING',
+  'SUBMIT PPV PRICING PROOF','SUBMIT TAGGING PROOF','UNSEND MM',
+  'SEND ENDORSEMENT','UPDATE CAMPAIGN/RENEWAL TRACKER',
+  'UPDATE MMS TRACKER','SEND EOD / LOG OUT TD',
+];
+
+function eodCalcGross() {
+  var s = EOD_STATE[EOD_CN] ? EOD_STATE[EOD_CN].sales : {};
+  return MODELS_EOD.reduce(function(t,m){ return t + (parseFloat(s[m.key])||0); }, 0);
+}
+function eodCountCL() {
+  var cl = EOD_STATE[EOD_CN] ? EOD_STATE[EOD_CN].checklist : {};
+  var done = Object.values(cl).filter(Boolean).length;
+  return {done:done, total: CKL_LEFT.length + CKL_RIGHT.length};
+}
+
+window.eodShiftChange = function(el) { if(EOD_STATE[EOD_CN]) EOD_STATE[EOD_CN].shift = el.value; };
+window.eodSaleInput = function(el) {
+  if(!EOD_STATE[EOD_CN]) return;
+  EOD_STATE[EOD_CN].sales[el.dataset.mkey] = el.value;
+  var g = eodCalcGross();
+  var g1 = document.getElementById('eodGross'); if(g1) g1.textContent = '$'+g.toFixed(2);
+  var g2 = document.getElementById('eodGross2'); if(g2) g2.textContent = '$'+g.toFixed(2);
+};
+window.eodMMToggle = function(el) {
+  if(!EOD_STATE[EOD_CN]) return;
+  var key = el.dataset.mkey;
+  EOD_STATE[EOD_CN].mm[key] = !EOD_STATE[EOD_CN].mm[key];
+  el.classList.toggle('on', !!EOD_STATE[EOD_CN].mm[key]);
+  el.textContent = EOD_STATE[EOD_CN].mm[key] ? '✓' : '';
+};
+window.eodFlagToggle = function(el) {
+  if(!EOD_STATE[EOD_CN]) return;
+  var key = el.dataset.fkey;
+  EOD_STATE[EOD_CN].flags[key] = !EOD_STATE[EOD_CN].flags[key];
+  el.classList.toggle('checked', !!EOD_STATE[EOD_CN].flags[key]);
+};
+window.eodCLToggle = function(el) {
+  if(!EOD_STATE[EOD_CN]) return;
+  var key = el.dataset.clkey;
+  EOD_STATE[EOD_CN].checklist[key] = !EOD_STATE[EOD_CN].checklist[key];
+  el.classList.toggle('on', !!EOD_STATE[EOD_CN].checklist[key]);
+  var dot = el.querySelector('.eod-cl-dot'); if(dot) dot.textContent = EOD_STATE[EOD_CN].checklist[key] ? '✓' : '';
+  var cl = eodCountCL();
+  var c1 = document.getElementById('eodCLCount'); if(c1) c1.textContent = '('+cl.done+'/'+cl.total+')';
+  var c2 = document.getElementById('eodCLProg');  if(c2) c2.textContent = cl.done+'/'+cl.total;
+};
+window.flagEOD = function(el) {
+  var id = el.dataset.eid;
+  var r = EOD_REPORTS.find(function(x){return x.id===id;});
+  if(r){ r.flagged=!r.flagged; showToast(r.flagged ? '🚩 Report flagged' : 'Flag removed'); renderEODHistory(); }
+};
+function renderEODHistory() {
+  var isAdmin = CU && CU.role==='admin';
+  var cn = EOD_CN;
+  var wrap = document.getElementById('eodHistoryWrap');
+  if(!wrap) return;
+  var list = EOD_REPORTS.filter(function(r){ return isAdmin || r.by===cn; });
+  if(list.length===0){ wrap.innerHTML='<div style="color:var(--dim);text-align:center;padding:32px">No reports submitted yet.</div>'; return; }
+  wrap.innerHTML = list.map(function(r) {
+    return '<div class="eod-hist-item">'
+      + '<div class="eod-hist-hdr">'
+      + '<div><div class="eod-hist-name">'+r.by+' · '+r.shift+' Shift</div>'
+      + '<div class="eod-hist-meta">'+r.date+' · Checklist: '+r.checklist+'/'+r.checklistTotal+'</div></div>'
+      + '<div style="display:flex;align-items:center;gap:8px">'
+      + (r.flagged ? '<span class="eod-flag-badge">🚩 Flagged</span>' : '')
+      + '<div class="eod-hist-gross">$'+r.gross.toFixed(2)+'</div>'
+      + (isAdmin ? '<button class="cov-btn reject" style="font-size:10px" data-eid="'+r.id+'" onclick="flagEOD(this)">'+(r.flagged?'Unflag':'🚩 Flag')+'</button>' : '')
+      + '</div></div>'
+      + (r.notes ? '<div style="font-size:11.5px;color:var(--dim);margin-top:6px">📝 '+r.notes+'</div>' : '')
+      + '</div>';
+  }).join('');
+}
+window.submitEOD = function() {
+  var st = EOD_STATE[EOD_CN];
+  if(!st){ showToast('Error: no shift state.'); return; }
+  var gross = eodCalcGross();
+  var cl = eodCountCL();
+  var today = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  EOD_REPORTS.unshift({
+    id:'EOD-'+String(EOD_REPORTS.length+1).padStart(3,'0'),
+    by:EOD_CN, shift:st.shift, date:today,
+    sales:Object.assign({},st.sales), mm:Object.assign({},st.mm),
+    gross:gross, notes:'', checklist:cl.done, checklistTotal:cl.total, flagged:false
+  });
+  EOD_STATE[EOD_CN] = {shift:'MID',sales:{},mm:{},flags:{},checklist:{}};
+  addNotif('📝 '+EOD_CN+' submitted EOD · $'+gross.toFixed(2)+' gross');
+  showToast('✅ EOD report submitted!');
+  renderEODHistory();
+};
 
 function pEOD() {
   var p = mkPage('eod');
-  var isAdmin = CU && CU.role === 'admin';
+  var isAdmin = CU && CU.role==='admin';
   var cn = CU ? (CU.cn || 'admin') : 'admin';
+  EOD_CN = cn;
+  if(!EOD_STATE[cn]) EOD_STATE[cn] = {shift:'MID',sales:{},mm:{},flags:{},checklist:{}};
+
+  var gross = eodCalcGross();
+  var cl = eodCountCL();
   var today = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 
-  var MODELS_EOD = [
-    {key:'sabVIP',  label:'SABRINA VIP',   emoji:'👑'},
-    {key:'sabFree', label:'SAB FREE',      emoji:'🔓'},
-    {key:'omi',     label:'OMI',           emoji:'🔥'},
-    {key:'bee',     label:'BEE',           emoji:'🐝'},
-    {key:'izana',   label:'IZANA',         emoji:'💎'},
-    {key:'maddy',   label:'MADDY (DAISY)', emoji:'💋'},
-  ];
+  // Build model rows
+  var modelRows = MODELS_EOD.map(function(m) {
+    var val = EOD_STATE[cn].sales[m.key] || '';
+    var mmOn = !!EOD_STATE[cn].mm[m.key];
+    return '<tr>'
+      + '<td style="font-weight:600">'+m.emoji+' '+m.label+'</td>'
+      + '<td><input class="af" style="width:100px;text-align:right;padding:5px 9px" type="number" min="0" step="0.01" placeholder="$0.00" value="'+val+'" data-mkey="'+m.key+'" onchange="eodSaleInput(this)"></td>'
+      + '<td style="text-align:center"><div class="eod-mm-check'+(mmOn?' on':'')+'" data-mkey="'+m.key+'" onclick="eodMMToggle(this)">'+(mmOn?'✓':'')+'</div></td>'
+      + '<td><input class="af" style="width:120px;padding:5px 9px;font-size:11px" placeholder="Notes..." data-mkey="'+m.key+'" onchange="eodNoteInput(this)"></td></tr>';
+  }).join('');
 
-  var CKL_LEFT = [
-    'LOG IN / CONFIRM ACCESS','USE TIMEDOCTOR','CHECK SOP CHANNEL',
-    "CHECK MODEL'S FF UP CHANNEL",'CHECK ENDORSEMENT & QA CHANNEL',
-    'POSTED STORIES / MID SHIFT','UPDATE FAN NOTES',
-    '4MM ON SAB','4MM ON OMI','4MM ON BEE','4MM ON IZANA','4MM ON MADDY/DAISY',
-  ];
-  var CKL_RIGHT = [
-    'OFFERED VIP','OFFERED CUSTOM','OFFERED VC','OFFERED GFE','SEXTING',
-    'SUBMIT PPV PRICING PROOF','SUBMIT TAGGING PROOF','UNSEND MM',
-    'SEND ENDORSEMENT','UPDATE CAMPAIGN/RENEWAL TRACKER',
-    'UPDATE MMS TRACKER','SEND EOD / LOG OUT TD',
-  ];
+  // Build flags
+  var flagList = ['Full Shift','Late','Undertime','Before OT','After OT','Cover for Other'];
+  var flagsHtml = flagList.map(function(f) {
+    var key = f.replace(/\s+/g,'_').toLowerCase();
+    var on = !!EOD_STATE[cn].flags[key];
+    return '<label class="eod-flag'+(on?' checked':'')+'" data-fkey="'+key+'" onclick="eodFlagToggle(this)">'+f+'</label>';
+  }).join('');
 
-  if (!EOD_STATE[cn]) {
-    EOD_STATE[cn] = {shift:'MID', sales:{}, mm:{}, flags:{}, checklist:{}, notes:''};
-  }
-
-  function getState() { return EOD_STATE[cn]; }
-
-  function calcGross() {
-    var s = getState().sales;
-    return MODELS_EOD.reduce(function(t,m){ return t + (parseFloat(s[m.key])||0); }, 0);
-  }
-
-  function countCL() {
-    var cl = getState().checklist;
-    var done = Object.values(cl).filter(Boolean).length;
-    return {done: done, total: CKL_LEFT.length + CKL_RIGHT.length};
-  }
-
-  function render() {
-    var st = getState();
-    var gross = calcGross();
-    var cl = countCL();
-
-    var modelRows = MODELS_EOD.map(function(m) {
-      var val = st.sales[m.key] || '';
-      var mmOn = !!st.mm[m.key];
-      return '<tr><td style="font-weight:600">' + m.emoji + ' ' + m.label + '</td>'
-        + '<td><input class="af" style="width:100px;text-align:right;padding:5px 9px" '
-        + 'type="number" min="0" step="0.01" placeholder="$0.00" value="' + val + '" '
-        + 'oninput="EOD_STATE['' + cn + ''].sales['' + m.key + '']=this.value;renderEODGross()">'
-        + '</td><td style="text-align:center">'
-        + '<div class="eod-mm-check' + (mmOn?' on':'') + '" onclick="toggleEODmm('' + cn + '','' + m.key + '')" title="MM Sent">'
-        + (mmOn?'✓':'') + '</div></td>'
-        + '<td><input class="af" style="width:120px;padding:5px 9px;font-size:11px" placeholder="Notes..." '
-        + 'oninput="EOD_STATE['' + cn + ''].notes_' + m.key + '=this.value"></td></tr>';
+  // Build checklist
+  function clItems(items, col) {
+    return items.map(function(txt,i) {
+      var key = col+'_'+i;
+      var on = !!EOD_STATE[cn].checklist[key];
+      return '<div class="eod-cl-item'+(on?' on':'')+'" data-clkey="'+key+'" onclick="eodCLToggle(this)">'
+        + '<div class="eod-cl-dot">'+(on?'✓':'')+'</div>'
+        + '<span>'+txt+'</span></div>';
     }).join('');
-
-    function clItem(txt, idx, col) {
-      var key = col + '_' + idx;
-      var on = !!st.checklist[key];
-      return '<div class="eod-cl-item' + (on?' on':'') + '" onclick="toggleEODcl('' + cn + '','' + key + '')">'
-        + '<div class="eod-cl-dot">' + (on?'✓':'') + '</div>'
-        + '<span>' + txt + '</span></div>';
-    }
-
-    var flagsHtml = ['Full Shift','Late','Undertime','Before OT','After OT','Cover for Other'].map(function(f) {
-      var key = f.replace(/\s+/g,'_').toLowerCase();
-      var on = !!st.flags[key];
-      return '<label class="eod-flag' + (on?' checked':'') + '">'
-        + '<input type="checkbox"' + (on?' checked':'') + ' onchange="EOD_STATE['' + cn + ''].flags['' + key + '']=this.checked;renderEODFlags('' + cn + '')">'
-        + f + '</label>';
-    }).join('');
-
-    p.innerHTML = '<div class="ph"><div>'
-      + '<div class="pt">📝 EOD Shift Report</div>'
-      + '<div class="ps">' + (isAdmin ? 'Admin view — all submissions' : cn + ' · Submit your end-of-shift report') + '</div>'
-      + '</div></div>'
-
-      // FORM (chatter) or HISTORY (admin)
-      + (!isAdmin ? '<div class="eod-wrap">'
-          // LEFT — form
-          + '<div><div class="eod-section">'
-          + '<div class="eod-section-title">📋 Shift Info</div>'
-          + '<div class="eod-meta">'
-          + '<div class="eod-field"><div class="eod-label">Chatter</div><div style="font-weight:700;font-size:13px">' + cn + '</div></div>'
-          + '<div class="eod-field"><div class="eod-label">Date</div><div style="font-weight:700;font-size:13px">' + today + '</div></div>'
-          + '<div class="eod-field"><div class="eod-label">Shift</div>'
-          + '<select class="af" style="padding:5px 9px" onchange="EOD_STATE['' + cn + ''].shift=this.value">'
-          + ['AM','MID','EVE'].map(function(s){return '<option'+(s===st.shift?' selected':'')+'>'+s+'</option>';}).join('')
-          + '</select></div>'
-          + '<div class="eod-field"><div class="eod-label">Attendance</div></div>'
-          + '</div>'
-          + '<div class="eod-flags" id="eodFlags">' + flagsHtml + '</div>'
-          + '<div class="eod-section-title" style="margin-top:14px">💰 Sales Per Model</div>'
-          + '<table class="eod-model-table"><thead><tr><th>Model</th><th>Sales ($)</th><th>MM</th><th>Notes</th></tr></thead>'
-          + '<tbody>' + modelRows + '</tbody></table>'
-          + '<div class="eod-total"><div class="eod-total-label">TOTAL GROSS</div>'
-          + '<div class="eod-total-val" id="eodGross">$' + gross.toFixed(2) + '</div></div>'
-          + '</div></div>'
-          // RIGHT — checklist
-          + '<div><div class="eod-section">'
-          + '<div class="eod-section-title">✅ Shift Checklist (' + cl.done + '/' + cl.total + ')</div>'
-          + '<div class="eod-cl-grid">'
-          + '<div>' + CKL_LEFT.map(function(t,i){return clItem(t,i,'L');}).join('') + '</div>'
-          + '<div>' + CKL_RIGHT.map(function(t,i){return clItem(t,i,'R');}).join('') + '</div>'
-          + '</div>'
-          + '</div>'
-          + '<div class="eod-submit-row">'
-          + '<div class="eod-progress">Checklist: <strong>' + cl.done + '/' + cl.total + '</strong> · Gross: <strong id="eodGross2">$' + gross.toFixed(2) + '</strong></div>'
-          + '<button class="abtn" style="width:auto;padding:9px 22px" onclick="submitEOD()">Submit EOD Report →</button>'
-          + '</div>'
-          + '</div>'
-          + '</div>'
-        : '')
-
-      // ADMIN HISTORY
-      + '<div class="eod-history">'
-      + '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">' + (isAdmin?'All EOD Reports':'My Submitted Reports') + '</div></div>'
-      + (EOD_REPORTS.length === 0 ? '<div style="color:var(--dim);text-align:center;padding:32px">No reports submitted yet.</div>'
-        : EOD_REPORTS.map(function(r) {
-          var canSee = isAdmin || r.by === cn;
-          if (!canSee) return '';
-          return '<div class="eod-hist-item">'
-            + '<div class="eod-hist-hdr">'
-            + '<div><div class="eod-hist-name">' + r.by + ' · ' + r.shift + ' Shift</div>'
-            + '<div class="eod-hist-meta">' + r.date + ' · Checklist: ' + r.checklist + '/' + r.checklistTotal + '</div></div>'
-            + '<div style="display:flex;align-items:center;gap:8px">'
-            + (r.flagged ? '<span class="eod-flag-badge">🚩 Flagged</span>' : '')
-            + '<div class="eod-hist-gross">$' + r.gross.toFixed(2) + '</div>'
-            + (isAdmin ? '<button class="cov-btn reject" style="font-size:10px" onclick="flagEOD('' + r.id + '',event)">' + (r.flagged?'Unflag':'🚩 Flag') + '</button>' : '')
-            + '</div></div>'
-            + (r.notes ? '<div style="font-size:11.5px;color:var(--dim);margin-top:6px">📝 ' + r.notes + '</div>' : '')
-            + '</div>';
-        }).join(''))
-      + '</div>';
   }
 
-  window.renderEODGross = function() {
-    var g = calcGross();
-    var el1 = document.getElementById('eodGross');
-    var el2 = document.getElementById('eodGross2');
-    if (el1) el1.textContent = '$' + g.toFixed(2);
-    if (el2) el2.textContent = '$' + g.toFixed(2);
-  };
+  // Build shift select
+  var shiftOpts = ['AM','MID','EVE'].map(function(s){
+    return '<option'+(s===EOD_STATE[cn].shift?' selected':'')+'>'+s+'</option>';
+  }).join('');
 
-  window.renderEODFlags = function(c) {
-    // flags re-render handled inline
-  };
+  p.innerHTML = '<div class="ph"><div>'
+    + '<div class="pt">📝 EOD Shift Report</div>'
+    + '<div class="ps">'+(isAdmin?'Admin view — all submissions':cn+' · Submit your end-of-shift report')+'</div>'
+    + '</div></div>'
 
-  window.toggleEODmm = function(c, key) {
-    EOD_STATE[c].mm[key] = !EOD_STATE[c].mm[key];
-    render();
-  };
+    + (!isAdmin ? '<div class="eod-wrap">'
+        + '<div><div class="eod-section">'
+        + '<div class="eod-section-title">📋 Shift Info</div>'
+        + '<div class="eod-meta">'
+        + '<div class="eod-field"><div class="eod-label">Chatter</div><div style="font-weight:700;font-size:13px">'+cn+'</div></div>'
+        + '<div class="eod-field"><div class="eod-label">Date</div><div style="font-weight:700;font-size:13px">'+today+'</div></div>'
+        + '<div class="eod-field"><div class="eod-label">Shift</div>'
+        + '<select class="af" style="padding:5px 9px" onchange="eodShiftChange(this)">'
+        + shiftOpts + '</select></div>'
+        + '<div class="eod-field"><div class="eod-label">Attendance</div></div>'
+        + '</div>'
+        + '<div class="eod-flags">'+flagsHtml+'</div>'
+        + '<div class="eod-section-title" style="margin-top:14px">💰 Sales Per Model</div>'
+        + '<table class="eod-model-table"><thead><tr><th>Model</th><th>Sales ($)</th><th>MM</th><th>Notes</th></tr></thead>'
+        + '<tbody>'+modelRows+'</tbody></table>'
+        + '<div class="eod-total"><div class="eod-total-label">TOTAL GROSS</div>'
+        + '<div class="eod-total-val" id="eodGross">$'+gross.toFixed(2)+'</div></div>'
+        + '</div></div>'
+        + '<div><div class="eod-section">'
+        + '<div class="eod-section-title">✅ Shift Checklist <span id="eodCLCount">('+cl.done+'/'+cl.total+')</span></div>'
+        + '<div class="eod-cl-grid">'
+        + '<div>'+clItems(CKL_LEFT,'L')+'</div>'
+        + '<div>'+clItems(CKL_RIGHT,'R')+'</div>'
+        + '</div></div>'
+        + '<div class="eod-submit-row">'
+        + '<div class="eod-progress">Checklist: <strong id="eodCLProg">'+cl.done+'/'+cl.total+'</strong> · Gross: <strong id="eodGross2">$'+gross.toFixed(2)+'</strong></div>'
+        + '<button class="abtn" style="width:auto;padding:9px 22px" onclick="submitEOD()">Submit EOD →</button>'
+        + '</div></div></div>'
+      : '')
 
-  window.toggleEODcl = function(c, key) {
-    EOD_STATE[c].checklist[key] = !EOD_STATE[c].checklist[key];
-    var cl = countCL();
-    // Update counts inline
-    var sec = document.querySelector('.eod-section-title');
-    if (sec && sec.textContent.includes('Checklist')) {
-      sec.textContent = '✅ Shift Checklist (' + cl.done + '/' + cl.total + ')';
-    }
-    var item = document.querySelectorAll('[onclick*="' + key + '"]')[0];
-    if (item) {
-      item.classList.toggle('on', !!EOD_STATE[c].checklist[key]);
-      var dot = item.querySelector('.eod-cl-dot');
-      if (dot) dot.textContent = EOD_STATE[c].checklist[key] ? '✓' : '';
-    }
-  };
+    + '<div class="eod-history">'
+    + '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">'+(isAdmin?'All EOD Reports':'My Submitted Reports')+'</div></div>'
+    + '<div id="eodHistoryWrap"></div>'
+    + '</div>';
 
-  window.submitEOD = function() {
-    var st = getState();
-    var gross = calcGross();
-    var cl = countCL();
-    var today2 = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-    EOD_REPORTS.unshift({
-      id: 'EOD-' + String(EOD_REPORTS.length+1).padStart(3,'0'),
-      by: cn, shift: st.shift, date: today2,
-      attendance: Object.assign({}, st.flags),
-      sales: Object.assign({}, st.sales),
-      mm: Object.assign({}, st.mm),
-      gross: gross, notes: st.notes || '',
-      checklist: cl.done, checklistTotal: cl.total, flagged: false
-    });
-    // Reset state
-    EOD_STATE[cn] = {shift:'MID', sales:{}, mm:{}, flags:{}, checklist:{}, notes:''};
-    addNotif('📝 ' + cn + ' submitted EOD report · $' + gross.toFixed(2) + ' gross');
-    showToast('✅ EOD report submitted!');
-    render();
-  };
-
-  window.flagEOD = function(id, e) {
-    e.stopPropagation();
-    var r = EOD_REPORTS.find(function(x){return x.id===id;});
-    if (r) { r.flagged = !r.flagged; showToast(r.flagged ? '🚩 Report flagged' : 'Flag removed'); render(); }
-  };
-
-  render();
+  setTimeout(renderEODHistory, 0);
   return p;
 }
+
+window.eodNoteInput = function(el) {
+  if(EOD_STATE[EOD_CN]) EOD_STATE[EOD_CN]['note_'+el.dataset.mkey] = el.value;
+};
 
 // ════════════════════════════════════════
 // SESSION 18: VIOLATION + WARNING LOG
 // ════════════════════════════════════════
 function pViolations() {
   var p = mkPage('violations');
-  var isAdmin = CU && CU.role === 'admin';
+  var isAdmin = CU && CU.role==='admin';
   var cn = CU ? (CU.cn || '') : '';
-
   var VIOL_TYPES = ['TOS Compliance','Grammar/Quality','Attendance','Conduct','PPV Non-Compliance','Other'];
-  var CHATTERS = ['Jayce','Sage','Jammy','Adie','Dale','Joan','Fred'];
+  var CHATTERS_V = ['Jayce','Sage','Jammy','Adie','Dale','Joan','Fred'];
 
   function strikeCount(name) {
-    return VIOLATIONS.filter(function(v){ return v.by === name; }).length;
-  }
-
-  function render() {
-    var visible = isAdmin ? VIOLATIONS : VIOLATIONS.filter(function(v){ return v.by === cn; });
-
-    // Strike summary (admin only)
-    var summaryHtml = isAdmin ? '<div class="strike-summary">'
-      + CHATTERS.map(function(name) {
-        var c = CLR[name] || '#FF2D78';
-        var count = strikeCount(name);
-        var countClass = count===0?'zero':count===1?'one':count===2?'two':'three';
-        return '<div class="strike-card">'
-          + '<div class="strike-av" style="background:'+c+'">'+name[0]+'</div>'
-          + '<div class="strike-name">'+name+'</div>'
-          + '<div class="strike-count '+countClass+'">'+count+'</div>'
-          + '<div style="font-size:9.5px;color:var(--mu)">strike'+(count!==1?'s':'')+'</div>'
-          + '</div>';
-      }).join('')
-      + '</div>' : '';
-
-    // Add form (admin only)
-    var formHtml = isAdmin ? '<div class="viol-add-form">'
-      + '<div class="card-title" style="margin-bottom:14px">➕ Log New Violation</div>'
-      + '<div class="viol-form-grid">'
-      + '<div><div class="eod-label" style="margin-bottom:5px">Chatter</div>'
-      + '<select class="af" id="vChatter" style="width:100%"><option value="">Select chatter</option>'
-      + CHATTERS.map(function(n){return '<option>'+n+'</option>';}).join('')
-      + '</select></div>'
-      + '<div><div class="eod-label" style="margin-bottom:5px">Type</div>'
-      + '<select class="af" id="vType" style="width:100%">'
-      + VIOL_TYPES.map(function(t){return '<option>'+t+'</option>';}).join('')
-      + '</select></div>'
-      + '<div><div class="eod-label" style="margin-bottom:5px">Severity</div>'
-      + '<select class="af" id="vSev" style="width:100%">'
-      + '<option value="minor">⚠️ Minor</option><option value="moderate">🟠 Moderate</option><option value="serious">🔴 Serious</option>'
-      + '</select></div>'
-      + '</div>'
-      + '<div style="margin-bottom:12px"><div class="eod-label" style="margin-bottom:5px">Description</div>'
-      + '<textarea class="af" id="vDesc" rows="2" placeholder="Describe the violation..." style="resize:vertical;line-height:1.5"></textarea>'
-      + '</div>'
-      + '<button class="abtn" style="width:auto;padding:9px 22px" onclick="logViolation()">Log Violation →</button>'
-      + '</div>' : '';
-
-    // Violation cards
-    var cards = visible.length === 0
-      ? '<div style="color:var(--dim);text-align:center;padding:32px;font-size:13px">'
-        + (isAdmin ? 'No violations logged yet.' : 'You have no violations on record. Keep it up! ✅') + '</div>'
-      : visible.map(function(v) {
-          var c = CLR[v.by] || '#FF2D78';
-          return '<div class="viol-card '+v.sev+'">'
-            + '<div class="viol-hdr">'
-            + '<div class="viol-av" style="background:'+c+'">'+v.by[0]+'</div>'
-            + '<div><div class="viol-name">'+v.by+'</div><div class="viol-date">'+v.date+'</div></div>'
-            + '<div class="viol-badges">'
-            + '<span class="viol-sev '+v.sev+'">'+(v.sev==='minor'?'⚠️ Minor':v.sev==='moderate'?'🟠 Moderate':'🔴 Serious')+'</span>'
-            + '<span class="viol-strike">Strike #'+strikeCount(v.by)+'</span>'
-            + '</div></div>'
-            + '<div class="viol-body">'
-            + '<span class="viol-type-tag">📋 '+v.type+'</span>'
-            + '<div class="viol-desc">'+v.desc+'</div>'
-            + (v.linked_coaching ? '<div style="margin-top:8px;font-size:11px;color:var(--mint)">🔗 Linked coaching: '+v.linked_coaching+'</div>' : '')
-            + (isAdmin ? '<div style="margin-top:10px"><button class="cov-btn reject" style="font-size:10px" onclick="deleteViol(''+v.id+'')">Remove</button></div>' : '')
-            + '</div></div>';
-        }).join('');
-
-    p.innerHTML = '<div class="ph"><div>'
-      + '<div class="pt">⚠️ Violation & Warning Log</div>'
-      + '<div class="ps">' + (isAdmin ? 'Admin only · All chatter violations and warnings' : 'Your warning history') + '</div>'
-      + '</div></div>'
-      + (isAdmin ? '<div class="notice">🔒 This tab is admin-only. Chatters can only see their own warnings.</div>' : '')
-      + summaryHtml + formHtml
-      + '<div class="viol-grid">'+cards+'</div>';
+    return VIOLATIONS.filter(function(v){ return v.by===name; }).length;
   }
 
   window.logViolation = function() {
     var chatter = document.getElementById('vChatter').value;
     var type = document.getElementById('vType').value;
     var sev = document.getElementById('vSev').value;
-    var desc = (document.getElementById('vDesc').value || '').trim();
-    if (!chatter) { showToast('⚠️ Please select a chatter.'); return; }
-    if (!desc) { showToast('⚠️ Please add a description.'); return; }
+    var desc = (document.getElementById('vDesc').value||'').trim();
+    if(!chatter){ showToast('Please select a chatter.'); return; }
+    if(!desc){ showToast('Please add a description.'); return; }
     var today = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
     VIOLATIONS.unshift({
-      id: 'VIO-' + String(VIOLATIONS.length+1).padStart(3,'0'),
-      by: chatter, type: type, sev: sev, date: today,
-      desc: desc, linked_coaching: null
+      id:'VIO-'+String(VIOLATIONS.length+1).padStart(3,'0'),
+      by:chatter, type:type, sev:sev, date:today, desc:desc, linked_coaching:null
     });
-    document.getElementById('vDesc').value = '';
-    document.getElementById('vChatter').value = '';
-    addNotif('⚠️ Violation logged for ' + chatter + ' — ' + sev + ' · ' + type);
+    document.getElementById('vDesc').value='';
+    document.getElementById('vChatter').value='';
+    addNotif('⚠️ Violation logged for '+chatter+' — '+sev+' · '+type);
     showToast('✅ Violation logged.');
-    render();
+    renderViol();
   };
 
   window.deleteViol = function(id) {
-    if (!confirm('Remove this violation record?')) return;
-    VIOLATIONS = VIOLATIONS.filter(function(v){ return v.id !== id; });
+    if(!confirm('Remove this violation record?')) return;
+    VIOLATIONS = VIOLATIONS.filter(function(v){ return v.id!==id; });
     showToast('Violation removed.');
-    render();
+    renderViol();
   };
 
-  render();
+  function renderViol() {
+    var wrap = document.getElementById('violListWrap');
+    if(!wrap) return;
+    var visible = isAdmin ? VIOLATIONS : VIOLATIONS.filter(function(v){ return v.by===cn; });
+    if(visible.length===0){
+      wrap.innerHTML='<div style="color:var(--dim);text-align:center;padding:32px;font-size:13px">'
+        +(isAdmin?'No violations logged yet.':'You have no violations on record. Keep it up! ✅')+'</div>';
+      return;
+    }
+    wrap.innerHTML = visible.map(function(v) {
+      var c = CLR[v.by]||'#FF2D78';
+      var sevLabel = v.sev==='minor'?'⚠️ Minor':v.sev==='moderate'?'🟠 Moderate':'🔴 Serious';
+      return '<div class="viol-card '+v.sev+'">'
+        +'<div class="viol-hdr">'
+        +'<div class="viol-av" style="background:'+c+'">'+v.by[0]+'</div>'
+        +'<div><div class="viol-name">'+v.by+'</div><div class="viol-date">'+v.date+'</div></div>'
+        +'<div class="viol-badges">'
+        +'<span class="viol-sev '+v.sev+'">'+sevLabel+'</span>'
+        +'<span class="viol-strike">Strike #'+strikeCount(v.by)+'</span>'
+        +'</div></div>'
+        +'<div class="viol-body">'
+        +'<span class="viol-type-tag">📋 '+v.type+'</span>'
+        +'<div class="viol-desc">'+v.desc+'</div>'
+        +(v.linked_coaching?'<div style="margin-top:8px;font-size:11px;color:var(--mint)">🔗 Linked coaching: '+v.linked_coaching+'</div>':'')
+        +(isAdmin?'<div style="margin-top:10px"><button class="cov-btn reject" style="font-size:10px" onclick="deleteViol(\''+v.id+'\')">Remove</button></div>':'')
+        +'</div></div>';
+    }).join('');
+  }
+
+  // Strike summary
+  var summaryHtml = isAdmin ? '<div class="strike-summary">'
+    + CHATTERS_V.map(function(name) {
+        var c = CLR[name]||'#FF2D78';
+        var count = strikeCount(name);
+        var cls = count===0?'zero':count===1?'one':count===2?'two':'three';
+        return '<div class="strike-card">'
+          +'<div class="strike-av" style="background:'+c+'">'+name[0]+'</div>'
+          +'<div class="strike-name">'+name+'</div>'
+          +'<div class="strike-count '+cls+'">'+count+'</div>'
+          +'<div style="font-size:9.5px;color:var(--mu)">strike'+(count!==1?'s':'')+'</div>'
+          +'</div>';
+      }).join('')
+    + '</div>' : '';
+
+  var formHtml = isAdmin ? '<div class="viol-add-form">'
+    +'<div class="card-title" style="margin-bottom:14px">➕ Log New Violation</div>'
+    +'<div class="viol-form-grid">'
+    +'<div><div class="eod-label" style="margin-bottom:5px">Chatter</div>'
+    +'<select class="af" id="vChatter" style="width:100%"><option value="">Select chatter</option>'
+    +CHATTERS_V.map(function(n){return '<option>'+n+'</option>';}).join('')
+    +'</select></div>'
+    +'<div><div class="eod-label" style="margin-bottom:5px">Type</div>'
+    +'<select class="af" id="vType" style="width:100%">'
+    +VIOL_TYPES.map(function(t){return '<option>'+t+'</option>';}).join('')
+    +'</select></div>'
+    +'<div><div class="eod-label" style="margin-bottom:5px">Severity</div>'
+    +'<select class="af" id="vSev" style="width:100%">'
+    +'<option value="minor">⚠️ Minor</option><option value="moderate">🟠 Moderate</option><option value="serious">🔴 Serious</option>'
+    +'</select></div></div>'
+    +'<div style="margin-bottom:12px"><div class="eod-label" style="margin-bottom:5px">Description</div>'
+    +'<textarea class="af" id="vDesc" rows="2" placeholder="Describe the violation..." style="resize:vertical;line-height:1.5"></textarea></div>'
+    +'<button class="abtn" style="width:auto;padding:9px 22px" onclick="logViolation()">Log Violation →</button>'
+    +'</div>' : '';
+
+  p.innerHTML = '<div class="ph"><div>'
+    +'<div class="pt">⚠️ Violation & Warning Log</div>'
+    +'<div class="ps">'+(isAdmin?'Admin only · All chatter violations':'Your warning history')+'</div>'
+    +'</div></div>'
+    +(isAdmin?'<div class="notice">🔒 Admin-only view. Chatters can only see their own warnings.</div>':'')
+    +summaryHtml+formHtml
+    +'<div class="viol-grid" id="violListWrap"></div>';
+
+  setTimeout(renderViol, 0);
   return p;
 }
+
 
 window.tgCo=(uid)=>{
   const b=$('body_'+uid),h=$('chv_'+uid);
