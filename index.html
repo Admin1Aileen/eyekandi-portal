@@ -1,0 +1,2672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍬 EYE KANDI — Operations Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --candy:#FF2D78;--cl:rgba(255,45,120,0.13);
+  --gold:#FFD166;--gl:rgba(255,209,102,0.13);
+  --mint:#06D6A0;--ml:rgba(6,214,160,0.13);
+  --sky:#60A5FA;--lav:#C084FC;--ora:#F97316;
+  --bg:#07070E;--s1:#0F0F18;--s2:#16161F;--s3:#1C1C28;
+  --bdr:rgba(255,255,255,0.07);--bdr2:rgba(255,255,255,0.11);
+  --txt:#EDE8FF;--dim:#65657F;--mu:#3A3A58;
+  --ff:'DM Sans',system-ui,sans-serif;--fh:'Syne',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--ff);background:var(--bg);color:var(--txt);min-height:100vh;font-size:14px;line-height:1.5;}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--s1)}
+::-webkit-scrollbar-thumb{background:var(--s3);border-radius:3px}
+
+/* ── AUTH ── */
+#authWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse 80% 50% at 50% -5%,rgba(255,45,120,0.18) 0%,transparent 70%);}
+.abox{width:400px;background:var(--s1);border:1px solid var(--bdr);border-radius:24px;
+  padding:42px 38px;text-align:center;box-shadow:0 40px 100px rgba(0,0,0,0.6);}
+.alogo{font-size:44px;margin-bottom:14px;display:block;}
+.atitle{font-family:var(--fh);font-size:22px;font-weight:800;margin-bottom:4px;letter-spacing:-.3px;}
+.asub{font-size:12px;color:var(--dim);margin-bottom:28px;}
+.atabs{display:flex;background:var(--s2);border-radius:12px;padding:4px;margin-bottom:22px;gap:4px;}
+.atab{flex:1;padding:8px;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;
+  border:none;background:transparent;color:var(--dim);font-family:var(--ff);transition:all .2s;}
+.atab.on{background:var(--s3);color:var(--txt);}
+.af{width:100%;background:var(--s2);border:1px solid var(--bdr);border-radius:11px;
+  padding:12px 15px;color:var(--txt);font-size:13px;font-family:var(--ff);outline:none;
+  margin-bottom:10px;transition:border-color .2s;}
+.af:focus{border-color:rgba(255,45,120,.5);}
+.af::placeholder{color:var(--mu);}
+.abtn{width:100%;padding:13px;border-radius:11px;background:var(--candy);color:#fff;
+  font-size:14px;font-weight:700;font-family:var(--ff);border:none;cursor:pointer;
+  transition:all .2s;margin-top:4px;letter-spacing:.2px;}
+.abtn:hover{background:#e0205e;transform:translateY(-1px);}
+.aerr{background:rgba(255,45,120,.1);border:1px solid rgba(255,45,120,.3);color:#FF6FA6;
+  border-radius:10px;padding:10px 14px;font-size:12px;margin-bottom:12px;display:none;text-align:left;}
+.ahint{background:var(--s2);border:1px solid var(--bdr);border-radius:11px;padding:14px;
+  font-size:11px;color:var(--dim);margin-top:16px;text-align:left;line-height:2;}
+.ahint b{color:var(--txt);}
+
+/* ── SHELL ── */
+#app{display:none;}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(7,7,14,.94);
+  backdrop-filter:blur(24px);border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;gap:14px;padding:12px 28px;}
+.t-logo{display:flex;align-items:center;gap:10px;}
+.t-name{font-family:var(--fh);font-weight:800;font-size:15px;}
+.t-role{font-size:10px;color:var(--dim);margin-top:1px;}
+.t-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.t-av{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;
+  justify-content:center;font-family:var(--fh);font-weight:800;font-size:12px;color:#fff;}
+.t-uname{font-size:12px;font-weight:600;}
+.t-badge{font-size:10px;padding:2px 9px;border-radius:20px;font-weight:700;}
+.ba{background:rgba(255,209,102,.14);color:var(--gold);border:1px solid rgba(255,209,102,.25);}
+.bc{background:var(--cl);color:#FF6FA6;border:1px solid rgba(255,45,120,.2);}
+.t-out{padding:6px 14px;border-radius:9px;background:var(--s2);border:1px solid var(--bdr);
+  color:var(--dim);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--ff);transition:all .2s;}
+.t-out:hover{color:var(--txt);}
+
+/* ── NAV ── */
+.nav{display:flex;padding:0 28px;background:var(--s1);border-bottom:1px solid var(--bdr);overflow-x:auto;flex-shrink:0;}
+.nav::-webkit-scrollbar{height:0;}
+.nb{padding:11px 16px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--dim);
+  border:none;background:transparent;font-family:var(--ff);border-bottom:2px solid transparent;
+  white-space:nowrap;transition:all .2s;}
+.nb:hover{color:var(--txt);}
+.nb.on{color:var(--candy);border-bottom-color:var(--candy);}
+
+/* ── PAGES ── */
+.page{display:none;padding:28px;max-width:1300px;margin:0 auto;}
+.page.on{display:block;}
+
+/* ── PRIMITIVES ── */
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px;}
+.pt{font-family:var(--fh);font-size:17px;font-weight:800;letter-spacing:-.3px;}
+.ps{font-size:11px;color:var(--dim);margin-top:3px;}
+.card{background:var(--s1);border:1px solid var(--bdr);border-radius:16px;padding:20px;}
+.ctitle{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:14px;
+  display:flex;align-items:center;gap:7px;}
+.ctitle small{font-size:10px;font-weight:400;color:var(--dim);font-family:var(--ff);}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr;}}
+.kpi{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;padding:18px;
+  position:relative;overflow:hidden;}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ac,var(--candy));opacity:.7;}
+.kl{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+.kv{font-family:var(--fh);font-size:28px;font-weight:800;line-height:1;}
+.ks{font-size:11px;color:var(--mu);margin-top:5px;}
+.notice{background:rgba(255,209,102,.07);border:1px solid rgba(255,209,102,.22);
+  border-radius:11px;padding:12px 15px;font-size:12px;color:#c9a84c;line-height:1.6;
+  display:flex;gap:9px;align-items:flex-start;margin-bottom:18px;}
+.fr{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.fb{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;
+  border:1px solid var(--bdr);background:var(--s2);color:var(--dim);font-family:var(--ff);transition:all .2s;}
+.fb:hover{color:var(--txt);}
+.fb.on{background:var(--cl);color:#FF6FA6;border-color:rgba(255,45,120,.3);}
+.lnk{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:9px;
+  background:var(--s2);border:1px solid var(--bdr);color:var(--dim);font-size:12px;font-weight:600;
+  text-decoration:none;font-family:var(--ff);transition:all .2s;}
+.lnk:hover{color:#FF6FA6;border-color:rgba(255,45,120,.3);background:var(--cl);}
+
+/* ── PERF TABLE ── */
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--dim);
+  text-transform:uppercase;letter-spacing:.06em;background:var(--s2);border-bottom:1px solid var(--bdr);white-space:nowrap;}
+td{padding:9px 12px;border-bottom:1px solid var(--bdr);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--s2);}
+.sbar{display:flex;align-items:center;gap:8px;}
+.sbg{flex:1;height:5px;background:var(--s3);border-radius:3px;overflow:hidden;min-width:50px;}
+.sfi{height:100%;border-radius:3px;}
+.snum{font-weight:700;font-size:11px;width:32px;text-align:right;}
+
+/* ── COACHING ── */
+.col{display:flex;flex-direction:column;gap:11px;}
+.coe{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;}
+.coh{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;
+  transition:background .15s;user-select:none;}
+.coh:hover{background:var(--s2);}
+.coav{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;
+  justify-content:center;font-family:var(--fh);font-weight:800;font-size:12px;color:#fff;flex-shrink:0;}
+.con{font-weight:700;font-size:13px;}
+.com{font-size:10.5px;color:var(--dim);margin-top:2px;}
+.cob2{margin-left:auto;display:flex;gap:5px;align-items:center;}
+.cp{padding:3px 9px;border-radius:20px;font-size:9.5px;font-weight:700;}
+.cpp{background:var(--ml);color:var(--mint);}
+.cpc{background:var(--cl);color:#FF6FA6;}
+.chv{color:var(--mu);font-size:16px;transition:transform .22s;margin-left:4px;}
+.chv.op{transform:rotate(90deg);}
+.cob{display:none;padding:0 18px 18px;border-top:1px solid var(--bdr);}
+.cob.op{display:block;}
+.cosl{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;
+  letter-spacing:.07em;margin:14px 0 8px;}
+.cobox{background:var(--s2);border-radius:9px;padding:11px 13px;font-size:12.5px;color:var(--dim);line-height:1.65;}
+.imr{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:7px;}
+.imc{background:rgba(255,45,120,.06);border:1px solid rgba(255,45,120,.13);border-radius:9px;padding:10px 12px;}
+.iml{font-size:11px;font-weight:700;color:#FF6FA6;margin-bottom:3px;}
+.imn{font-size:11px;color:var(--dim);line-height:1.5;}
+.acl{display:flex;flex-direction:column;gap:6px;}
+.aci{display:flex;gap:10px;align-items:flex-start;background:var(--s2);
+  border-radius:8px;padding:9px 12px;font-size:11.5px;color:var(--dim);line-height:1.55;}
+.acn{width:18px;height:18px;background:var(--cl);color:#FF6FA6;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0;margin-top:2px;}
+.cmb{background:linear-gradient(135deg,rgba(6,214,160,.07),rgba(96,165,250,.05));
+  border:1px solid rgba(6,214,160,.18);border-radius:10px;padding:12px 14px;margin-top:10px;}
+.cml{font-size:9px;font-weight:700;color:var(--mint);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;}
+.cmt{font-size:12px;color:var(--dim);line-height:1.7;font-style:italic;}
+.kpp{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
+.kp{padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600;}
+.kr{background:var(--cl);color:#FF6FA6;}.ky{background:var(--gl);color:var(--gold);}.kg{background:var(--ml);color:var(--mint);}
+
+/* ── CARDS GRID ── */
+.ccg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:20px;}
+.cc{background:var(--s1);border:1px solid var(--bdr);border-left:3px solid var(--cc,var(--candy));
+  border-radius:14px;padding:16px;transition:transform .2s;}
+.cc:hover{transform:translateY(-2px);}
+.cch{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.ccav{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--fh);font-weight:800;font-size:14px;color:#fff;flex-shrink:0;}
+.ccn{font-family:var(--fh);font-weight:800;font-size:14px;}
+.ccs{font-size:10px;color:var(--dim);margin-top:1px;}
+.ccst{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;text-align:center;}
+.ccsv{background:var(--s2);border-radius:8px;padding:7px 5px;}
+.ccvn{font-family:var(--fh);font-weight:800;font-size:14px;}
+.ccvl{font-size:9px;color:var(--dim);margin-top:1px;}
+.ccb{height:4px;background:var(--s3);border-radius:2px;overflow:hidden;}
+
+/* ── MODEL SALES ── */
+.msg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px;}
+.msc{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;padding:18px;
+  text-align:center;transition:transform .2s;border-top:3px solid var(--mc,var(--candy));}
+.msc:hover{transform:translateY(-2px);}
+.mse{font-size:30px;margin-bottom:8px;}
+.msn{font-family:var(--fh);font-weight:800;font-size:14px;margin-bottom:2px;}
+.msr{font-family:var(--fh);font-size:24px;font-weight:800;color:var(--gold);margin:6px 0 3px;}
+.mss{font-size:10px;color:var(--dim);}
+.msb{height:4px;background:var(--s3);border-radius:2px;overflow:hidden;margin-top:10px;}
+
+/* ── CHECKLIST ── */
+.clpw{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;padding:18px;margin-bottom:20px;}
+.clph{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.clpt{font-family:var(--fh);font-size:13px;font-weight:700;}
+.clpct{font-family:var(--fh);font-size:24px;font-weight:800;color:var(--mint);}
+.clpb{height:8px;background:var(--s3);border-radius:4px;overflow:hidden;}
+.clpf{height:100%;background:linear-gradient(90deg,var(--mint),#06D6A055);border-radius:4px;transition:width .4s;}
+.clsec{margin-bottom:20px;}
+.clst{font-family:var(--fh);font-size:12px;font-weight:700;margin-bottom:10px;
+  padding-bottom:8px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:6px;}
+.cli{display:flex;align-items:flex-start;gap:10px;background:var(--s2);border-radius:9px;
+  padding:10px 13px;border:1px solid var(--bdr);cursor:pointer;transition:all .15s;
+  user-select:none;margin-bottom:6px;}
+.cli.dn{background:rgba(6,214,160,.05);border-color:rgba(6,214,160,.15);}
+.clck{width:18px;height:18px;border-radius:5px;border:2px solid var(--bdr2);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:1px;}
+.cli.dn .clck{background:var(--mint);border-color:var(--mint);}
+.clci{color:#fff;font-size:10px;display:none;}
+.cli.dn .clci{display:block;}
+.cltx{font-size:12.5px;color:var(--dim);line-height:1.5;flex:1;}
+.cli.dn .cltx{color:var(--mu);text-decoration:line-through;}
+.rbtn{padding:6px 14px;border-radius:8px;background:var(--s2);border:1px solid var(--bdr);
+  color:var(--dim);font-size:11px;cursor:pointer;font-family:var(--ff);transition:all .2s;}
+.rbtn:hover{color:var(--txt);}
+
+/* ── SCHEDULE ── */
+.sdrop{border:2px dashed var(--bdr);border-radius:14px;padding:48px 32px;text-align:center;
+  cursor:pointer;transition:all .2s;background:var(--s1);}
+.sdrop:hover,.sdrop.drag{border-color:rgba(255,45,120,.4);background:rgba(255,45,120,.05);}
+.sprev{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;}
+.sprh{padding:13px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
+.simg{width:100%;max-height:600px;object-fit:contain;display:block;}
+
+/* ── SOPs ── */
+.sopg{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;margin-bottom:20px;}
+.sopc{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;padding:16px;
+  display:flex;flex-direction:column;gap:9px;transition:transform .2s;}
+.sopc:hover{transform:translateY(-2px);}
+.sopc.wn{border-color:rgba(255,209,102,.25);}
+.sopt{display:flex;align-items:flex-start;gap:10px;}
+.sopico{width:36px;height:36px;border-radius:9px;background:var(--s2);display:flex;
+  align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.sopn{font-family:var(--fh);font-weight:700;font-size:12.5px;margin-bottom:2px;}
+.sopy{font-size:9.5px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;}
+.sopno{font-size:11px;color:var(--dim);line-height:1.55;}
+
+/* ── SALES GUIDE ── */
+.svg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:11px;margin-bottom:20px;}
+.svc{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:14px;
+  border-left:3px solid var(--sv,var(--bdr));}
+.svc[data-s=valid]{--sv:var(--mint);}
+.svc[data-s=invalid]{--sv:var(--candy);}
+.svc[data-s=review]{--sv:var(--gold);}
+.svt{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.svsc{font-size:12.5px;font-weight:600;line-height:1.45;flex:1;}
+.svb{padding:2px 8px;border-radius:20px;font-size:9.5px;font-weight:700;white-space:nowrap;flex-shrink:0;}
+.svv{background:var(--ml);color:var(--mint);}
+.svi{background:var(--cl);color:#FF6FA6;}
+.svr{background:var(--gl);color:var(--gold);}
+.svno{font-size:11px;color:var(--dim);line-height:1.6;background:var(--s2);border-radius:7px;padding:7px 10px;}
+
+/* ── PPV ── */
+.ppvg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:13px;margin-bottom:20px;}
+.ppvc{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;}
+.ppvh{padding:12px 15px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:8px;}
+.ppvn{font-family:var(--fh);font-weight:800;font-size:13px;}
+.ppva{font-size:9.5px;color:var(--mu);margin-top:1px;}
+.ppvrl{font-size:10px;color:var(--mu);font-style:italic;padding:6px 15px 0;line-height:1.5;}
+.ppvs{padding:10px 15px 0;}
+.ppvsl{font-size:9px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.ppvr{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.02);gap:10px;}
+.ppvr:last-child{border-bottom:none;}
+.ppvi{font-size:11px;color:var(--dim);flex:1;line-height:1.4;}
+.ppvp{font-size:11px;font-weight:700;color:var(--gold);white-space:nowrap;}
+.ppvp.ask{color:var(--lav);}.ppvp.hi{color:#FF6FA6;}
+.ppvsp{height:10px;}
+
+/* ── ANNOUNCEMENTS ── */
+.anl{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.anc{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:16px;
+  border-left:3px solid var(--an,var(--candy));}
+.anc.global{--an:var(--gold);}.anc.callout{--an:var(--candy);}.anc.info{--an:var(--sky);}
+.ant{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
+.ants{font-weight:700;font-size:13px;}
+.antd{font-size:10px;color:var(--mu);white-space:nowrap;}
+.anb{font-size:12px;color:var(--dim);line-height:1.6;}
+.antag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:9.5px;font-weight:700;margin-top:8px;}
+.tg{background:var(--gl);color:var(--gold);}
+.tc{background:var(--cl);color:#FF6FA6;}
+.ti{background:rgba(96,165,250,.12);color:var(--sky);}
+
+/* ── REQUESTS ── */
+.rql{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.rqc{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:16px;}
+.rqh{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px;}
+.rqt{font-weight:700;font-size:13px;}
+.rqst{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;}
+.stnew{background:rgba(96,165,250,.12);color:var(--sky);}
+.stpend{background:var(--gl);color:var(--gold);}
+.stappr{background:var(--ml);color:var(--mint);}
+.stdone{background:rgba(255,255,255,.06);color:var(--dim);}
+.strej{background:var(--cl);color:#FF6FA6;}
+.rqm{font-size:11px;color:var(--mu);margin-bottom:8px;}
+.rqb{font-size:12px;color:var(--dim);line-height:1.6;}
+.fform{background:var(--s2);border:1px solid var(--bdr);border-radius:14px;padding:20px;margin-bottom:20px;}
+.ffl{font-size:10px;font-weight:700;color:var(--dim);display:block;margin-bottom:5px;
+  text-transform:uppercase;letter-spacing:.05em;}
+.ffi{width:100%;background:var(--s1);border:1px solid var(--bdr);border-radius:9px;
+  padding:10px 13px;color:var(--txt);font-size:13px;outline:none;font-family:var(--ff);
+  transition:border-color .2s;margin-bottom:10px;}
+.ffi:focus{border-color:rgba(255,45,120,.4);}
+.ffta{resize:vertical;min-height:80px;}
+.sbmt{padding:10px 22px;border-radius:10px;background:var(--candy);color:#fff;
+  font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:var(--ff);transition:all .2s;}
+.sbmt:hover{background:#e0205e;}
+
+/* ── AI ── */
+.aiw{display:flex;flex-direction:column;height:calc(100vh - 200px);max-height:650px;}
+.aim{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;
+  background:var(--s1);border:1px solid var(--bdr);border-radius:14px 14px 0 0;}
+.aimsg{max-width:80%;padding:12px 15px;border-radius:12px;font-size:13px;line-height:1.6;}
+.aimsg.u{background:var(--candy);color:#fff;margin-left:auto;border-radius:12px 12px 3px 12px;}
+.aimsg.b{background:var(--s2);color:var(--txt);border-radius:12px 12px 12px 3px;}
+.aimsg.b.th{color:var(--dim);font-style:italic;}
+.airow{display:flex;gap:10px;background:var(--s2);border:1px solid var(--bdr);
+  border-top:none;border-radius:0 0 14px 14px;padding:12px;}
+.aiinp{flex:1;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;
+  padding:10px 14px;color:var(--txt);font-size:13px;outline:none;font-family:var(--ff);}
+.aiinp:focus{border-color:rgba(255,45,120,.4);}
+.aisnd{padding:10px 20px;background:var(--candy);color:#fff;border:none;border-radius:10px;
+  font-size:13px;font-weight:700;cursor:pointer;font-family:var(--ff);transition:all .2s;}
+.aisnd:hover{background:#e0205e;}
+.aisnd:disabled{opacity:.5;cursor:not-allowed;}
+
+/* ── CS BAR ── */
+.csb{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.csbtn{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;
+  border:1px solid var(--bdr);background:var(--s2);color:var(--dim);font-family:var(--ff);transition:all .2s;}
+.csbtn:hover{color:var(--txt);}
+.csbtn.on{color:#fff;border-color:transparent;}
+
+/* BAR CHART */
+.bars{display:flex;align-items:flex-end;gap:6px;height:140px;padding-top:10px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bar-fill{width:100%;border-radius:5px 5px 0 0;transition:height .5s;}
+.bar-lbl{font-size:10px;color:var(--mu);}
+.bar-val{font-size:10px;font-weight:700;}
+
+/* ── MAINTENANCE BANNER ── */
+#maintBanner{
+  display:none;
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:linear-gradient(135deg,#1A1000,#120A00);
+  border-bottom:2px solid var(--gold);
+  padding:0;
+  animation:slideDown .4s ease;
+}
+@keyframes slideDown{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+.maint-inner{
+  max-width:1300px;margin:0 auto;
+  display:flex;align-items:center;gap:14px;
+  padding:10px 28px;
+}
+.maint-icon{font-size:20px;flex-shrink:0;animation:spin 3s linear infinite;}
+@keyframes spin{0%,100%{transform:rotate(0deg)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+.maint-text{flex:1;}
+.maint-title{font-family:var(--fh);font-size:13px;font-weight:800;color:var(--gold);margin-bottom:2px;}
+.maint-sub{font-size:11px;color:#c9a84c;line-height:1.5;}
+.maint-badge{
+  padding:4px 12px;border-radius:20px;
+  background:rgba(255,209,102,.15);
+  border:1px solid rgba(255,209,102,.3);
+  color:var(--gold);font-size:10px;font-weight:700;
+  white-space:nowrap;flex-shrink:0;
+  display:flex;align-items:center;gap:5px;
+}
+.maint-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);
+  animation:pulse2 1.5s ease-in-out infinite;}
+@keyframes pulse2{0%,100%{opacity:1}50%{opacity:.3}}
+.maint-dismiss{
+  padding:5px 12px;border-radius:8px;background:transparent;
+  border:1px solid rgba(255,209,102,.25);color:#c9a84c;
+  font-size:11px;cursor:pointer;font-family:var(--ff);
+  transition:all .2s;flex-shrink:0;
+}
+.maint-dismiss:hover{background:rgba(255,209,102,.1);color:var(--gold);}
+.maint-data-note{
+  font-size:10px;color:rgba(255,209,102,.6);
+  display:flex;align-items:center;gap:4px;
+  padding:4px 10px;background:rgba(255,209,102,.06);
+  border-radius:6px;border:1px solid rgba(255,209,102,.12);
+  white-space:nowrap;flex-shrink:0;
+}
+/* Offset page content when banner is showing */
+body.maint-on .topbar{top:52px;}
+body.maint-on #maintBanner{display:block;}
+
+
+/* ── NOTIFICATION BELL ── */
+.notif-wrap{position:relative;cursor:pointer;}
+.notif-bell{width:34px;height:34px;border-radius:9px;background:var(--s2);
+  border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;
+  font-size:16px;transition:all .2s;flex-shrink:0;}
+.notif-bell:hover{background:var(--s3);border-color:var(--bdr2);}
+.notif-badge{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;
+  border-radius:20px;background:var(--candy);color:#fff;font-size:9px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;padding:0 4px;
+  border:2px solid var(--bg);animation:notifpop .3s ease;}
+@keyframes notifpop{from{transform:scale(0)}to{transform:scale(1)}}
+.notif-badge.hidden{display:none;}
+.notif-dropdown{position:absolute;top:calc(100% + 8px);right:0;width:310px;
+  background:var(--s1);border:1px solid var(--bdr2);border-radius:14px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);z-index:500;display:none;overflow:hidden;}
+.notif-dropdown.open{display:block;animation:fadeSlide .2s ease;}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.notif-hdr{display:flex;align-items:center;justify-content:space-between;
+  padding:12px 15px;border-bottom:1px solid var(--bdr);}
+.notif-hdr-title{font-family:var(--fh);font-size:13px;font-weight:700;}
+.notif-mark-all{font-size:11px;color:var(--candy);cursor:pointer;font-weight:600;}
+.notif-mark-all:hover{text-decoration:underline;}
+.notif-list{max-height:320px;overflow-y:auto;}
+.notif-item{display:flex;gap:10px;padding:11px 15px;border-bottom:1px solid var(--bdr);
+  cursor:pointer;transition:background .15s;align-items:flex-start;}
+.notif-item:hover{background:var(--s2);}
+.notif-item.unread{background:rgba(255,45,120,.04);}
+.notif-item:last-child{border-bottom:none;}
+.notif-dot{width:7px;height:7px;border-radius:50%;background:var(--candy);
+  flex-shrink:0;margin-top:5px;}
+.notif-dot.read{background:transparent;}
+.notif-content{flex:1;min-width:0;}
+.notif-msg{font-size:12px;color:var(--txt);line-height:1.45;margin-bottom:3px;}
+.notif-time{font-size:10px;color:var(--mu);}
+.notif-empty{padding:28px 15px;text-align:center;color:var(--dim);font-size:12px;}
+.notif-footer{padding:10px 15px;border-top:1px solid var(--bdr);text-align:center;}
+.notif-footer a{font-size:11px;color:var(--candy);cursor:pointer;font-weight:600;}
+
+/* ── NAV RED DOT BADGES ── */
+.nb{position:relative;}
+.nb .ndot{position:absolute;top:4px;right:4px;width:7px;height:7px;
+  border-radius:50%;background:var(--candy);border:2px solid var(--s1);display:none;}
+.nb .ndot.show{display:block;}
+
+/* ── QUICK LINKS TAB ── */
+.ql-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:20px;}
+.ql-cat{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;}
+.ql-cat-hdr{padding:12px 16px;border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;gap:8px;}
+.ql-cat-icon{font-size:18px;}
+.ql-cat-title{font-family:var(--fh);font-weight:700;font-size:13px;}
+.ql-items{padding:8px;}
+.ql-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;
+  text-decoration:none;transition:all .15s;border:1px solid transparent;}
+.ql-item:hover{background:var(--s2);border-color:var(--bdr);}
+.ql-item-icon{font-size:15px;flex-shrink:0;width:28px;text-align:center;}
+.ql-item-info{flex:1;min-width:0;}
+.ql-item-name{font-size:12.5px;font-weight:600;color:var(--txt);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ql-item-type{font-size:10px;color:var(--mu);margin-top:1px;}
+.ql-item-arrow{color:var(--mu);font-size:12px;flex-shrink:0;}
+.ql-item:hover .ql-item-arrow{color:var(--candy);}
+.ql-status-ok{width:6px;height:6px;border-radius:50%;background:var(--mint);flex-shrink:0;}
+.ql-status-warn{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+
+/* ── CHECKLIST COMPLETE MODAL ── */
+#clModal{position:fixed;inset:0;z-index:1000;display:none;
+  align-items:center;justify-content:center;background:rgba(0,0,0,.6);
+  backdrop-filter:blur(6px);}
+#clModal.open{display:flex;animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.clm-box{background:var(--s1);border:1px solid var(--bdr2);border-radius:20px;
+  padding:32px;max-width:420px;width:90%;text-align:center;
+  box-shadow:0 40px 100px rgba(0,0,0,.6);animation:scaleIn .3s ease;}
+@keyframes scaleIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.clm-icon{font-size:48px;margin-bottom:12px;}
+.clm-title{font-family:var(--fh);font-size:20px;font-weight:800;margin-bottom:8px;}
+.clm-sub{font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:20px;}
+.clm-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px;}
+.clm-stat{background:var(--s2);border-radius:10px;padding:12px 8px;}
+.clm-stat-val{font-family:var(--fh);font-size:20px;font-weight:800;margin-bottom:2px;}
+.clm-stat-lbl{font-size:10px;color:var(--dim);}
+.clm-note{background:var(--s2);border-radius:10px;padding:14px;margin-bottom:20px;text-align:left;}
+.clm-note-lbl{font-size:10px;font-weight:700;color:var(--dim);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.clm-note-input{width:100%;background:transparent;border:none;color:var(--dim);
+  font-size:12px;font-family:var(--ff);resize:none;outline:none;line-height:1.5;}
+.clm-actions{display:flex;gap:10px;justify-content:center;}
+.clm-btn{padding:10px 22px;border-radius:10px;font-size:13px;font-weight:700;
+  font-family:var(--ff);cursor:pointer;border:none;transition:all .2s;}
+.clm-btn-primary{background:var(--mint);color:#fff;}
+.clm-btn-primary:hover{background:#04b888;}
+.clm-btn-ghost{background:var(--s2);color:var(--dim);border:1px solid var(--bdr);}
+.clm-btn-ghost:hover{color:var(--txt);}
+
+
+/* ── COVERAGE REQUESTS ── */
+.cov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:20px;}
+.cov-card{background:var(--s1);border:1px solid var(--bdr);border-radius:13px;padding:16px;transition:all .2s;}
+.cov-card:hover{border-color:var(--bdr2);transform:translateY(-2px);}
+.cov-card.urgent{border-left:3px solid var(--candy);}
+.cov-card.overtime{border-left:3px solid var(--gold);}
+.cov-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.cov-type{padding:3px 9px;border-radius:20px;font-size:9.5px;font-weight:700;}
+.cov-type.coverage{background:rgba(255,45,120,.12);color:var(--candy);border:1px solid rgba(255,45,120,.2);}
+.cov-type.overtime{background:rgba(255,209,102,.12);color:var(--gold);border:1px solid rgba(255,209,102,.2);}
+.cov-name{font-weight:700;font-size:13px;margin-bottom:2px;}
+.cov-meta{font-size:11px;color:var(--dim);}
+.cov-shift{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;
+  border-radius:7px;background:var(--s2);font-size:11px;font-weight:700;margin:8px 0;}
+.cov-reason{font-size:12px;color:var(--dim);line-height:1.55;margin-bottom:10px;}
+.cov-actions{display:flex;gap:7px;flex-wrap:wrap;}
+.cov-btn{padding:5px 13px;border-radius:8px;font-size:11px;font-weight:700;
+  cursor:pointer;border:none;font-family:var(--ff);transition:all .2s;}
+.cov-btn.claim{background:var(--mint);color:#fff;}
+.cov-btn.claim:hover{background:#04b888;}
+.cov-btn.approve{background:var(--candy);color:#fff;}
+.cov-btn.approve:hover{background:#d41f62;}
+.cov-btn.reject{background:var(--s2);border:1px solid var(--bdr);color:var(--dim);}
+.cov-btn.reject:hover{color:var(--txt);}
+.cov-status{padding:3px 9px;border-radius:20px;font-size:9.5px;font-weight:700;}
+.cov-status.open{background:rgba(96,165,250,.12);color:var(--sky);border:1px solid rgba(96,165,250,.2);}
+.cov-status.claimed{background:rgba(255,209,102,.12);color:var(--gold);border:1px solid rgba(255,209,102,.2);}
+.cov-status.approved{background:rgba(6,214,160,.12);color:var(--mint);border:1px solid rgba(6,214,160,.2);}
+
+/* ── SHIFT REMINDER BANNER ── */
+#shiftReminder{display:none;background:linear-gradient(135deg,rgba(6,214,160,.12),rgba(96,165,250,.08));
+  border:1px solid rgba(6,214,160,.25);border-radius:12px;padding:13px 18px;
+  margin:0 0 16px;display:flex;align-items:center;gap:12px;}
+#shiftReminder.show{display:flex;animation:slideDown .3s ease;}
+.sr-icon{font-size:22px;flex-shrink:0;}
+.sr-text{flex:1;}
+.sr-title{font-weight:700;font-size:13px;color:var(--mint);margin-bottom:2px;}
+.sr-sub{font-size:11.5px;color:var(--dim);}
+.sr-dismiss{padding:5px 12px;border-radius:8px;background:transparent;
+  border:1px solid rgba(6,214,160,.25);color:var(--mint);font-size:11px;
+  cursor:pointer;font-family:var(--ff);transition:all .2s;flex-shrink:0;}
+.sr-dismiss:hover{background:rgba(6,214,160,.1);}
+
+/* ── GOAL SETTING ── */
+.goal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:24px;}
+.goal-card{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;
+  overflow:hidden;transition:all .2s;}
+.goal-card:hover{border-color:var(--bdr2);transform:translateY(-2px);}
+.goal-hdr{padding:13px 16px;border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:space-between;}
+.goal-name{font-family:var(--fh);font-weight:800;font-size:14px;
+  display:flex;align-items:center;gap:7px;}
+.goal-period{font-size:10px;color:var(--mu);font-weight:400;}
+.goal-body{padding:14px 16px;}
+.goal-row{display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;gap:8px;}
+.goal-label{font-size:11px;color:var(--dim);flex:1;}
+.goal-input{background:var(--s2);border:1px solid var(--bdr);border-radius:7px;
+  color:var(--txt);font-size:12px;font-weight:600;font-family:var(--ff);
+  padding:5px 9px;width:100px;text-align:right;outline:none;transition:border-color .2s;}
+.goal-input:focus{border-color:rgba(255,45,120,.4);}
+.goal-progress-wrap{margin-top:12px;padding-top:12px;border-top:1px solid var(--bdr);}
+.goal-progress-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.goal-progress-label{font-size:11px;color:var(--dim);}
+.goal-progress-pct{font-family:var(--fh);font-size:13px;font-weight:800;}
+.goal-bar{height:6px;background:var(--s3);border-radius:3px;overflow:hidden;}
+.goal-bar-fill{height:100%;border-radius:3px;transition:width .6s ease;}
+.goal-save-btn{width:100%;padding:8px;border-radius:8px;background:var(--s2);
+  border:1px solid var(--bdr);color:var(--dim);font-size:11px;font-weight:600;
+  cursor:pointer;font-family:var(--ff);margin-top:12px;transition:all .2s;}
+.goal-save-btn:hover{background:var(--candy);color:#fff;border-color:var(--candy);}
+.goal-summary{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;
+  padding:18px;margin-bottom:20px;}
+.goal-summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px;}
+.goal-kpi{background:var(--s2);border-radius:10px;padding:13px;text-align:center;}
+.goal-kpi-val{font-family:var(--fh);font-size:22px;font-weight:800;}
+.goal-kpi-lbl{font-size:10px;color:var(--dim);margin-top:3px;}
+.goal-kpi-sub{font-size:10px;color:var(--mu);margin-top:2px;}
+
+
+/* ── EOD REPORT ── */
+.eod-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+@media(max-width:900px){.eod-wrap{grid-template-columns:1fr;}}
+.eod-section{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;padding:16px;}
+.eod-section-title{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:14px;
+  display:flex;align-items:center;gap:7px;padding-bottom:10px;border-bottom:1px solid var(--bdr);}
+.eod-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.eod-field{display:flex;flex-direction:column;gap:5px;}
+.eod-label{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;}
+.eod-flags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+.eod-flag{display:flex;align-items:center;gap:6px;padding:5px 11px;border-radius:8px;
+  background:var(--s2);border:1px solid var(--bdr);cursor:pointer;font-size:11.5px;
+  color:var(--dim);user-select:none;transition:all .15s;}
+.eod-flag input{display:none;}
+.eod-flag.checked{background:rgba(6,214,160,.08);border-color:rgba(6,214,160,.25);color:var(--mint);}
+.eod-flag.checked::before{content:'✓ ';}
+.eod-model-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
+.eod-model-table th{padding:7px 10px;text-align:left;font-size:9.5px;font-weight:700;
+  color:var(--dim);text-transform:uppercase;letter-spacing:.06em;
+  background:var(--s2);border-bottom:1px solid var(--bdr);}
+.eod-model-table td{padding:7px 10px;border-bottom:1px solid var(--bdr);vertical-align:middle;}
+.eod-model-table tr:last-child td{border-bottom:none;}
+.eod-mm-check{width:18px;height:18px;border-radius:4px;border:2px solid var(--bdr2);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .15s;flex-shrink:0;margin:auto;}
+.eod-mm-check.on{background:var(--mint);border-color:var(--mint);}
+.eod-total{display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-top:2px solid var(--bdr2);margin-top:8px;}
+.eod-total-label{font-family:var(--fh);font-size:13px;font-weight:800;}
+.eod-total-val{font-family:var(--fh);font-size:22px;font-weight:800;color:var(--mint);}
+.eod-cl-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.eod-cl-item{display:flex;align-items:center;gap:7px;padding:6px 9px;
+  background:var(--s2);border-radius:7px;cursor:pointer;user-select:none;
+  font-size:11px;color:var(--dim);transition:all .15s;border:1px solid transparent;}
+.eod-cl-item:hover{border-color:var(--bdr);}
+.eod-cl-item.on{background:rgba(6,214,160,.07);color:var(--mint);border-color:rgba(6,214,160,.18);}
+.eod-cl-dot{width:14px;height:14px;border-radius:4px;border:2px solid var(--bdr2);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;}
+.eod-cl-item.on .eod-cl-dot{background:var(--mint);border-color:var(--mint);color:#fff;}
+.eod-submit-row{display:flex;align-items:center;justify-content:space-between;
+  margin-top:16px;padding-top:14px;border-top:1px solid var(--bdr);flex-wrap:wrap;gap:10px;}
+.eod-progress{font-size:12px;color:var(--dim);}
+.eod-history{margin-top:20px;}
+.eod-hist-item{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;
+  padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:all .15s;}
+.eod-hist-item:hover{border-color:var(--bdr2);}
+.eod-hist-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.eod-hist-name{font-weight:700;font-size:13px;}
+.eod-hist-meta{font-size:11px;color:var(--dim);}
+.eod-hist-gross{font-family:var(--fh);font-size:16px;font-weight:800;color:var(--mint);}
+.eod-flag-badge{padding:2px 8px;border-radius:20px;font-size:9.5px;font-weight:700;
+  background:rgba(255,45,120,.12);color:var(--candy);border:1px solid rgba(255,45,120,.2);}
+
+/* ── VIOLATION LOG ── */
+.viol-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.viol-card{background:var(--s1);border:1px solid var(--bdr);border-radius:13px;overflow:hidden;}
+.viol-card.minor{border-left:3px solid var(--gold);}
+.viol-card.moderate{border-left:3px solid var(--ora);}
+.viol-card.serious{border-left:3px solid var(--candy);}
+.viol-hdr{display:flex;align-items:center;gap:12px;padding:13px 16px;}
+.viol-av{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;
+  justify-content:center;font-family:var(--fh);font-weight:800;font-size:12px;
+  color:#fff;flex-shrink:0;}
+.viol-name{font-weight:700;font-size:13px;}
+.viol-date{font-size:10.5px;color:var(--dim);margin-top:2px;}
+.viol-badges{margin-left:auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.viol-sev{padding:3px 9px;border-radius:20px;font-size:9.5px;font-weight:700;}
+.viol-sev.minor{background:rgba(255,209,102,.12);color:var(--gold);border:1px solid rgba(255,209,102,.2);}
+.viol-sev.moderate{background:rgba(249,115,22,.12);color:var(--ora);border:1px solid rgba(249,115,22,.2);}
+.viol-sev.serious{background:rgba(255,45,120,.12);color:var(--candy);border:1px solid rgba(255,45,120,.2);}
+.viol-strike{padding:3px 9px;border-radius:20px;font-size:9.5px;font-weight:800;
+  background:var(--s2);color:var(--dim);}
+.viol-body{padding:0 16px 14px;border-top:1px solid var(--bdr);}
+.viol-desc{font-size:12px;color:var(--dim);line-height:1.6;margin-top:10px;}
+.viol-type-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;
+  border-radius:7px;background:var(--s2);font-size:10.5px;color:var(--dim);margin-top:8px;}
+.viol-add-form{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;
+  padding:18px;margin-bottom:20px;}
+.viol-form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:700px){.viol-form-grid{grid-template-columns:1fr;}}
+.strike-summary{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:10px;margin-bottom:20px;}
+.strike-card{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;
+  padding:13px;text-align:center;}
+.strike-av{width:36px;height:36px;border-radius:9px;margin:0 auto 8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fh);font-weight:800;font-size:13px;color:#fff;}
+.strike-name{font-size:12px;font-weight:700;margin-bottom:4px;}
+.strike-count{font-family:var(--fh);font-size:20px;font-weight:800;}
+.strike-count.zero{color:var(--mu);}
+.strike-count.one{color:var(--gold);}
+.strike-count.two{color:var(--ora);}
+.strike-count.three{color:var(--candy);}
+
+</style>
+</head>
+<body>
+<!-- ═══ MAINTENANCE BANNER ═══ -->
+<!-- ADMIN: Set MAINTENANCE_MODE = true below to activate -->
+<div id="maintBanner">
+  <div class="maint-inner">
+    <div class="maint-icon">🔧</div>
+    <div class="maint-text">
+      <div class="maint-title" id="maintTitle">Portal Update in Progress</div>
+      <div class="maint-sub" id="maintMsg">We are adding new features. You can still view and use all existing data below.</div>
+    </div>
+    <div class="maint-data-note">✅ Last data intact</div>
+    <div class="maint-badge"><div class="maint-dot"></div> Under Maintenance</div>
+    <button class="maint-dismiss" onclick="dismissMaint()">Got it ✕</button>
+  </div>
+</div>
+
+
+<!-- AUTH -->
+<div id="authWrap">
+<div class="abox">
+  <span class="alogo">🍬</span>
+  <div class="atitle">EYE KANDI Portal</div>
+  <div class="asub">Sign in to your account</div>
+  <div class="atabs">
+    <button class="atab on" onclick="authTab('login')">Sign In</button>
+    <button class="atab" onclick="authTab('signup')">Sign Up</button>
+  </div>
+  <div id="aerr" class="aerr"></div>
+  <div id="loginForm">
+    <input class="af" id="lu" placeholder="Username" autocomplete="username">
+    <input class="af" id="lp" placeholder="Password" type="password" autocomplete="current-password">
+    <button class="abtn" onclick="doLogin()">Sign In →</button>
+  </div>
+  <div id="signupForm" style="display:none">
+    <select class="af" id="sc">
+      <option value="">— Select your chatter name —</option>
+      <option>Jayce</option><option>Sage</option><option>Jammy</option>
+      <option>Adie</option><option>Dale</option><option>Joan</option><option>Fred</option>
+    </select>
+    <input class="af" id="su" placeholder="Choose a username">
+    <input class="af" id="sp" placeholder="Password (min 6 chars)" type="password">
+    <input class="af" id="sp2" placeholder="Confirm password" type="password">
+    <button class="abtn" onclick="doSignup()">Create Account →</button>
+  </div>
+  <div class="ahint">
+    <b>Admin:</b> admin / EKadmin2026!<br>
+    <b>Chatters:</b> jayce / Jayce2026! &nbsp;·&nbsp; sage / Sage2026!<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jammy / Jammy2026! &nbsp;·&nbsp; adie / Adie2026!<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dale / Dale2026! &nbsp;·&nbsp; joan / Joan2026! &nbsp;·&nbsp; fred / Fred2026!
+  </div>
+</div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="t-logo">
+      <span style="font-size:20px">🍬</span>
+      <div><div class="t-name">EYE KANDI</div><div class="t-role" id="tRole"></div></div>
+    </div>
+    <div class="t-right">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="t-av" id="tAv"></div>
+        <div><div class="t-uname" id="tUname"></div><div style="margin-top:2px" id="tBadge"></div></div>
+      </div>
+      <div class="notif-wrap" id="notifWrap">
+        <div class="notif-bell" onclick="toggleNotif()" title="Notifications">🔔
+          <div class="notif-badge hidden" id="notifBadge">0</div>
+        </div>
+        <div class="notif-dropdown" id="notifDropdown">
+          <div class="notif-hdr">
+            <div class="notif-hdr-title">Notifications</div>
+            <span class="notif-mark-all" onclick="markAllRead()">Mark all read</span>
+          </div>
+          <div class="notif-list" id="notifList">
+            <div class="notif-empty">No notifications yet</div>
+          </div>
+          <div class="notif-footer"><a onclick="closeNotif()">Close</a></div>
+        </div>
+      </div>
+      <span id="syncIndicator" style="font-size:11px;color:var(--dim);padding:4px 10px;background:var(--s2);border:1px solid var(--bdr);border-radius:20px;">⟳ Loading...</span>
+      <button class="t-out" onclick="doLogout()">Sign Out</button>
+    </div>
+  </div>
+  <div class="nav" id="nav"></div>
+  <div id="pages"></div>
+</div>
+
+<script>
+
+// ═══════════════════════════════════════
+// MAINTENANCE MODE CONFIG
+// Set MAINTENANCE_MODE = true to show the banner
+// Change MAINT_TITLE and MAINT_MSG to describe what's happening
+// ═══════════════════════════════════════
+const MAINTENANCE_MODE = false;  // ← flip to true when doing updates
+const MAINT_TITLE = 'Portal Update in Progress';
+const MAINT_MSG = 'We are adding new features. You can still view and use all existing data — nothing has been removed.';
+
+function initMaintenance() {
+  if (!MAINTENANCE_MODE) return;
+  document.body.classList.add('maint-on');
+  const t = document.getElementById('maintTitle');
+  const m = document.getElementById('maintMsg');
+  if (t) t.textContent = MAINT_TITLE;
+  if (m) m.textContent = MAINT_MSG;
+}
+
+function dismissMaint() {
+  document.body.classList.remove('maint-on');
+  // Will re-appear on next page load if MAINTENANCE_MODE is still true
+}
+
+// Run on page load
+initMaintenance();
+
+
+// ════════════════════════════════════════
+// ACCOUNTS — pure in-memory, zero deps
+// ════════════════════════════════════════
+const ACCS=[
+  {u:'admin',    p:'EKadmin2026!', r:'admin',   cn:null},
+  {u:'eyekandi', p:'EK2026!',      r:'admin',   cn:null},
+  {u:'jayce',    p:'Jayce2026!',   r:'chatter', cn:'Jayce'},
+  {u:'sage',     p:'Sage2026!',    r:'chatter', cn:'Sage'},
+  {u:'jammy',    p:'Jammy2026!',   r:'chatter', cn:'Jammy'},
+  {u:'adie',     p:'Adie2026!',    r:'chatter', cn:'Adie'},
+  {u:'dale',     p:'Dale2026!',    r:'chatter', cn:'Dale'},
+  {u:'joan',     p:'Joan2026!',    r:'chatter', cn:'Joan'},
+  {u:'fred',     p:'Fred2026!',    r:'chatter', cn:'Fred'},
+];
+const XACCS=[]; // signed up accounts
+let CU=null;
+
+// ════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════
+const CLR={Jayce:'#FF2D78',Sage:'#06D6A0',Jammy:'#FFD166',Adie:'#C084FC',Dale:'#60A5FA',Joan:'#F97316',Fred:'#EC4899'};
+const MONTHS=['Jan','Feb','Mar','Apr','May'];
+
+const PERF={
+  Jayce:{sh:'MID/EVE',mms:{t:160,ok:125,pend:35},sales:[1240,1580,1320,980,1650],tips:30,qs:55,qt:75,
+    kpi:{'Mass Message':88,'Building Rapport':84,'Response Time':95,'Terms of Service':100,'Grammar':95,'PPV Sent':82,'Sales':83,'Retention':85,'Drives Conversation':82,'Fan Satisfaction':84}},
+  Sage:{sh:'AM/MID',mms:{t:151,ok:98,pend:52,rep:1},sales:[820,740,910,670,1020],tips:25,qs:46,qt:75,
+    kpi:{'Mass Message':70,'Building Rapport':83,'Response Time':89,'Terms of Service':100,'Grammar':96,'PPV Sent':86,'Sales':86,'Retention':58,'Drives Conversation':59,'Fan Satisfaction':52}},
+  Jammy:{sh:'AM/MID',mms:{t:275,ok:252,pend:23},sales:[2100,1890,2340,1760,2580],tips:864,qs:51,qt:75,
+    kpi:{'Mass Message':91,'Building Rapport':87,'Response Time':91,'Terms of Service':100,'Grammar':95,'PPV Sent':88,'Sales':90,'Retention':88,'Drives Conversation':88,'Fan Satisfaction':94}},
+  Adie:{sh:'AM',mms:{t:142,ok:142,pend:0},sales:[3200,3540,3120,2980,3670],tips:168,qs:63,qt:75,
+    kpi:{'Mass Message':91,'Building Rapport':87,'Response Time':92,'Terms of Service':100,'Grammar':95,'PPV Sent':92,'Sales':94,'Retention':91,'Drives Conversation':94,'Fan Satisfaction':91}},
+  Dale:{sh:'EVE',mms:{t:288,ok:267,pend:21},sales:[4100,4560,3980,3450,4820],tips:689,qs:57,qt:75,
+    kpi:{'Mass Message':95,'Building Rapport':93,'Response Time':95,'Terms of Service':100,'Grammar':95,'PPV Sent':96,'Sales':97,'Retention':88,'Drives Conversation':95,'Fan Satisfaction':86}},
+  Joan:{sh:'MID',mms:{t:313,ok:307,pend:6},sales:[5200,5870,4980,4320,5640],tips:486,qs:55,qt:75,
+    kpi:{'Mass Message':93,'Building Rapport':76,'Response Time':93,'Terms of Service':0,'Grammar':95,'PPV Sent':50,'Sales':65,'Retention':55,'Drives Conversation':65,'Fan Satisfaction':55}},
+  Fred:{sh:'EVE',mms:{t:92,ok:77,pend:15},sales:[980,1120,890,760,1040],tips:0,qs:53,qt:75,
+    kpi:{'Mass Message':81,'Building Rapport':65,'Response Time':95,'Terms of Service':50,'Grammar':95,'PPV Sent':79,'Sales':77,'Retention':69,'Drives Conversation':71,'Fan Satisfaction':81}},
+};
+
+const MODELS=[
+  {id:'Sabrina',e:'👑',c:'#FF2D78',rev:38420,subs:163,tr:'+12%'},
+  {id:'Omi',    e:'🔥',c:'#FFD166',rev:9840, subs:254,tr:'+8%'},
+  {id:'Maddy',  e:'💋',c:'#C084FC',rev:7230, subs:238,tr:'+5%'},
+  {id:'Bee',    e:'🐝',c:'#60A5FA',rev:5610, subs:215,tr:'+3%'},
+  {id:'Izana',  e:'💎',c:'#06D6A0',rev:4190, subs:247,tr:'+6%'},
+];
+
+const COACHING={
+  Jayce:[{per:'Apr 1–15, 2024',dt:'Apr 16, 2024',st:'PASSED',co:'AJ',
+    beh:'Inconsistent performance — multiple unattended chats observed.',
+    rca:'Unattended chats led to dropped conversations and missed sales.',
+    areas:[{l:'Grammar',n:'Message construction needs polish — unclear to fans.'},{l:'Drives Conversation',n:'One-line responses — not enough depth.'},{l:'Fan Satisfaction',n:'No post-fan care — conversations closed abruptly.'}],
+    acts:['Live coaching — Grammarly utilization and timer management.','Extra effort: back-read previous conversations, ask about hobbies.','Concern about lowballing raised — to be addressed in team meeting.','Address low-sales outlier — specific action plan advised.'],
+    com:"I will utilize Grammarly consistently and put extra effort on back-reading and asking about fans hobbies to keep conversations alive.",
+    kpi:{'Mass Message':'r','Building Rapport':'r','Response Time':'y','Terms of Service':'g','Grammar':'r','PPV Sent':'y','Sales':'r','Retention':'y','Drives Conversation':'r','Fan Satisfaction':'r'}}],
+  Sage:[{per:'Feb 1–15, 2024',dt:'Feb 16, 2024',st:'COACHING',co:'AJ',
+    beh:'Low scores in engagement and grammar — fan confusion observed.',
+    rca:'Insufficient rapport building and grammar errors causing early drop-off.',
+    areas:[{l:'Grammar',n:'Grammar issues kept fans confused — Grammarly enforcement needed.'},{l:'Building Rapport',n:'Conversations felt transactional — needs personalization.'}],
+    acts:['Increase open-ended questions for deeper fan engagement.','Implement sexting transition framework from coaching playbook.','Daily Grammarly check before starting shift.'],
+    com:'I will focus on building genuine connections and use Grammarly consistently.',
+    kpi:{'Mass Message':'y','Building Rapport':'r','Response Time':'y','Terms of Service':'g','Grammar':'r','PPV Sent':'y','Sales':'y','Retention':'r','Drives Conversation':'r','Fan Satisfaction':'y'}}],
+  Jammy:[{per:'Jan 1–15, 2024',dt:'Jan 16, 2024',st:'COACHING',co:'AJ',
+    beh:'1st warning — grammar issues consistently confusing fans.',
+    rca:'Broken sentences and incomplete thoughts leading to fan disengagement.',
+    areas:[{l:'Grammar',n:'Incomplete thoughts and poor sentence construction.'},{l:'Building Rapport',n:'Rushing to sell without adequate engagement first.'}],
+    acts:['Mandatory Grammarly use before sending any message.','Practice engage-transition-sell framework daily.','Weekly 1-on-1 check-in for next 4 weeks.'],
+    com:"I will not send any message without Grammarly and always build rapport before pitching PPVs.",
+    kpi:{'Mass Message':'y','Building Rapport':'r','Response Time':'g','Terms of Service':'g','Grammar':'r','PPV Sent':'y','Sales':'y','Retention':'y','Drives Conversation':'r','Fan Satisfaction':'y'}}],
+  Adie:[{per:'Jan 1–15, 2024',dt:'Jan 16, 2024',st:'PASSED',co:'AJ',
+    beh:'Strong consistent performer — session focused on optimization.',
+    rca:'No critical issues. Session aimed at reaching higher performance tier.',
+    areas:[{l:'Retention',n:'Minor dip — explore post-chat follow-up strategies.'}],
+    acts:['Continue current framework — performing well.','Experiment with post-fan care messages.','Share best practices in next calibration.'],
+    com:'I will continue my current approach and experiment with post-fan care to push my retention higher.',
+    kpi:{'Mass Message':'g','Building Rapport':'g','Response Time':'g','Terms of Service':'g','Grammar':'g','PPV Sent':'g','Sales':'g','Retention':'y','Drives Conversation':'g','Fan Satisfaction':'g'}}],
+  Dale:[{per:'Jan 1–15, 2024',dt:'Jan 16, 2024',st:'PASSED',co:'AJ',
+    beh:'Solid performer with a minor attendance flag in Week 3.',
+    rca:'Attendance gap in Week 3 affected shift coverage and sales continuity.',
+    areas:[{l:'Attendance',n:'Week 3 gap — need clear advance notice for schedule changes.'}],
+    acts:['Always provide 1 week advance notice for any absence.','Maintain current sales and engagement approach.','Avoid terminal breaks in final hour of shift.'],
+    com:"I will communicate schedule changes at least a week in advance.",
+    kpi:{'Mass Message':'g','Building Rapport':'g','Response Time':'g','Terms of Service':'y','Grammar':'g','PPV Sent':'g','Sales':'g','Retention':'g','Drives Conversation':'g','Fan Satisfaction':'y'}}],
+  Joan:[{per:'Jan 1–15, 2024',dt:'Jan 16, 2024',st:'PASSED',co:'AJ',
+    beh:'Top performer — coaching focused on maintaining standards.',
+    rca:'No critical issues. Minor note on post-fan care consistency.',
+    areas:[{l:'Fan Satisfaction',n:'Occasionally skipping post-fan care at end of long sessions.'}],
+    acts:['Checklist reminder for post-fan care before closing every chat.','Consider mentoring newer chatters.'],
+    com:'I will add a mental checklist for post-fan care before closing every chat.',
+    kpi:{'Mass Message':'g','Building Rapport':'g','Response Time':'g','Terms of Service':'g','Grammar':'g','PPV Sent':'g','Sales':'g','Retention':'g','Drives Conversation':'g','Fan Satisfaction':'y'}}],
+  Fred:[{per:'Feb 1–15, 2024',dt:'Feb 16, 2024',st:'COACHING',co:'AJ',
+    beh:'1st warning — inconsistent TOS compliance and low PPV push rate.',
+    rca:'Unfamiliarity with updated TOS guidelines and hesitancy in pitching PPVs.',
+    areas:[{l:'Terms of Service',n:'TOS violations noted — re-read updated SOP immediately.'},{l:'PPV Sent',n:'Low PPV pitch rate — hesitant to transition from chat to sell.'}],
+    acts:['Re-read and sign off on current TOS SOP immediately.','Practice PPV transition scripts from coaching playbook.','Minimum 3 PPV pitches per shift for next 2 weeks.'],
+    com:'I will re-read the SOP today and pitch at least 3 PPVs per shift while staying TOS-compliant.',
+    kpi:{'Mass Message':'y','Building Rapport':'g','Response Time':'g','Terms of Service':'r','Grammar':'g','PPV Sent':'r','Sales':'y','Retention':'y','Drives Conversation':'y','Fan Satisfaction':'g'}}],
+};
+
+const SOPS=[
+  {i:'📋',n:'Main SOP',t:'Google Sheets',note:'Attendance, Idle/Break, Sales & Compliance rules. Updated Jan 31, 2024.',url:'https://docs.google.com/spreadsheets/d/1CwPKLRT-HBr4j7i6uERxijaX6yydyVsxDi4JR4ymP_4/edit',w:false},
+  {i:'🏷️',n:'Tagging SOP',t:'Google Docs',note:'How to tag collaborator content in Infloww.',url:'https://docs.google.com/document/d/1YuSxnAMnFNysG2m0HIgWd3wcv_fcLWJ2Wp3hBfNPvxU/edit',w:false},
+  {i:'💬',n:'Mass Message Library',t:'Google Docs',note:'All approved captions and mass message templates.',url:'https://docs.google.com/document/d/13wFYOi6F_yissaoKrr3qvWoGC9I4efTkBQwhi7JesGg/edit',w:false},
+  {i:'💰',n:'PPV Pricing Reference',t:'Google Sheets',note:'Official per-model PPV pricing. Can go higher, never lower.',url:'https://docs.google.com/spreadsheets/d/1_LbogJfEjxUDSxtG6tO8BaKonrU85R71L2G_nqJcFwU/edit',w:false},
+  {i:'🎬',n:'How to Add a Story',t:'Loom Video',note:'Step-by-step video for adding a story to the model\'s OnlyFans.',url:'https://www.loom.com/share/cd12861e17f645e4aa3152d2c422827d',w:true,wn:'May redirect to Loom library — contact admin if inaccessible.'},
+];
+
+const SVS=[
+  {s:'valid',  sc:'Getting good engagement before asking fan to unlock a PPV',n:'Build rapport first — valid when you earn the right to sell.'},
+  {s:'valid',  sc:'Asking fan to unlock during an active sexting session',n:'Fan is engaged and content is relevant — valid.'},
+  {s:'valid',  sc:'Asking fan to unlock as payment for a service (sexting, custom, VC)',n:'Transactional exchange for a service = valid.'},
+  {s:'valid',  sc:'Encouraging fan to unlock after getting to know their preferences',n:'Personalized pitch = valid influenced sale.'},
+  {s:'valid',  sc:'Persuading fan to unlock a PPV (not as service payment)',n:'Direct persuasion-driven sale = valid.'},
+  {s:'valid',  sc:'Chatter sent PPV and fan unlocked it during the same shift',n:'Sent and unlocked same shift = valid.'},
+  {s:'valid',  sc:'Chatter hinted for tips and fan tipped via post or content',n:'Tip-hinting that converts = valid influenced sale.'},
+  {s:'valid',  sc:'Subscription payments',n:'All subscription payments = valid sales.'},
+  {s:'invalid',sc:'Fan unlocks scheduled PPV from main feed without chatter engagement',n:'No chatter engagement = not credited.'},
+  {s:'invalid',sc:'Fan sends tip from post or campaign without chatter interaction',n:'Organic tip — not credited.'},
+  {s:'invalid',sc:'Fan tips influenced by QA/executive/manager stepping in',n:'Management-driven tip = not attributed to chatter on shift.'},
+  {s:'invalid',sc:'Fan unlocks PPV sent by QA/executive/manager during shift support',n:'Must include screenshot proof if PPV was sent by someone else.'},
+  {s:'review', sc:'Sending a mass message to prompt random/scheduled PPV unlocks',n:'Not to be sent daily. QA reviews validity case by case.'},
+  {s:'review', sc:'Fan asks what type of content it is and chatter explains',n:'Valid if descriptive and convincing — QA will confirm.'},
+];
+
+const PPVM=[
+  {id:'Omi',n:'Omi',al:'Dominique Pichette / Flowmi',e:'🔥',c:'#FF2D78',
+   rl:'Topless=lower · Fully nude close-up=higher · Nude posed (tits visible)=mid',
+   secs:[{l:'Photos',items:[{n:'Single photo',p:'$10–$45'},{n:'Photo set (3–5)',p:'$15–$55'}]},
+    {l:'Videos',items:[{n:'Teaser clip',p:'$15–$40'},{n:'Full-length (≤10 min)',p:'$45–$80'},{n:'Sexy outfit video',p:'$20–$35'},{n:'Masturbation video',p:'MIN $200',c:'hi'},{n:'Pussy play <3 min',p:'From $150',c:'hi'},{n:'Pussy play >3 min',p:'MIN $200',c:'hi'},{n:'Male partner video',p:'$400–$600',c:'hi'}]},
+    {l:'Bundles',items:[{n:'Bundle w/ masturbation',p:'$250+',c:'hi'},{n:'Bundle w/o masturbation',p:'$100–$150'}]}]},
+  {id:'Bee',n:'Bee',al:'',e:'🐝',c:'#FFD166',rl:'Can go higher but never lower.',
+   secs:[{l:'Photos',items:[{n:'Single photo',p:'$3–$10'},{n:'Photo set (3–5)',p:'$5–$20'}]},
+    {l:'Videos',items:[{n:'Teaser clip',p:'$5–$20'},{n:'Full-length (≤10 min)',p:'$15–$50'},{n:'Bundle',p:'$50–$100'},{n:'Showing boobs',p:'$90 max'},{n:'<1 min undressing/playing',p:'$50–$70'},{n:'1 min+ undressing/playing',p:'$80–$90+'}]}]},
+  {id:'Maddy',n:'Maddy',al:'Daisy',e:'💋',c:'#C084FC',rl:'Can go higher but never lower.',
+   secs:[{l:'Photos',items:[{n:'Single photo',p:'$3–$10'},{n:'Photo set (3–5)',p:'$5–$20'}]},
+    {l:'Videos',items:[{n:'Teaser clip',p:'$5–$20'},{n:'Full-length (≤10 min)',p:'$15–$50'},{n:'Bundle',p:'$50–$100'}]}]},
+  {id:'Sabrina',n:'Sabrina',al:'Can ask for pricing on anything!',e:'👑',c:'#06D6A0',
+   rl:'Content with partner → vault pricing. Partner videos = $400–$600 regardless of length.',
+   secs:[{l:'Photos',items:[{n:'Single photo',p:'$10'},{n:'3-photo set',p:'$20'},{n:'5-photo set',p:'$35–$40'}]},
+    {l:'Videos',items:[{n:'Teaser clip',p:'Ask Sab',c:'ask'},{n:'Full-length video',p:'Ask Sab',c:'ask'},{n:'Bundle',p:'$300–$500',c:'hi'},{n:'Male partner video',p:'$400–$600',c:'hi'}]},
+    {l:'Specific — Always Ask Sab',items:[{n:'Tits playing (panties on/off)',p:'Ask Sab',c:'ask'},{n:'Stripping top/bottom',p:'Ask Sab',c:'ask'},{n:'Blowjob content',p:'Ask Sab',c:'ask'},{n:'Shaking ass (panties on/off)',p:'Ask Sab',c:'ask'},{n:'JOI content',p:'Ask Sab',c:'ask'}]}]},
+];
+
+const CKL={
+  pre:['Log in to Time Doctor before opening any pages','Check Discord for announcements or urgent messages','Review the daily model notes and any content restrictions','Check PPV pricing reference if sending PPVs today','Review your previous shift open conversations','Read any new coaching notes or SOP updates'],
+  during:['Respond to all DMs within 15 minutes','Send at least 1 mass message during your shift','Push at least 3 PPVs per shift','Build rapport before pitching — no cold selling','Always do post-fan care before closing any conversation','Log any influenced sales in the tracker with screenshot','Check Tagging SOP before sending any collab content'],
+  post:['Submit your EOD sales report','Tag any open chats for follow-up on next shift','Log off Time Doctor only after fully clocked out','Report any fan issues or flags to QA in Discord'],
+};
+
+let ANNS=[
+  {ty:'global', ti:'Truth or Dare Campaign — ONGOING',dt:'Jun 1, 2026',bo:'Campaign is live! Push Truth or Dare to all active fans. Entry tip starts at $10. Log every entry in the Campaign Tracker.'},
+  {ty:'global', ti:'MMS Tracker Reminder',dt:'Jun 3, 2026',bo:'All MMS must be submitted to the May 2026 MMS Tracker before end of shift. Pending submissions are blocking QA review.'},
+  {ty:'callout',ti:'TOS Compliance Check',dt:'Jun 5, 2026',bo:'All chatters — please re-read the updated TOS SOP. There have been a few compliance flags this week.'},
+  {ty:'info',   ti:'New PPV Pricing Updated',dt:'May 31, 2026',bo:'PPV pricing reference has been updated. Check the PPV Pricing tab. Remember: can go higher, never lower.'},
+];
+
+let REQS=[
+  {id:'REQ-001',ti:'Schedule Change Request — June 12',r:'chatter',by:'Adie',cat:'Schedule',st:'approved',dt:'Jun 4, 2026',de:'Requesting to swap AM shift on June 12 with Dale EVE shift. Both parties agree.'},
+  {id:'REQ-002',ti:'PPV Price Clarification for Custom Video',r:'chatter',by:'Jammy',cat:'Pricing',st:'done',dt:'Jun 3, 2026',de:'Need clarification on pricing for a custom 15-min video for Sabrina page.'},
+  {id:'REQ-003',ti:'Grammarly Access — Account Issue',r:'chatter',by:'Sage',cat:'Tech Support',st:'new',dt:'Jun 6, 2026',de:'Grammarly is not working on my device. Getting a login error. Need help before my next shift.'},
+  {id:'REQ-004',ti:'Campaign Ideas — Roll the Dice Relaunch',r:'chatter',by:'Joan',cat:'Campaign',st:'pending',dt:'Jun 5, 2026',de:'Suggest relaunching Roll the Dice campaign for the summer. High fan engagement last time.'},
+];
+
+// in-memory checklist state per chatter
+const CLST={};
+
+// ── COVERAGE / OVERTIME REQUESTS ──
+let COV_REQS = [
+  {id:'COV-001', type:'coverage', by:'Sage', shift:'AM', date:'Jun 13, 2026',
+   reason:'Medical appointment — unable to make it to shift.', status:'open', claimed_by:null},
+  {id:'COV-002', type:'overtime', by:'Dale', shift:'EVE', date:'Jun 14, 2026',
+   reason:'Want to extend my shift by 2 hours for the campaign push.', status:'approved', claimed_by:null},
+];
+
+// ── GOALS DATA ──
+// Saved per chatter/model in memory
+const GOALS = {
+  chatters: {
+    Jayce: {qa:75, sales:2000, ppv:3, mms:50},
+    Sage:  {qa:75, sales:1500, ppv:3, mms:50},
+    Jammy: {qa:75, sales:3000, ppv:5, mms:80},
+    Adie:  {qa:80, sales:4000, ppv:5, mms:70},
+    Dale:  {qa:80, sales:5000, ppv:6, mms:90},
+    Joan:  {qa:80, sales:6000, ppv:6, mms:100},
+    Fred:  {qa:75, sales:1500, ppv:3, mms:40},
+  },
+  models: {
+    Sabrina: {rev:37000, subs:80, renewals:25, customs:25},
+    Omi:     {rev:5000,  subs:10, renewals:5,  customs:15},
+    Maddy:   {rev:2000,  subs:10, renewals:5,  customs:10},
+    Bee:     {rev:1000,  subs:5,  renewals:3,  customs:5},
+    Izana:   {rev:600,   subs:5,  renewals:3,  customs:0},
+  }
+};
+
+// in-memory schedule
+let SCHED=null;
+
+// ── EOD REPORTS ──
+let EOD_REPORTS = [
+  {id:'EOD-001', by:'Joan', shift:'MID', date:'Jun 5, 2026',
+   attendance:{full:false,late:false,undertime:false,beforeOT:false,afterOT:false,cover:true},
+   sales:{sabVIP:515, sabFree:0, omi:0, bee:0, izana:0, maddy:0},
+   mm:{sabVIP:true, sabFree:false, omi:false, bee:false, izana:false, maddy:false},
+   gross:515, notes:'no possible offer for VC', checklist:22, checklistTotal:24, flagged:false},
+];
+
+// ── VIOLATION LOG ──
+let VIOLATIONS = [
+  {id:'VIO-001', by:'Fred', type:'TOS Compliance', sev:'serious', date:'Feb 16, 2024',
+   desc:'TOS violation noted during shift review. Sent non-compliant content. First offense.', linked_coaching:'Feb 1–15, 2024'},
+  {id:'VIO-002', by:'Sage', type:'Grammar/Quality', sev:'minor', date:'Feb 16, 2024',
+   desc:'Multiple grammar errors causing fan confusion during shift. Coaching assigned.', linked_coaching:'Feb 1–15, 2024'},
+  {id:'VIO-003', by:'Jammy', type:'Grammar/Quality', sev:'minor', date:'Jan 16, 2024',
+   desc:'Broken sentences and incomplete thoughts leading to fan disengagement.', linked_coaching:'Jan 1–15, 2024'},
+];
+
+
+// ════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════
+const $=id=>document.getElementById(id);
+const mkPage=id=>{const p=document.createElement('div');p.className='page';p.id='page-'+id;return p;};
+const col=v=>v>=90?'var(--mint)':v>=75?'var(--gold)':'var(--candy)';
+const barHtml=(sales,color)=>{
+  const mx=Math.max(...sales);
+  return `<div class="bars">${sales.map((v,i)=>`<div class="bar-col">
+    <div class="bar-fill" style="height:${Math.round((v/mx)*120)}px;background:linear-gradient(180deg,${color},${color}66)"></div>
+    <div class="bar-lbl">${MONTHS[i]}</div>
+    <div class="bar-val" style="color:${color}">$${(v/1000).toFixed(1)}k</div>
+  </div>`).join('')}</div>`;
+};
+
+// ════════════════════════════════════════
+// AUTH
+// ════════════════════════════════════════
+function authTab(t){
+  document.querySelectorAll('.atab').forEach((b,i)=>b.classList.toggle('on',i===(t==='login'?0:1)));
+  $('loginForm').style.display=t==='login'?'block':'none';
+  $('signupForm').style.display=t==='signup'?'block':'none';
+  $('aerr').style.display='none';
+}
+function showErr(m){const e=$('aerr');e.textContent=m;e.style.display='block';}
+
+function doLogin(){
+  const u=($('lu').value||'').trim().toLowerCase();
+  const p=($('lp').value||'');
+  if(!u||!p){showErr('Please fill in all fields.');return;}
+  const match=ACCS.find(a=>a.u===u&&a.p===p)||XACCS.find(a=>a.u===u&&a.p===p);
+  if(match){launch({username:match.u,role:match.r,cn:match.cn});return;}
+  showErr('Incorrect username or password.');
+}
+
+function doSignup(){
+  const ch=$('sc').value,u=($('su').value||'').trim(),p=$('sp').value,p2=$('sp2').value;
+  if(!ch){showErr('Please select your chatter name.');return;}
+  if(!u){showErr('Please choose a username.');return;}
+  if(p.length<6){showErr('Password must be at least 6 characters.');return;}
+  if(p!==p2){showErr('Passwords do not match.');return;}
+  if([...ACCS,...XACCS].find(a=>a.u===u.toLowerCase())){showErr('Username already taken.');return;}
+  if([...ACCS,...XACCS].find(a=>a.cn===ch&&a.r==='chatter')){showErr('This chatter already has an account.');return;}
+  const a={u:u.toLowerCase(),p,r:'chatter',cn:ch};
+  XACCS.push(a);
+  launch({username:a.u,role:'chatter',cn:ch});
+}
+
+function doLogout(){
+  CU=null;
+  $('authWrap').style.display='flex';
+  $('app').style.display='none';
+  ['lu','lp','su','sp','sp2'].forEach(x=>{const e=$(x);if(e)e.value='';});
+  $('sc').value='';
+  $('aerr').style.display='none';
+}
+
+function launch(user){
+  CU=user;
+  $('authWrap').style.display='none';
+  $('app').style.display='block';
+  const c=user.role==='admin'?'#FFD166':(CLR[user.cn]||'#FF2D78');
+  $('tAv').style.background=`linear-gradient(135deg,${c},${c}88)`;
+  $('tAv').textContent=user.username[0].toUpperCase();
+  $('tUname').textContent=user.username;
+  $('tRole').textContent=user.role==='admin'?'Administrator':`Chatter · ${user.cn}`;
+  $('tBadge').innerHTML=user.role==='admin'
+    ?'<span class="t-badge ba">⭐ Admin</span>'
+    :'<span class="t-badge bc">🍬 Chatter</span>';
+  buildNav();
+  buildPages();
+  goPage('dashboard');
+  startSync();
+  setTimeout(updateNavDots,1500);
+  if(CU.role==='chatter') setTimeout(function(){checkShiftReminder(CU.cn);},2000);
+}
+
+// ════════════════════════════════════════
+// NAV
+// ════════════════════════════════════════
+function buildNav(){
+  const ADMIN_TABS=[
+    ['dashboard','📊 Overview'],['chatters','👥 Chatters'],['performance','📈 Performance'],
+    ['coaching','🎯 Coaching'],['model_sales','💸 Model Sales'],['announcements','📣 Announcements'],
+    ['requests','🎫 Requests'],['checklist','✅ Checklist'],['coverage','🆘 Coverage'],['goals','🎯 Goals'],['eod','📝 EOD Report'],['violations','⚠️ Violations'],['schedule','📅 Schedule'],
+    ['quicklinks','🔗 Quick Links'],['sops','📋 SOPs'],['sales_ref','💲 Sales Guide'],['ppv','💰 PPV Pricing'],['ai','🤖 AI Assistant']
+  ];
+  const CHATTER_TABS=[
+    ['dashboard','📊 My Dashboard'],['performance','📈 Performance'],['coaching','🎯 My Coaching'],
+    ['announcements','📣 Announcements'],['requests','🎫 Requests'],['checklist','✅ Checklist'],
+    ['schedule','📅 Schedule'],['quicklinks','🔗 Quick Links'],['sops','📋 SOPs'],['sales_ref','💲 Sales Guide'],
+    ['ppv','💰 PPV Pricing'],['ai','🤖 AI Assistant']
+  ];
+  const tabs=CU.role==='admin'?ADMIN_TABS:CHATTER_TABS;
+  $('nav').innerHTML=tabs.map(([id,lbl])=>
+    `<button class="nb" id="nb-${id}" onclick="goPage('${id}')">${lbl}<span class="ndot" id="ndot-${id}"></span></button>`
+  ).join('');
+}
+
+function goPage(id){
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  const nb=$('nb-'+id),pg=$('page-'+id);
+  if(nb)nb.classList.add('on');
+  if(pg)pg.classList.add('on');
+}
+
+// ════════════════════════════════════════
+// PAGES
+// ════════════════════════════════════════
+function buildPages(){
+  const c=$('pages'); c.innerHTML='';
+  if(CU.role==='admin'){
+    [pAdminDash,pAdminChatters,pAdminPerf,pAdminCoaching,pModelSales,
+     pAnnouncements,pRequests,()=>pChecklist('admin'),pCoverage,pGoalSetting,pEOD,pViolations,pSchedule,pQuickLinks,pSOPs,pSalesRef,pPPV,pAI
+    ].forEach(fn=>c.appendChild(fn()));
+  } else {
+    [()=>pChatterDash(CU.cn),()=>pChatterPerf(CU.cn),()=>pChatterCoaching(CU.cn),
+     pAnnouncements,()=>pRequests(CU.cn),()=>pChecklist(CU.cn),pCoverage,pGoalSetting,pEOD,pViolations,pSchedule,pQuickLinks,pSOPs,pSalesRef,pPPV,pAI
+    ].forEach(fn=>c.appendChild(fn()));
+  }
+}
+
+// ─── CHATTER DASHBOARD ───
+function pChatterDash(n){
+  const p=mkPage('dashboard'),d=PERF[n],c=CLR[n]||'#FF2D78';
+  const rate=Math.round((d.mms.ok/d.mms.t)*100);
+  const ts=d.sales.reduce((a,b)=>a+b,0);
+  p.innerHTML=`
+  <div id="shiftReminder">
+    <div class="sr-icon">⏰</div>
+    <div class="sr-text">
+      <div class="sr-title">Shift Starting Soon!</div>
+      <div class="sr-sub" id="srSubText">Your shift is starting soon — get ready and clock in on Time Doctor!</div>
+    </div>
+    <button class="sr-dismiss" onclick="dismissShiftReminder()">Got it</button>
+  </div>
+  <div class="ph"><div>
+    <div class="pt" style="display:flex;align-items:center;gap:9px">
+      <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,${c},${c}77);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:13px;color:#fff">${n[0]}</div>${n}
+    </div>
+    <div class="ps">${d.sh} Shift · EYE KANDI May 2026</div>
+  </div></div>
+  <div class="g4" style="margin-bottom:18px">
+    <div class="kpi" style="--ac:${c}"><div class="kl">MMS Submitted</div><div class="kv">${d.mms.t}</div><div class="ks">May 2026</div></div>
+    <div class="kpi" style="--ac:var(--mint)"><div class="kl">Approved</div><div class="kv" style="color:var(--mint)">${d.mms.ok}</div><div class="ks">${rate}% approval rate</div></div>
+    <div class="kpi" style="--ac:var(--gold)"><div class="kl">Pending QA</div><div class="kv" style="color:var(--gold)">${d.mms.pend}</div><div class="ks">${d.mms.pend===0?'🎉 All clear':'Awaiting review'}</div></div>
+    <div class="kpi" style="--ac:var(--lav)"><div class="kl">Latest QA Score</div><div class="kv" style="color:var(--lav)">${d.qs}</div><div class="ks">Target: ${d.qt}</div></div>
+  </div>
+  <div class="g2">
+    <div class="card"><div class="ctitle">Sales Trend <small>Jan–May 2026</small></div>${barHtml(d.sales,c)}</div>
+    <div class="card"><div class="ctitle">Quick Stats</div>
+      <div style="display:flex;flex-direction:column;gap:10px;padding-top:4px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--s2);border-radius:9px">
+          <span style="font-size:12px;color:var(--dim)">Total Sales (Jan–May)</span>
+          <span style="font-family:var(--fh);font-weight:800;color:var(--gold)">$${ts.toLocaleString()}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--s2);border-radius:9px">
+          <span style="font-size:12px;color:var(--dim)">Campaign Tips Earned</span>
+          <span style="font-family:var(--fh);font-weight:800;color:var(--mint)">$${d.tips.toLocaleString()}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--s2);border-radius:9px">
+          <span style="font-size:12px;color:var(--dim)">MMS Approval Rate</span>
+          <span style="font-family:var(--fh);font-weight:800;color:${col(rate)}">${rate}%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--s2);border-radius:9px">
+          <span style="font-size:12px;color:var(--dim)">QA Score vs Target</span>
+          <span style="font-family:var(--fh);font-weight:800;color:${d.qs>=d.qt?'var(--mint)':'var(--candy)'}">
+            ${d.qs} <span style="font-size:11px;color:var(--mu)">/ ${d.qt}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  return p;
+}
+
+// ─── CHATTER PERFORMANCE ───
+function pChatterPerf(n){
+  const p=mkPage('performance'),d=PERF[n],c=CLR[n]||'#FF2D78';
+  const rows=Object.entries(d.kpi).map(([k,v])=>`<tr>
+    <td style="color:var(--dim)">${k}</td>
+    <td><div class="sbar"><div class="sbg"><div class="sfi" style="width:${v}%;background:${col(v)}"></div></div>
+    <div class="snum" style="color:${col(v)}">${v}%</div></div></td>
+  </tr>`).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">📈 My Performance</div><div class="ps">${n} · From QA Scoring Sheets</div></div>
+    <a href="https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit" target="_blank" class="lnk">↗ Full Tracker</a>
+  </div>
+  <div class="g2">
+    <div class="card"><div class="ctitle">KPI Breakdown</div>
+      <div class="tw"><table><thead><tr><th>Metric</th><th>Score</th></tr></thead><tbody>${rows}</tbody></table></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card"><div class="ctitle">QA Score</div>
+        <div style="text-align:center;padding:20px 0">
+          <div style="font-family:var(--fh);font-size:60px;font-weight:800;color:${col(d.qs)}">${d.qs}</div>
+          <div style="font-size:12px;color:var(--dim);margin-top:6px">Target: <b style="color:var(--gold)">${d.qt}</b></div>
+          <div style="width:80%;height:6px;background:var(--s3);border-radius:3px;overflow:hidden;margin:12px auto 0">
+            <div style="height:100%;width:${Math.min((d.qs/d.qt)*100,100)}%;background:${col(d.qs)};border-radius:3px"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card"><div class="ctitle">Campaign Tips</div>
+        <div style="font-family:var(--fh);font-size:32px;font-weight:800;color:var(--gold)">$${d.tips.toLocaleString()}</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:4px">Truth or Dare & other campaigns</div>
+      </div>
+      <div class="card"><div class="ctitle">Sales Trend</div>${barHtml(d.sales,c)}</div>
+    </div>
+  </div>`;
+  return p;
+}
+
+// ─── CHATTER COACHING ───
+function pChatterCoaching(n){
+  const p=mkPage('coaching'),logs=COACHING[n]||[];
+  p.innerHTML=`<div class="ph"><div><div class="pt">🎯 My Coaching Log</div><div class="ps">Your personal coaching history</div></div></div>
+  ${logs.length===0?'<div class="card" style="text-align:center;padding:40px;color:var(--dim)">No coaching sessions on record yet.</div>'
+    :`<div class="col">${logs.map((l,i)=>coCard(l,i,n,false)).join('')}</div>`}`;
+  return p;
+}
+
+// ─── ADMIN DASHBOARD ───
+function pAdminDash(){
+  const p=mkPage('dashboard'),cns=Object.keys(PERF);
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">Admin Overview</div><div class="ps">EYE KANDI · May 2026</div></div></div>
+  <div class="g4" style="margin-bottom:20px">
+    <div class="kpi" style="--ac:var(--candy)"><div class="kl">Total MMS</div><div class="kv">1,421</div><div class="ks">All chatters</div></div>
+    <div class="kpi" style="--ac:var(--mint)"><div class="kl">Approved</div><div class="kv" style="color:var(--mint)">1,268</div><div class="ks">89.2% approval rate</div></div>
+    <div class="kpi" style="--ac:var(--gold)"><div class="kl">Pending QA</div><div class="kv" style="color:var(--gold)">152</div><div class="ks">Awaiting review</div></div>
+    <div class="kpi" style="--ac:var(--sky)"><div class="kl">Active Chatters</div><div class="kv">7</div><div class="ks">All shifts</div></div>
+  </div>
+  <div class="g3">
+    ${cns.map(n=>{const d=PERF[n],c=CLR[n],r=Math.round((d.mms.ok/d.mms.t)*100);
+      return`<div class="card" style="border-left:3px solid ${c}">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,${c},${c}77);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:13px;color:#fff">${n[0]}</div>
+          <div><div style="font-family:var(--fh);font-weight:800;font-size:14px">${n}</div><div style="font-size:10px;color:var(--dim)">${d.sh}</div></div>
+          <div style="margin-left:auto;text-align:right"><div style="font-family:var(--fh);font-weight:800;font-size:18px;color:${c}">${r}%</div><div style="font-size:9px;color:var(--mu)">approval</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px">
+          <div style="background:var(--s2);border-radius:7px;padding:7px;text-align:center"><div style="font-family:var(--fh);font-weight:800;font-size:14px">${d.mms.t}</div><div style="font-size:9px;color:var(--dim)">MMS</div></div>
+          <div style="background:var(--s2);border-radius:7px;padding:7px;text-align:center"><div style="font-family:var(--fh);font-weight:800;font-size:14px;color:${col(d.qs)}">${d.qs}</div><div style="font-size:9px;color:var(--dim)">QA</div></div>
+          <div style="background:var(--s2);border-radius:7px;padding:7px;text-align:center"><div style="font-family:var(--fh);font-weight:800;font-size:14px;color:var(--gold)">$${(d.sales.reduce((a,b)=>a+b,0)/1000).toFixed(1)}k</div><div style="font-size:9px;color:var(--dim)">Sales</div></div>
+        </div>
+        <div style="height:4px;background:var(--s3);border-radius:2px;overflow:hidden">
+          <div style="height:100%;width:${r}%;background:${c};border-radius:2px"></div>
+        </div>
+      </div>`;}).join('')}
+  </div>`;
+  return p;
+}
+
+// ─── ADMIN CHATTERS ───
+function pAdminChatters(){
+  const p=mkPage('chatters'),cns=Object.keys(PERF);
+  const rows=cns.map(n=>{
+    const d=PERF[n],c=CLR[n],r=Math.round((d.mms.ok/d.mms.t)*100),ts=d.sales.reduce((a,b)=>a+b,0);
+    const avg=Math.round(Object.values(d.kpi).reduce((a,b)=>a+b,0)/10);
+    return`<tr>
+      <td><div style="display:flex;align-items:center;gap:8px"><div style="width:26px;height:26px;border-radius:7px;background:${c};display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:10px;color:#fff">${n[0]}</div><span style="font-weight:700">${n}</span></div></td>
+      <td style="color:var(--dim)">${d.sh}</td>
+      <td><span style="font-weight:700;color:${col(d.qs)}">${d.qs}</span></td>
+      <td><span style="font-weight:700;color:${col(avg)}">${avg}%</span></td>
+      <td>${d.mms.t}</td><td style="color:var(--gold);font-weight:700">$${(ts/1000).toFixed(1)}k</td>
+      <td><span style="font-weight:700;color:${col(r)}">${r}%</span></td>
+    </tr>`;
+  }).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">👥 All Chatters</div><div class="ps">Full performance overview</div></div></div>
+  <div class="card">
+    <div class="tw"><table><thead><tr><th>Chatter</th><th>Shift</th><th>QA Score</th><th>Avg KPI</th><th>MMS</th><th>Sales</th><th>Approval</th></tr></thead><tbody>${rows}</tbody></table></div>
+  </div>`;
+  return p;
+}
+
+// ─── ADMIN PERFORMANCE ───
+function pAdminPerf(){
+  const p=mkPage('performance'),cns=Object.keys(PERF);
+  const kpis=Object.keys(PERF.Jayce.kpi);
+  const rows=cns.map(n=>{
+    const d=PERF[n],c=CLR[n];
+    const cells=Object.values(d.kpi).map(v=>`<td style="color:${col(v)};font-weight:600;font-size:11px">${v}%</td>`).join('');
+    return`<tr><td><div style="display:flex;align-items:center;gap:7px"><div style="width:22px;height:22px;border-radius:6px;background:${c};display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:9px;color:#fff">${n[0]}</div><b>${n}</b></div></td>
+    <td style="font-family:var(--fh);font-weight:800;color:${col(d.qs)}">${d.qs}</td>${cells}</tr>`;
+  }).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">📈 Team Performance</div><div class="ps">Latest QA scores</div></div>
+    <a href="https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit" target="_blank" class="lnk">↗ Full Sheet</a>
+  </div>
+  <div class="card" style="margin-bottom:18px">
+    <div class="tw"><table><thead><tr><th>Chatter</th><th>Score</th>${kpis.map(k=>`<th>${k.split(' ')[0]}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>
+  </div>
+  <div class="pt" style="font-size:14px;margin-bottom:12px">Individual Reports</div>
+  <div class="csb" id="perfBar">${cns.map(n=>`<button class="csbtn" onclick="showPerf('${n}',this)">${n}</button>`).join('')}</div>
+  <div id="perfDetail"></div>`;
+  return p;
+}
+
+function showPerf(n,btn){
+  document.querySelectorAll('#perfBar .csbtn').forEach(b=>{b.classList.remove('on');b.style.background='';});
+  btn.classList.add('on');btn.style.background=CLR[n];
+  const d=PERF[n],c=CLR[n];
+  const rows=Object.entries(d.kpi).map(([k,v])=>`<tr>
+    <td style="color:var(--dim)">${k}</td>
+    <td><div class="sbar"><div class="sbg"><div class="sfi" style="width:${v}%;background:${col(v)}"></div></div><div class="snum" style="color:${col(v)}">${v}%</div></div></td>
+  </tr>`).join('');
+  $('perfDetail').innerHTML=`<div class="g2">
+    <div class="card"><div class="ctitle">KPI Breakdown — ${n}</div>
+      <div class="tw"><table><thead><tr><th>Metric</th><th>Score</th></tr></thead><tbody>${rows}</tbody></table></div>
+    </div>
+    <div class="card"><div class="ctitle">Sales Trend — ${n}</div>${barHtml(d.sales,c)}</div>
+  </div>`;
+}
+
+// ─── ADMIN COACHING ───
+function pAdminCoaching(){
+  const p=mkPage('coaching');
+  const all=Object.keys(COACHING).flatMap((n,i)=>COACHING[n].map((l,j)=>coCard(l,j,n,true))).join('');
+  const btns=['All',...Object.keys(COACHING)].map(n=>`<button class="csbtn${n==='All'?' on':''}" onclick="filterCo('${n}',this)">${n}</button>`).join('');
+  p.innerHTML=`<div class="ph"><div><div class="pt">🎯 All Coaching Logs</div><div class="ps">Full team history</div></div></div>
+  <div class="csb" style="margin-bottom:18px">${btns}</div>
+  <div class="col" id="coList">${all}</div>`;
+  return p;
+}
+function filterCo(n,btn){
+  document.querySelectorAll('.csb .csbtn').forEach(b=>{b.classList.remove('on');b.style.background='';});
+  btn.classList.add('on');if(n!=='All')btn.style.background=CLR[n];
+  document.querySelectorAll('#coList .coe').forEach(el=>{
+    el.style.display=(n==='All'||el.dataset.c===n)?'':'none';
+  });
+}
+
+// ─── MODEL SALES ───
+function pModelSales(){
+  const p=mkPage('model_sales'),tot=MODELS.reduce((a,m)=>a+m.rev,0);
+  const cards=MODELS.map(m=>`<div class="msc" style="--mc:${m.c}">
+    <div class="mse">${m.e}</div><div class="msn">${m.id}</div>
+    <div class="msr">$${m.rev.toLocaleString()}</div>
+    <div class="mss">${m.subs} subs · ${m.tr} MoM</div>
+    <div class="msb"><div style="height:100%;width:${Math.min(Math.round((m.rev/tot)*200),100)}%;background:${m.c};border-radius:2px"></div></div>
+  </div>`).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">💸 Model Sales</div><div class="ps">Current revenue · May 2026</div></div>
+    <div style="display:flex;gap:8px">
+      <a href="https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit?gid=2121828189" target="_blank" class="lnk">↗ VIP Tracker</a>
+      <a href="https://docs.google.com/spreadsheets/d/1KcgGQNfdcvMFEoNoImLp7ITurci2vAwc_AveKz8u6rU/edit" target="_blank" class="lnk">↗ Campaign Tracker</a>
+    </div>
+  </div>
+  <div class="kpi" style="--ac:var(--gold);display:inline-flex;flex-direction:column;gap:4px;min-width:200px;margin-bottom:18px">
+    <div class="kl">Total Revenue</div><div class="kv" style="color:var(--gold)">$${tot.toLocaleString()}</div>
+    <div class="ks">All 5 models combined</div>
+  </div>
+  <div class="msg">${cards}</div>`;
+  return p;
+}
+
+// ─── ANNOUNCEMENTS ───
+function pAnnouncements(){
+  const p=mkPage('announcements');
+  const renderAnns=()=>{
+    const cards=ANNS.map(a=>`<div class="anc ${a.ty}">
+      <div class="ant"><div class="ants">${a.ti}</div><div class="antd">${a.dt}</div></div>
+      <div class="anb">${a.bo}</div>
+      <span class="antag ${a.ty==='global'?'tg':a.ty==='callout'?'tc':'ti'}">${a.ty==='global'?'📢 Global':a.ty==='callout'?'⚠️ Call-Out':'ℹ️ Info'}</span>
+    </div>`).join('');
+    const form=CU.role==='admin'?`
+      <div class="fform" style="margin-bottom:20px">
+        <div style="font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:14px">📣 Post Announcement</div>
+        <label class="ffl">Title</label><input class="ffi" id="ati" placeholder="Announcement title">
+        <label class="ffl">Message</label><textarea class="ffi ffta" id="abo" placeholder="Write your message..."></textarea>
+        <label class="ffl">Type</label>
+        <select class="ffi" id="aty"><option value="global">📢 Global</option><option value="callout">⚠️ Call-Out</option><option value="info">ℹ️ Info</option></select>
+        <button class="sbmt" onclick="postAnn()">Post →</button>
+      </div>`:'';
+    p.innerHTML=`<div class="ph"><div><div class="pt">📣 Announcements</div><div class="ps">Team updates and call-outs</div></div></div>
+    ${form}<div class="anl">${cards}</div>`;
+  };
+  renderAnns();
+  window.postAnn=()=>{
+    const ti=($('ati').value||'').trim(),bo=($('abo').value||'').trim(),ty=$('aty').value;
+    if(!ti||!bo){alert('Please fill in title and message.');return;}
+    const dt=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    ANNS.unshift({ty,ti,dt,bo});
+    renderAnns();
+  };
+  return p;
+}
+
+// ─── REQUESTS ───
+function pRequests(cn){
+  const p=mkPage('requests');
+  const isAdmin=CU.role==='admin';
+  const stCls={new:'stnew',pending:'stpend',approved:'stappr',done:'stdone',rejected:'strej'};
+  const renderReqs=()=>{
+    const list=(isAdmin?REQS:REQS.filter(r=>r.by===cn)).map(r=>`
+      <div class="rqc">
+        <div class="rqh"><div class="rqt">${r.ti}</div><span class="rqst ${stCls[r.st]||'stnew'}">${r.st.toUpperCase()}</span></div>
+        <div class="rqm">${r.id} · ${r.cat} · ${r.dt} · By: <b>${r.by}</b></div>
+        <div class="rqb">${r.de}</div>
+        ${isAdmin?`<div style="margin-top:10px">
+          <select onchange="updReq('${r.id}',this.value)" style="background:var(--s2);border:1px solid var(--bdr);border-radius:8px;padding:5px 10px;color:var(--txt);font-size:11px;cursor:pointer;font-family:var(--ff)">
+            <option value="">Change status...</option>
+            <option>new</option><option>pending</option><option>approved</option><option>done</option><option>rejected</option>
+          </select>
+        </div>`:''}
+      </div>`).join('');
+    p.innerHTML=`
+    <div class="ph"><div><div class="pt">🎫 ${isAdmin?'All Requests':'My Requests'}</div><div class="ps">${isAdmin?'Manage team requests':'Your submitted requests'}</div></div></div>
+    <div class="fform">
+      <div style="font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:14px">➕ Submit a Request</div>
+      <div class="g2" style="margin-bottom:0">
+        <div><label class="ffl">Title</label><input class="ffi" id="rti" placeholder="Brief title"></div>
+        <div><label class="ffl">Category</label>
+          <select class="ffi" id="rca"><option>Schedule</option><option>Tech Support</option><option>Pricing</option><option>Campaign</option><option>Coaching</option><option>Other</option></select>
+        </div>
+      </div>
+      <label class="ffl">Description</label><textarea class="ffi ffta" id="rde" placeholder="Describe your request..."></textarea>
+      <button class="sbmt" onclick="submitReq()">Submit Request →</button>
+    </div>
+    <div class="rql">${list}</div>`;
+  };
+  renderReqs();
+  window.submitReq=()=>{
+    const ti=($('rti').value||'').trim(),de=($('rde').value||'').trim(),ca=$('rca').value;
+    if(!ti||!de){alert('Please fill in title and description.');return;}
+    const dt=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    REQS.push({id:`REQ-${String(REQS.length+1).padStart(3,'0')}`,ti,r:CU.role,by:cn||'admin',cat:ca,st:'new',dt,de});
+    renderReqs();
+  };
+  window.updReq=(id,st)=>{
+    if(!st)return;
+    const r=REQS.find(x=>x.id===id);
+    if(r){r.st=st;renderReqs();}
+  };
+  return p;
+}
+
+// ─── CHECKLIST ───
+function pChecklist(cn){
+  const p=mkPage('checklist');
+  if(!CLST[cn])CLST[cn]={};
+  const s=CLST[cn];
+  const render=()=>{
+    let tot=0,dn=0;
+    Object.values(CKL).forEach(items=>items.forEach(()=>tot++));
+    Object.values(s).forEach(v=>{if(v)dn++;});
+    const pct=tot?Math.round((dn/tot)*100):0;
+    const sec=(ti,icon,items,key)=>`<div class="clsec">
+      <div class="clst">${icon} ${ti}</div>
+      ${items.map((it,i)=>{const id=`${key}_${i}`,done=!!s[id];
+        return`<div class="cli${done?' dn':''}" onclick="tgCL('${cn}','${id}')">
+          <div class="clck"><span class="clci">✓</span></div>
+          <div class="cltx">${it}</div>
+        </div>`;}).join('')}
+    </div>`;
+    p.innerHTML=`
+    <div class="ph"><div><div class="pt">✅ Shift Checklist</div><div class="ps">${cn} · Track your shift tasks</div></div></div>
+    <div class="clpw">
+      <div class="clph"><div class="clpt">Shift Progress</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <button class="rbtn" onclick="rstCL('${cn}')">Reset</button>
+          <div class="clpct">${pct}%</div>
+        </div>
+      </div>
+      <div class="clpb"><div class="clpf" style="width:${pct}%"></div></div>
+      <div style="font-size:11px;color:var(--dim);margin-top:8px">${dn} of ${tot} completed</div>
+    </div>
+    ${sec('Pre-Shift','🌅',CKL.pre,'pre')}
+    ${sec('During Shift','⚡',CKL.during,'during')}
+    ${sec('Post-Shift','🌙',CKL.post,'post')}`;
+  };
+  window.tgCL=(c,id)=>{
+    CLST[c][id]=!CLST[c][id];
+    // Refresh checklist page
+    if(CU&&(CU.cn===c||CU.role==='admin')){
+      const pg=$('page-checklist');
+      if(pg&&pg.classList.contains('on')){
+        const fn=CU.role==='admin'?pChecklist('admin'):pChecklist(CU.cn);
+        pg.replaceWith(fn);fn.classList.add('on');$('nb-checklist').classList.add('on');
+      }
+    }
+    // Check completion
+    const s=CLST[c]||{};
+    let tot=0,dn=0;
+    Object.values(CKL).forEach(items=>items.forEach(()=>tot++));
+    Object.values(s).forEach(v=>{if(v)dn++;});
+    // Show modal when all done
+    if(dn===tot&&tot>0&&CLST[c][id]===true){
+      const secs=[
+        {label:'Pre-Shift',done:CKL.pre.filter((_,i)=>s['pre_'+i]).length,total:CKL.pre.length},
+        {label:'During',done:CKL.during.filter((_,i)=>s['during_'+i]).length,total:CKL.during.length},
+        {label:'Post-Shift',done:CKL.post.filter((_,i)=>s['post_'+i]).length,total:CKL.post.length},
+      ];
+      setTimeout(()=>showClModal(c,dn,tot,secs),200);
+    }
+    // Notify admin when shift starts (first item checked)
+    if(CU&&CU.role!=='admin'&&CLST[c][id]===true&&dn===1){
+      addNotif('🟢 '+c+' started their shift checklist');
+    }
+  };
+  window.rstCL=(c)=>{if(confirm('Reset all checklist items?')){CLST[c]={};render();}};
+  render();
+  return p;
+}
+
+// ─── SCHEDULE ───
+function pSchedule(){
+  const p=mkPage('schedule');
+  const render=()=>{
+    if(SCHED){
+      p.innerHTML=`
+      <div class="ph"><div><div class="pt">📅 Weekly Schedule</div><div class="ps">Current uploaded schedule</div></div>
+        <button class="rbtn" onclick="SCHED=null;const pg=pSchedule();pg.classList.add('on');$('page-schedule').replaceWith(pg);$('nb-schedule').classList.add('on')">Replace</button>
+      </div>
+      <div class="sprev">
+        <div class="sprh"><div style="font-family:var(--fh);font-weight:700">Current Schedule</div></div>
+        <img class="simg" src="${SCHED}" alt="Schedule">
+      </div>`;
+    } else {
+      p.innerHTML=`
+      <div class="ph"><div><div class="pt">📅 Weekly Schedule</div><div class="ps">Upload the weekly shift schedule for the team</div></div></div>
+      <div class="sdrop" onclick="$('sfi').click()"
+        ondragover="event.preventDefault();this.classList.add('drag')"
+        ondragleave="this.classList.remove('drag')"
+        ondrop="event.preventDefault();this.classList.remove('drag');ldSched(event.dataTransfer.files[0])">
+        <input type="file" id="sfi" accept="image/*,.pdf" style="display:none" onchange="ldSched(this.files[0])">
+        <div style="font-size:40px;margin-bottom:12px">📅</div>
+        <div style="font-family:var(--fh);font-size:16px;font-weight:700;margin-bottom:6px">Upload Weekly Schedule</div>
+        <div style="font-size:12px;color:var(--dim)">Drag & drop or click to browse · JPG, PNG, PDF</div>
+      </div>`;
+    }
+  };
+  window.ldSched=(f)=>{if(!f)return;const r=new FileReader();r.onload=(e)=>{SCHED=e.target.result;render();};r.readAsDataURL(f);};
+  render();
+  return p;
+}
+
+// ─── SOPs ───
+function pSOPs(){
+  const p=mkPage('sops');
+  const cards=SOPS.map(s=>`<div class="sopc${s.w?' wn':''}">
+    <div class="sopt"><div class="sopico">${s.i}</div>
+      <div><div class="sopn">${s.n}</div><div class="sopy">${s.t}</div></div>
+    </div>
+    <div class="sopno">${s.note}${s.wn?`<br><span style="color:var(--gold);font-size:10px">⚠️ ${s.wn}</span>`:''}</div>
+    <a class="lnk" href="${s.url}" target="_blank" rel="noopener">↗ Open</a>
+  </div>`).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">📋 SOPs</div><div class="ps">Standard Operating Procedures — read before every shift</div></div></div>
+  <div class="notice">📌 SOPs are updated regularly. Always check the latest version before your shift. Questions? Ask your QA in Discord.</div>
+  <div class="sopg">${cards}</div>`;
+  return p;
+}
+
+// ─── SALES REF ───
+function pSalesRef(){
+  const p=mkPage('sales_ref');
+  const cards=SVS.map(s=>{
+    const [cls,lbl]=s.s==='valid'?['svv','✅ Valid']:s.s==='invalid'?['svi','❌ Invalid']:['svr','⚠️ Review'];
+    return`<div class="svc" data-s="${s.s}"><div class="svt"><div class="svsc">${s.sc}</div><span class="svb ${cls}">${lbl}</span></div><div class="svno">${s.n}</div></div>`;
+  }).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">💲 Sales Validity Guide</div><div class="ps">Know exactly what counts — reference every shift</div></div></div>
+  <div class="notice">📌 For scheduled PPVs or PPVs sent by someone else — always include a <b>screenshot</b> in the tracker as proof.</div>
+  <div class="fr">
+    <button class="fb on" onclick="fSV('all',this)">All</button>
+    <button class="fb" onclick="fSV('valid',this)">✅ Valid</button>
+    <button class="fb" onclick="fSV('invalid',this)">❌ Invalid</button>
+    <button class="fb" onclick="fSV('review',this)">⚠️ Review</button>
+  </div>
+  <div class="svg" id="svg">${cards}</div>`;
+  return p;
+}
+window.fSV=(v,btn)=>{
+  document.querySelectorAll('#page-sales_ref .fr .fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.querySelectorAll('#svg .svc').forEach(c=>{c.style.display=(v==='all'||c.dataset.s===v)?'':'none';});
+};
+
+// ─── PPV ───
+function pPPV(){
+  const p=mkPage('ppv');
+  const cards=PPVM.map(m=>{
+    const secs=m.secs.map(s=>`<div class="ppvs"><div class="ppvsl">${s.l}</div>
+      ${s.items.map(i=>`<div class="ppvr"><div class="ppvi">${i.n}</div><div class="ppvp ${i.c||''}">${i.p}</div></div>`).join('')}
+      </div><div class="ppvsp"></div>`).join('');
+    return`<div class="ppvc" data-ppv="${m.id}">
+      <div class="ppvh" style="border-left:4px solid ${m.c}">
+        <span style="font-size:20px">${m.e}</span>
+        <div><div class="ppvn">${m.n}</div>${m.al?`<div class="ppva">${m.al}</div>`:''}</div>
+      </div>
+      ${m.rl?`<div class="ppvrl">⚡ ${m.rl}</div>`:''}${secs}
+    </div>`;
+  }).join('');
+  const btns=PPVM.map(m=>`<button class="fb" onclick="fPPV('${m.id}',this)">${m.e} ${m.n}</button>`).join('');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">💰 PPV Pricing Reference</div><div class="ps">Can go higher — NEVER lower</div></div></div>
+  <div class="notice">⬆ You can <b>go higher</b> than these prices but <b>NEVER lower</b>. Items marked "Ask Sab" — confirm with management first.</div>
+  <div class="fr"><button class="fb on" onclick="fPPV('all',this)">All Models</button>${btns}</div>
+  <div class="ppvg" id="ppvg">${cards}</div>`;
+  return p;
+}
+window.fPPV=(v,btn)=>{
+  document.querySelectorAll('#page-ppv .fr .fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.querySelectorAll('#ppvg .ppvc').forEach((c,i)=>{c.style.display=(v==='all'||PPVM[i].id===v)?'':'none';});
+};
+
+// ─── AI ASSISTANT ───
+function pAI(){
+  const p=mkPage('ai');
+  p.innerHTML=`
+  <div class="ph"><div><div class="pt">🤖 AI Assistant</div><div class="ps">Powered by Claude — context-aware about EYE KANDI operations</div></div></div>
+  <div style="margin-bottom:10px">
+    <label style="font-size:11px;font-weight:600;color:var(--dim);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em">Anthropic API Key</label>
+    <input class="ffi" id="aiKey" type="password" placeholder="sk-ant-api03-..." style="margin-bottom:0">
+    <div style="font-size:11px;color:var(--mu);margin-top:5px">Paste your Anthropic API key above. It stays in your browser — never stored anywhere.</div>
+  </div>
+  <div class="aiw">
+    <div class="aim" id="aiMsgs">
+      <div class="aimsg b">👋 Hi! I am your EYE KANDI AI assistant. I know about your chatters, performance data, SOPs, PPV pricing, and campaigns. Ask me anything!</div>
+    </div>
+    <div class="airow">
+      <input class="aiinp" id="aiInp" placeholder="Ask about performance, SOPs, sales, campaigns..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI();}">
+      <button class="aisnd" id="aiBtn" onclick="sendAI()">Send</button>
+    </div>
+  </div>`;
+  return p;
+}
+
+window.sendAI=async()=>{
+  const inp=$('aiInp'),msgs=$('aiMsgs'),btn=$('aiBtn');
+  const key=($('aiKey').value||'').trim();
+  const txt=(inp.value||'').trim();
+  if(!txt)return;
+  if(!key){
+    msgs.innerHTML+=`<div class="aimsg b">⚠️ Please paste your Anthropic API key above to use the AI assistant. Get one at <a href="https://console.anthropic.com" target="_blank" style="color:var(--candy)">console.anthropic.com</a></div>`;
+    msgs.scrollTop=msgs.scrollHeight;return;
+  }
+  msgs.innerHTML+=`<div class="aimsg u">${txt}</div>`;
+  msgs.innerHTML+=`<div class="aimsg b th" id="aiThink">Thinking...</div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+  inp.value='';btn.disabled=true;
+  const ctx=`You are an AI assistant for EYE KANDI, a professional OnlyFans management agency.
+Current data:
+- Chatters: ${Object.keys(PERF).join(', ')}
+- Latest QA scores: ${Object.entries(PERF).map(([n,d])=>`${n}:${d.qs}`).join(', ')}
+- MMS stats: ${Object.entries(PERF).map(([n,d])=>`${n}: ${d.mms.t} submitted, ${d.mms.ok} approved, ${d.mms.pend} pending`).join(' | ')}
+- Models revenue: ${MODELS.map(m=>`${m.id}:$${m.rev.toLocaleString()}`).join(', ')}
+- Active campaign: Truth or Dare (ongoing, entry tip from $10)
+- Open requests: ${REQS.filter(r=>r.st==='new'||r.st==='pending').length}
+Be helpful, concise, and professional.`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system:ctx,messages:[{role:'user',content:txt}]})
+    });
+    const data=await res.json();
+    const reply=data.content?.[0]?.text||'Sorry, no response received.';
+    $('aiThink').remove();
+    msgs.innerHTML+=`<div class="aimsg b">${reply.replace(/\n/g,'<br>')}</div>`;
+  }catch(e){
+    $('aiThink').remove();
+    msgs.innerHTML+=`<div class="aimsg b">⚠️ Error: ${e.message}</div>`;
+  }
+  btn.disabled=false;msgs.scrollTop=msgs.scrollHeight;
+};
+
+// ─── COACHING CARD ───
+function coCard(l,i,n,showName){
+  const c=CLR[n]||'#FF2D78',sc=l.st==='PASSED'?'cpp':'cpc';
+  const pills=Object.entries(l.kpi||{}).map(([k,v])=>`<span class="kp k${v}">${k}</span>`).join('');
+  const areas=l.areas.map(a=>`<div class="imc"><div class="iml">${a.l}</div><div class="imn">${a.n}</div></div>`).join('');
+  const acts=l.acts.map((a,n)=>`<div class="aci"><div class="acn">${n+1}</div><div>${a}</div></div>`).join('');
+  const uid=`co_${n}_${i}`;
+  return`<div class="coe" id="${uid}" data-c="${n}">
+    <div class="coh" onclick="tgCo('${uid}')">
+      <div class="coav" style="background:linear-gradient(135deg,${c},${c}77)">${n[0]}</div>
+      <div><div class="con">${showName?n+' — ':''}${l.per}</div><div class="com">Coach: ${l.co} · ${l.dt}</div></div>
+      <div class="cob2"><span class="cp ${sc}">${l.st}</span></div>
+      <span class="chv" id="chv_${uid}">›</span>
+    </div>
+    <div class="cob" id="body_${uid}">
+      <div class="cosl">KPI Focus Areas</div><div class="kpp">${pills}</div>
+      <div class="cosl">Identified Behavior</div><div class="cobox">${l.beh}</div>
+      <div class="cosl">Root Cause</div><div class="cobox">${l.rca}</div>
+      ${l.areas.length?`<div class="cosl">Areas to Improve</div><div class="imr">${areas}</div>`:''}
+      <div class="cosl">Action Plans</div><div class="acl">${acts}</div>
+      <div class="cmb"><div class="cml">Chatter Commitment</div><div class="cmt">"${l.com}"</div></div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// GOOGLE SHEETS AUTO-SYNC
+// ═══════════════════════════════════════
+const SHEET_IDS = {
+  tracker: '1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg',
+  mms: '1IuG0jsv8zpF0l835u45rPNn5xAyM9JGDVN6Es4OMH-8'
+};
+
+async function fetchSheetCSV(sheetId, gid) {
+  const url = 'https://docs.google.com/spreadsheets/d/' + sheetId + '/export?format=csv&gid=' + gid;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Fetch failed ' + res.status);
+  return await res.text();
+}
+
+function parseCSV(csv) {
+  const rows = [];
+  for (const line of csv.split('\n')) {
+    const cols = [], len = line.length;
+    let cur = '', inQ = false;
+    for (let i = 0; i < len; i++) {
+      const c = line[i];
+      if (c === '"') { inQ = !inQ; }
+      else if (c === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else { cur += c; }
+    }
+    cols.push(cur.trim());
+    rows.push(cols);
+  }
+  return rows;
+}
+
+function pct(val) {
+  if (!val) return 0;
+  const n = parseFloat((val+'').replace('%','').replace(',','.'));
+  return isNaN(n) ? 0 : Math.min(Math.round(n), 100);
+}
+
+async function syncLiveData() {
+  const ind = document.getElementById('syncIndicator');
+  try {
+    // === TRACKER SHEET — get latest KPI scores ===
+    const csv = await fetchSheetCSV(SHEET_IDS.tracker, 0);
+    const rows = parseCSV(csv);
+    const kpiKeys = ['Mass Message','Building Rapport','Response Time','Terms of Service','Grammar','PPV Sent','Sales','Retention','Drives Conversation','Fan Satisfaction'];
+    
+    // Walk rows bottom-up to find the LATEST scores per chatter
+    const latest = {};
+    for (let i = rows.length - 1; i >= 0; i--) {
+      const row = rows[i];
+      const name = (row[0]||'').trim();
+      const scoreVal = pct(row[1]);
+      if (!name || name.length < 2 || name.length > 20) continue;
+      if (/chatter|name|total|avg|average|score|opportunity|performance|date/i.test(name)) continue;
+      if (scoreVal < 30 || scoreVal > 100) continue;
+      const key = name.toLowerCase();
+      if (!latest[key]) {
+        const kpis = {};
+        kpiKeys.forEach((k, idx) => { kpis[k] = pct(row[idx + 2]); });
+        latest[key] = { name, score: scoreVal, kpi: kpis };
+      }
+    }
+
+    // === MMS TRACKER SHEET ===
+    const mmscsv = await fetchSheetCSV(SHEET_IDS.mms, 0);
+    const mmsrows = parseCSV(mmscsv);
+    const mmsCounts = {};
+    for (const row of mmsrows) {
+      const name = (row[0]||'').trim().toLowerCase();
+      const qa = (row[5]||'').trim().toUpperCase();
+      if (!name || /chatter|name/.test(name)) continue;
+      if (!mmsCounts[name]) mmsCounts[name] = {t:0,ok:0,pend:0};
+      mmsCounts[name].t++;
+      if (qa === 'GOOD') mmsCounts[name].ok++;
+      else mmsCounts[name].pend++;
+    }
+
+    // === UPDATE PERF with live data ===
+    let updated = 0;
+    for (const [key, val] of Object.entries(latest)) {
+      const perfKey = Object.keys(PERF).find(k => k.toLowerCase() === key);
+      if (perfKey) {
+        if (val.score > 0) PERF[perfKey].qs = val.score;
+        const hasKpi = Object.values(val.kpi).some(v => v > 0);
+        if (hasKpi) PERF[perfKey].kpi = val.kpi;
+        updated++;
+      }
+    }
+    for (const [key, val] of Object.entries(mmsCounts)) {
+      const perfKey = Object.keys(PERF).find(k => k.toLowerCase() === key);
+      if (perfKey && val.t > 0) {
+        PERF[perfKey].mms = { t: val.t, ok: val.ok, pend: val.pend };
+      }
+    }
+
+    if (ind) { ind.textContent = '✅ Live · ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}); ind.style.color = 'var(--mint)'; }
+    console.log('Synced', updated, 'chatters from Google Sheets');
+
+    // Refresh current page if active
+    if (CU) {
+      const ap = document.querySelector('.page.on');
+      if (ap) {
+        const pid = ap.id.replace('page-','');
+        if (['dashboard','performance','chatters'].includes(pid)) {
+          const pages = document.getElementById('pages');
+          pages.innerHTML = '';
+          buildPages();
+          goPage(pid);
+        }
+      }
+    }
+
+  } catch(e) {
+    console.warn('Sync failed:', e.message);
+    if (ind) { ind.textContent = '⚠️ Offline'; ind.style.color = 'var(--gold)'; }
+  }
+}
+
+// Auto-sync on launch, then every 5 minutes
+function startSync() {
+  syncLiveData();
+  setInterval(syncLiveData, 5 * 60 * 1000);
+}
+
+
+// ════════════════════════════════════════
+// NOTIFICATIONS SYSTEM
+// ════════════════════════════════════════
+let NOTIFS = [];
+
+function addNotif(msg, type) {
+  NOTIFS.unshift({ id: Date.now(), msg: msg, type: type||'info', read: false,
+    time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) });
+  renderNotifs();
+}
+
+function renderNotifs() {
+  const unread = NOTIFS.filter(function(n){return !n.read;}).length;
+  const badge = document.getElementById('notifBadge');
+  if (badge) {
+    badge.textContent = unread > 9 ? '9+' : unread;
+    badge.classList.toggle('hidden', unread === 0);
+  }
+  const list = document.getElementById('notifList');
+  if (!list) return;
+  if (NOTIFS.length === 0) {
+    list.innerHTML = '<div class="notif-empty">🔔 No notifications yet</div>';
+    return;
+  }
+  list.innerHTML = NOTIFS.slice(0, 20).map(function(n) {
+    return '<div class="notif-item' + (n.read?'':' unread') + '" onclick="readNotif(' + n.id + ')">'
+      + '<div class="notif-dot' + (n.read?' read':'') + '"></div>'
+      + '<div class="notif-content">'
+      + '<div class="notif-msg">' + n.msg + '</div>'
+      + '<div class="notif-time">' + n.time + '</div>'
+      + '</div></div>';
+  }).join('');
+  updateNavDots();
+}
+
+function readNotif(id) {
+  var n = NOTIFS.find(function(x){return x.id===id;});
+  if (n) n.read = true;
+  renderNotifs();
+}
+
+function markAllRead() {
+  NOTIFS.forEach(function(n){n.read=true;});
+  renderNotifs();
+}
+
+function toggleNotif() {
+  var dd = document.getElementById('notifDropdown');
+  if (dd) dd.classList.toggle('open');
+}
+
+function closeNotif() {
+  var dd = document.getElementById('notifDropdown');
+  if (dd) dd.classList.remove('open');
+}
+
+document.addEventListener('click', function(e) {
+  var wrap = document.getElementById('notifWrap');
+  if (wrap && !wrap.contains(e.target)) closeNotif();
+});
+
+function updateNavDots() {
+  var reqDot = document.querySelector('#nb-requests .ndot');
+  if (reqDot) {
+    var pending = REQS.filter(function(r){return r.status==='Pending';}).length;
+    reqDot.classList.toggle('show', pending > 0);
+  }
+  if (CU && CU.role === 'admin') {
+    var perfDot = document.querySelector('#nb-performance .ndot');
+    if (perfDot) {
+      var hasLow = Object.values(PERF).some(function(d){return (d.qs||d.latestScore||0) < 60;});
+      perfDot.classList.toggle('show', hasLow);
+    }
+  }
+}
+
+// ════════════════════════════════════════
+// QUICK LINKS HUB
+// ════════════════════════════════════════
+var QUICK_LINKS = [
+  { cat: '📊 Trackers & Sheets', icon: '📗', links: [
+    { name: 'TRACKER EK1&2 (QA Scores)', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit', ok: true },
+    { name: 'MMS Tracker', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1IuG0jsv8zpF0l835u45rPNn5xAyM9JGDVN6Es4OMH-8/edit', ok: true },
+    { name: 'PPV Pricing Sheet', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1_LbogJfEjxUDSxtG6tO8BaKonrU85R71L2G_nqJcFwU/edit', ok: true },
+    { name: 'Campaign Tracker', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1KcgGQNfdcvMFEoNoImLp7ITurci2vAwc_AveKz8u6rU/edit', ok: true },
+    { name: 'BFF Sheet', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1r-rqRfXGhM6U90D0Vm63sqr8dVqt0ITVWsRuZHTwa_E/edit', ok: true },
+    { name: 'Calibration Sheet', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1HTpeV-bXvmzaCGl_YLg9pi0QswQLCVNZzOgEftOuXnM/edit', ok: true },
+    { name: 'Sales Tracker (Net/PPV)', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1Re0u3EWPbwqWImAHds5GVGPCT0rvHVEBQQAoBjMHwq0/edit', ok: true },
+  ]},
+  { cat: '📋 SOPs & Documents', icon: '📄', links: [
+    { name: 'Main SOP', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1CwPKLRT-HBr4j7i6uERxijaX6yydyVsxDi4JR4ymP_4/edit', ok: true },
+    { name: 'Tagging SOP', type: 'Google Docs', url: 'https://docs.google.com/document/d/1YuSxnAMnFNysG2m0HIgWd3wcv_fcLWJ2Wp3hBfNPvxU/edit', ok: true },
+    { name: 'Mass Message Library', type: 'Google Docs', url: 'https://docs.google.com/document/d/13wFYOi6F_yissaoKrr3qvWoGC9I4efTkBQwhi7JesGg/edit', ok: true },
+    { name: 'How to Add a Story', type: 'Loom Video', url: 'https://www.loom.com/share/cd12861e17f645e4aa3152d2c422827d', ok: false },
+  ]},
+  { cat: 'Tools & Platforms', icon: '⚙️', links: [
+    { name: 'Time Doctor Download', type: 'App', url: 'https://www.timedoctor.com/download.html', ok: true },
+    { name: 'Custom Request Form', type: 'Fillout Form', url: 'https://fillout.com', ok: true },
+    { name: 'Infloww (Chatter Platform)', type: 'Platform', url: 'https://app.infloww.com', ok: true },
+  ]},
+  { cat: '📣 Team Comms', icon: '💬', links: [
+    { name: 'Discord Server', type: 'Discord', url: '#', ok: true },
+    { name: 'Model Dashboard (Notion)', type: 'Notion', url: '#', ok: false },
+    { name: 'Custom Request Status', type: 'Notion', url: '#', ok: false },
+  ]},
+];
+
+function pQuickLinks() {
+  var p = mkPage('quicklinks');
+  var warnCount = QUICK_LINKS.reduce(function(s,c){return s+c.links.filter(function(l){return !l.ok;}).length;},0);
+  var cats = QUICK_LINKS.map(function(cat) {
+    var items = cat.links.map(function(l) {
+      return '<a class="ql-item" href="' + l.url + '" target="_blank" rel="noopener">'
+        + '<div class="' + (l.ok?'ql-status-ok':'ql-status-warn') + '"></div>'
+        + '<div class="ql-item-info">'
+        + '<div class="ql-item-name">' + l.name + '</div>'
+        + '<div class="ql-item-type">' + l.type + (l.ok?'':' · ⚠️ May need update') + '</div>'
+        + '</div><div class="ql-item-arrow">↗</div></a>';
+    }).join('');
+    return '<div class="ql-cat">'
+      + '<div class="ql-cat-hdr"><span class="ql-cat-icon">' + cat.icon + '</span>'
+      + '<span class="ql-cat-title">' + cat.cat + '</span></div>'
+      + '<div class="ql-items">' + items + '</div></div>';
+  }).join('');
+  p.innerHTML = '<div class="ph"><div><div class="pt">🔗 Quick Links Hub</div>'
+    + '<div class="ps">All tools, sheets, and platforms in one place</div></div></div>'
+    + (warnCount>0?'<div class="notice">⚠️ '+warnCount+' link'+(warnCount>1?'s':'')+' may need updating (marked in yellow). Contact admin.</div>':'')
+    + '<div class="ql-cats">' + cats + '</div>';
+  return p;
+}
+
+// ════════════════════════════════════════
+// CHECKLIST COMPLETION MODAL
+// ════════════════════════════════════════
+var _clModalData = {};
+
+function showClModal(cn, done, total, sections) {
+  var isComplete = done === total;
+  var pct = Math.round((done/total)*100);
+  document.getElementById('clmIcon').textContent = isComplete ? '🎉' : '⚠️';
+  document.getElementById('clmTitle').textContent = isComplete ? 'Shift Complete!' : 'Shift Ended — Incomplete';
+  document.getElementById('clmSub').textContent = isComplete
+    ? 'Great shift, ' + cn + '! All ' + total + ' tasks completed.'
+    : done + ' of ' + total + ' tasks completed (' + pct + '%). Note any reasons below.';
+  document.getElementById('clmStats').innerHTML = sections.map(function(s) {
+    var col = s.done===s.total ? 'var(--mint)' : 'var(--gold)';
+    return '<div class="clm-stat">'
+      + '<div class="clm-stat-val" style="color:' + col + '">' + s.done + '/' + s.total + '</div>'
+      + '<div class="clm-stat-lbl">' + s.label + '</div></div>';
+  }).join('');
+  document.getElementById('clmNote').placeholder = isComplete
+    ? 'e.g. Pushed 5 PPVs, 2 high-value fans engaged...'
+    : 'e.g. Internet issue, will submit EOD tomorrow...';
+  document.getElementById('clModal').classList.add('open');
+  _clModalData = {cn:cn, done:done, total:total, pct:pct, isComplete:isComplete};
+}
+
+function closeClModal() {
+  document.getElementById('clModal').classList.remove('open');
+}
+
+function submitShiftSummary() {
+  var note = document.getElementById('clmNote').value.trim();
+  var d = _clModalData;
+  if (CU && CU.role !== 'admin') {
+    var msg = d.isComplete
+      ? '✅ ' + d.cn + ' completed all shift tasks (' + d.total + '/' + d.total + ')'
+      : '⚠️ ' + d.cn + ' submitted shift with ' + d.done + '/' + d.total + ' tasks (' + d.pct + '%)' + (note ? ': ' + note : '');
+    addNotif(msg, d.isComplete ? 'success' : 'warn');
+  }
+  closeClModal();
+  document.getElementById('clmNote').value = '';
+  showToast(d.isComplete ? '✅ Shift summary submitted!' : '⚠️ Shift summary submitted with notes.');
+}
+
+// ════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════
+function showToast(msg, dur) {
+  dur = dur || 3000;
+  var t = document.getElementById('toastEl');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toastEl';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);'
+      + 'background:var(--s1);border:1px solid var(--bdr2);border-radius:10px;'
+      + 'padding:10px 20px;font-size:13px;font-weight:600;color:var(--txt);'
+      + 'z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.4);transition:opacity .3s;white-space:nowrap;';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  if (t._timer) clearTimeout(t._timer);
+  t._timer = setTimeout(function(){t.style.opacity='0';}, dur);
+}
+
+
+
+// ════════════════════════════════════════
+// SESSION 8: SCHED-C — COVERAGE REQUESTS + OVERTIME + SHIFT REMINDER
+// ════════════════════════════════════════
+
+// Shift reminder — shows banner on dashboard if shift starts within 60 min
+function checkShiftReminder(cn) {
+  if (!cn) return;
+  var now = new Date();
+  var phHour = (now.getUTCHours() + 8) % 24; // PHT = UTC+8
+  // Shift start times in PHT
+  var shifts = {AM: 8, MID: 16, EVE: 0}; // 8AM, 4PM, 12AM PHT (approximate)
+  var myShift = PERF[cn] ? PERF[cn].sh : null;
+  if (!myShift) return;
+  var shiftKey = myShift.split('/')[0].trim();
+  var startHr = shifts[shiftKey] || shifts['AM'];
+  var diff = startHr - phHour;
+  if (diff < 0) diff += 24;
+  var banner = document.getElementById('shiftReminder');
+  if (diff <= 1 && diff >= 0 && banner) {
+    banner.classList.add('show');
+    var mins = Math.round(diff * 60);
+    var el = document.getElementById('srSubText');
+    if (el) el.textContent = mins <= 10
+      ? 'Your ' + shiftKey + ' shift is starting very soon — clock in on Time Doctor!'
+      : 'Your ' + shiftKey + ' shift starts in about ' + mins + ' minutes. Get ready!';
+  }
+}
+
+function dismissShiftReminder() {
+  var banner = document.getElementById('shiftReminder');
+  if (banner) banner.classList.remove('show');
+}
+
+// Coverage request page (Sched-C)
+function pCoverage() {
+  var p = mkPage('coverage');
+  var isAdmin = CU && CU.role === 'admin';
+
+  function render() {
+    var myCovReqs = isAdmin ? COV_REQS : COV_REQS.filter(function(r) {
+      return r.by === CU.cn || r.claimed_by === CU.cn;
+    });
+    var openReqs = COV_REQS.filter(function(r) { return r.status === 'open' && r.by !== (CU.cn||''); });
+
+    var formHtml = !isAdmin ? `
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-title">📢 Request Coverage or Overtime</div>
+        <div class="g2" style="margin-bottom:12px">
+          <div>
+            <div style="font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:600">Request Type</div>
+            <select class="af" id="covType" style="width:100%;cursor:pointer">
+              <option value="coverage">🆘 I Need Coverage (can't make my shift)</option>
+              <option value="overtime">⏰ Overtime / Extra Shift Request</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:600">Shift & Date</div>
+            <select class="af" id="covShift" style="width:100%;cursor:pointer">
+              <option value="AM">AM Shift</option>
+              <option value="MID">MID Shift</option>
+              <option value="EVE">EVE Shift</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:600">Reason / Details</div>
+          <textarea class="af" id="covReason" rows="3" placeholder="e.g. Medical appointment, internet issue, want to extend shift for campaign push..." style="resize:vertical;line-height:1.5"></textarea>
+        </div>
+        <button class="abtn" style="width:auto;padding:9px 22px" onclick="submitCovReq()">Submit Request →</button>
+      </div>` : '';
+
+    var openAvail = !isAdmin && openReqs.length > 0 ? `
+      <div class="notice" style="margin-bottom:16px">
+        🆘 <strong>${openReqs.length} open coverage request${openReqs.length>1?'s':''}</strong> — someone needs help! Can you cover?
+      </div>` : '';
+
+    var cards = COV_REQS.map(function(r) {
+      var isOwn = r.by === (CU.cn||'');
+      var canClaim = !isAdmin && r.status === 'open' && !isOwn && r.type === 'coverage';
+      var shiftColor = r.shift==='AM'?'#F97316':r.shift==='MID'?'#86AC6A':'#60A5FA';
+      return '<div class="cov-card ' + r.type + '">'
+        + '<div class="cov-hdr">'
+        + '<div><div class="cov-name">' + r.by + (isOwn?' (You)':'') + '</div>'
+        + '<div class="cov-meta">' + r.date + (r.claimed_by?' · Claimed by '+r.claimed_by:'') + '</div></div>'
+        + '<div style="display:flex;gap:5px;align-items:center">'
+        + '<span class="cov-type ' + r.type + '">' + (r.type==='coverage'?'🆘 Coverage':'⏰ Overtime') + '</span>'
+        + '<span class="cov-status ' + r.status + '">' + r.status.charAt(0).toUpperCase()+r.status.slice(1) + '</span>'
+        + '</div></div>'
+        + '<div class="cov-shift" style="color:'+shiftColor+'">'+r.shift+' Shift</div>'
+        + '<div class="cov-reason">' + r.reason + '</div>'
+        + '<div class="cov-actions">'
+        + (canClaim ? '<button class="cov-btn claim" onclick="claimCoverage(''+r.id+'')">✋ I Can Cover</button>' : '')
+        + (isAdmin && r.status==='claimed' ? '<button class="cov-btn approve" onclick="approveCov(''+r.id+'')">✅ Approve</button>' : '')
+        + (isAdmin && r.status==='open' ? '<button class="cov-btn approve" onclick="approveCov(''+r.id+'')">✅ Approve</button>' : '')
+        + (isAdmin ? '<button class="cov-btn reject" onclick="rejectCov(''+r.id+'')">✕ Reject</button>' : '')
+        + '</div></div>';
+    }).join('');
+
+    p.innerHTML = '<div class="ph"><div><div class="pt">🆘 Coverage & Overtime Requests</div>'
+      + '<div class="ps">Request shift coverage or extra hours — admin approves all requests</div></div></div>'
+      + openAvail + formHtml
+      + '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:14px">All Requests</div></div>'
+      + '<div class="cov-grid">' + (cards||'<div style="color:var(--dim);font-size:13px">No requests yet.</div>') + '</div>';
+  }
+
+  window.submitCovReq = function() {
+    var type = document.getElementById('covType').value;
+    var shift = document.getElementById('covShift').value;
+    var reason = (document.getElementById('covReason').value||'').trim();
+    if (!reason) { showToast('⚠️ Please add a reason.'); return; }
+    var d = new Date();
+    var dt = d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    COV_REQS.unshift({
+      id: 'COV-' + String(COV_REQS.length+1).padStart(3,'0'),
+      type: type, by: CU.cn, shift: shift, date: dt,
+      reason: reason, status: 'open', claimed_by: null
+    });
+    addNotif('🆘 ' + CU.cn + ' submitted a ' + type + ' request for ' + shift + ' shift');
+    document.getElementById('covReason').value = '';
+    showToast('✅ Request submitted! Admin has been notified.');
+    render();
+  };
+
+  window.claimCoverage = function(id) {
+    var r = COV_REQS.find(function(x){return x.id===id;});
+    if (!r) return;
+    r.status = 'claimed';
+    r.claimed_by = CU.cn;
+    addNotif('✋ ' + CU.cn + ' can cover ' + r.by + "'s " + r.shift + ' shift — awaiting admin approval');
+    showToast('✋ Coverage claimed! Waiting for admin to confirm.');
+    render();
+  };
+
+  window.approveCov = function(id) {
+    var r = COV_REQS.find(function(x){return x.id===id;});
+    if (!r) return;
+    r.status = 'approved';
+    addNotif('✅ Coverage/overtime approved: ' + r.by + ' ' + r.shift + ' shift on ' + r.date);
+    showToast('✅ Request approved!');
+    render();
+  };
+
+  window.rejectCov = function(id) {
+    var r = COV_REQS.find(function(x){return x.id===id;});
+    if (!r) return;
+    r.status = 'rejected';
+    showToast('Request rejected.');
+    render();
+  };
+
+  render();
+  return p;
+}
+
+// ════════════════════════════════════════
+// SESSION 22: GOAL SETTING
+// ════════════════════════════════════════
+function pGoalSetting() {
+  var p = mkPage('goals');
+  var isAdmin = CU && CU.role === 'admin';
+  var MONTHS_LABEL = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var curMonth = MONTHS_LABEL[new Date().getMonth()] + ' ' + new Date().getFullYear();
+
+  function pct(actual, goal) {
+    if (!goal || goal===0) return 0;
+    return Math.min(Math.round((actual/goal)*100), 100);
+  }
+
+  function barColor(p) {
+    return p >= 90 ? 'var(--mint)' : p >= 60 ? 'var(--gold)' : 'var(--candy)';
+  }
+
+  function chatterCard(name) {
+    var g = GOALS.chatters[name] || {qa:75,sales:2000,ppv:3,mms:50};
+    var d = PERF[name] || {};
+    var clr = CLR[name] || '#FF2D78';
+    var actualQA = d.qs || d.latestScore || 0;
+    var actualSales = d.sales ? d.sales.reduce(function(a,b){return a+b;},0) : 0;
+    var actualMMS = d.mms ? d.mms.t : 0;
+    var qaP = pct(actualQA, g.qa);
+    var salesP = pct(actualSales, g.sales);
+    var mmsP = pct(actualMMS, g.mms);
+    var canEdit = isAdmin || (CU.cn === name);
+    return '<div class="goal-card">'
+      + '<div class="goal-hdr">'
+      + '<div class="goal-name"><div style="width:28px;height:28px;border-radius:7px;background:'+clr+';display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff">'+name[0]+'</div>'+name+'</div>'
+      + '<div class="goal-period">'+curMonth+'</div></div>'
+      + '<div class="goal-body">'
+      + '<div class="goal-row"><div class="goal-label">🎯 QA Score Target</div>'
+      + (canEdit ? '<input class="goal-input" id="g_qa_'+name+'" value="'+g.qa+'" type="number" min="0" max="100">' : '<span style="font-weight:700;font-size:13px">'+g.qa+'</span>')
+      + '</div>'
+      + '<div class="goal-row"><div class="goal-label">💰 Sales Target ($)</div>'
+      + (canEdit ? '<input class="goal-input" id="g_sales_'+name+'" value="'+g.sales+'" type="number" min="0">' : '<span style="font-weight:700;font-size:13px">$'+g.sales.toLocaleString()+'</span>')
+      + '</div>'
+      + '<div class="goal-row"><div class="goal-label">📩 PPV Goal (per shift)</div>'
+      + (canEdit ? '<input class="goal-input" id="g_ppv_'+name+'" value="'+g.ppv+'" type="number" min="0">' : '<span style="font-weight:700;font-size:13px">'+g.ppv+'</span>')
+      + '</div>'
+      + '<div class="goal-row"><div class="goal-label">💬 MMS Target</div>'
+      + (canEdit ? '<input class="goal-input" id="g_mms_'+name+'" value="'+g.mms+'" type="number" min="0">' : '<span style="font-weight:700;font-size:13px">'+g.mms+'</span>')
+      + '</div>'
+      + '<div class="goal-progress-wrap">'
+      + '<div class="goal-progress-row"><div class="goal-progress-label">QA Score</div><div class="goal-progress-pct" style="color:'+barColor(qaP)+'">'+actualQA+' / '+g.qa+'</div></div>'
+      + '<div class="goal-bar"><div class="goal-bar-fill" style="width:'+qaP+'%;background:'+barColor(qaP)+'"></div></div>'
+      + '<div style="margin-top:8px"></div>'
+      + '<div class="goal-progress-row"><div class="goal-progress-label">Sales</div><div class="goal-progress-pct" style="color:'+barColor(salesP)+'">$'+actualSales.toLocaleString()+' / $'+g.sales.toLocaleString()+'</div></div>'
+      + '<div class="goal-bar"><div class="goal-bar-fill" style="width:'+salesP+'%;background:'+barColor(salesP)+'"></div></div>'
+      + '</div>'
+      + (canEdit ? '<button class="goal-save-btn" onclick="saveGoal(''+name+'')">💾 Save Goals</button>' : '')
+      + '</div></div>';
+  }
+
+  function modelCard(name) {
+    var g = GOALS.models[name] || {rev:5000,subs:10,renewals:5,customs:10};
+    var emojis = {Sabrina:'👑',Omi:'🔥',Maddy:'💋',Bee:'🐝',Izana:'💎'};
+    var colors = {Sabrina:'#FF2D78',Omi:'#FFD166',Maddy:'#C084FC',Bee:'#60A5FA',Izana:'#06D6A0'};
+    var clr = colors[name] || '#FF2D78';
+    return '<div class="goal-card">'
+      + '<div class="goal-hdr">'
+      + '<div class="goal-name">'+(emojis[name]||'⭐')+' '+name+'</div>'
+      + '<div class="goal-period">'+curMonth+'</div></div>'
+      + '<div class="goal-body">'
+      + '<div class="goal-row"><div class="goal-label">💰 Revenue Target ($)</div>'
+      + (isAdmin ? '<input class="goal-input" id="gm_rev_'+name+'" value="'+g.rev+'" type="number">' : '<span style="font-weight:700">$'+g.rev.toLocaleString()+'</span>')
+      + '</div>'
+      + '<div class="goal-row"><div class="goal-label">👥 New Subscribers</div>'
+      + (isAdmin ? '<input class="goal-input" id="gm_subs_'+name+'" value="'+g.subs+'" type="number">' : '<span style="font-weight:700">'+g.subs+'</span>')
+      + '</div>'
+      + '<div class="goal-row"><div class="goal-label">🔄 Renewals Target</div>'
+      + (isAdmin ? '<input class="goal-input" id="gm_ren_'+name+'" value="'+g.renewals+'" type="number">' : '<span style="font-weight:700">'+g.renewals+'</span>')
+      + '</div>'
+      + '<div class="goal-row"><div class="goal-label">🎨 Custom Content Goal</div>'
+      + (isAdmin ? '<input class="goal-input" id="gm_cust_'+name+'" value="'+g.customs+'" type="number">' : '<span style="font-weight:700">'+g.customs+'</span>')
+      + '</div>'
+      + (isAdmin ? '<button class="goal-save-btn" onclick="saveModelGoal(''+name+'')">💾 Save Goals</button>' : '')
+      + '</div></div>';
+  }
+
+  // Team overview summary
+  var chatterNames = Object.keys(GOALS.chatters);
+  var onTrack = chatterNames.filter(function(n){
+    var d = PERF[n]||{}; var g = GOALS.chatters[n]||{};
+    return (d.qs||d.latestScore||0) >= (g.qa||75);
+  }).length;
+
+  var summaryHtml = isAdmin ? '<div class="goal-summary">'
+    + '<div class="card-title">📊 Team Goals Overview — '+curMonth+'</div>'
+    + '<div class="goal-summary-grid">'
+    + '<div class="goal-kpi"><div class="goal-kpi-val" style="color:var(--mint)">'+(onTrack)+'/'+(chatterNames.length)+'</div><div class="goal-kpi-lbl">On Track QA</div></div>'
+    + '<div class="goal-kpi"><div class="goal-kpi-val" style="color:var(--gold)">$'+
+      Object.values(GOALS.models).reduce(function(s,g){return s+g.rev;},0).toLocaleString()+'</div><div class="goal-kpi-lbl">Total Rev Target</div></div>'
+    + '<div class="goal-kpi"><div class="goal-kpi-val" style="color:var(--lav)">'+
+      Object.values(GOALS.chatters).reduce(function(s,g){return s+g.ppv;},0)+'</div><div class="goal-kpi-lbl">Total PPV Goal/shift</div></div>'
+    + '<div class="goal-kpi"><div class="goal-kpi-val" style="color:var(--sky)">'+
+      Object.values(GOALS.models).reduce(function(s,g){return s+g.subs;},0)+'</div><div class="goal-kpi-lbl">Total Sub Target</div></div>'
+    + '</div></div>' : '';
+
+  // Build chatter section
+  var chatterSection = '';
+  if (isAdmin) {
+    chatterSection = '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">👥 Chatter Goals</div></div>'
+      + '<div class="goal-grid">' + chatterNames.map(chatterCard).join('') + '</div>';
+  } else if (CU.cn) {
+    chatterSection = '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">🎯 My Goals</div></div>'
+      + '<div class="goal-grid">' + chatterCard(CU.cn) + '</div>';
+  }
+
+  var modelSection = isAdmin ? '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">⭐ Model Goals</div></div>'
+    + '<div class="goal-grid">' + Object.keys(GOALS.models).map(modelCard).join('') + '</div>' : '';
+
+  p.innerHTML = '<div class="ph"><div>'
+    + '<div class="pt">🎯 Goal Setting</div>'
+    + '<div class="ps">Monthly targets for chatters and models · '+curMonth+'</div>'
+    + '</div></div>'
+    + summaryHtml + chatterSection + modelSection;
+
+  return p;
+}
+
+window.saveGoal = function(name) {
+  var qa = parseFloat(document.getElementById('g_qa_'+name).value)||75;
+  var sales = parseFloat(document.getElementById('g_sales_'+name).value)||2000;
+  var ppv = parseFloat(document.getElementById('g_ppv_'+name).value)||3;
+  var mms = parseFloat(document.getElementById('g_mms_'+name).value)||50;
+  GOALS.chatters[name] = {qa:qa, sales:sales, ppv:ppv, mms:mms};
+  showToast('✅ Goals saved for '+name+'!');
+  if (CU && CU.role==='admin') addNotif('🎯 Goals updated for '+name+' — '+name[0]+' targets set for this month');
+};
+
+window.saveModelGoal = function(name) {
+  var rev = parseFloat(document.getElementById('gm_rev_'+name).value)||5000;
+  var subs = parseFloat(document.getElementById('gm_subs_'+name).value)||10;
+  var ren = parseFloat(document.getElementById('gm_ren_'+name).value)||5;
+  var cust = parseFloat(document.getElementById('gm_cust_'+name).value)||10;
+  GOALS.models[name] = {rev:rev, subs:subs, renewals:ren, customs:cust};
+  showToast('✅ Goals saved for '+name+'!');
+};
+
+
+
+// ════════════════════════════════════════
+// SESSION 16: EOD REPORT
+// ════════════════════════════════════════
+var EOD_STATE = {};
+
+function pEOD() {
+  var p = mkPage('eod');
+  var isAdmin = CU && CU.role === 'admin';
+  var cn = CU ? (CU.cn || 'admin') : 'admin';
+  var today = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+  var MODELS_EOD = [
+    {key:'sabVIP',  label:'SABRINA VIP',   emoji:'👑'},
+    {key:'sabFree', label:'SAB FREE',      emoji:'🔓'},
+    {key:'omi',     label:'OMI',           emoji:'🔥'},
+    {key:'bee',     label:'BEE',           emoji:'🐝'},
+    {key:'izana',   label:'IZANA',         emoji:'💎'},
+    {key:'maddy',   label:'MADDY (DAISY)', emoji:'💋'},
+  ];
+
+  var CKL_LEFT = [
+    'LOG IN / CONFIRM ACCESS','USE TIMEDOCTOR','CHECK SOP CHANNEL',
+    "CHECK MODEL'S FF UP CHANNEL",'CHECK ENDORSEMENT & QA CHANNEL',
+    'POSTED STORIES / MID SHIFT','UPDATE FAN NOTES',
+    '4MM ON SAB','4MM ON OMI','4MM ON BEE','4MM ON IZANA','4MM ON MADDY/DAISY',
+  ];
+  var CKL_RIGHT = [
+    'OFFERED VIP','OFFERED CUSTOM','OFFERED VC','OFFERED GFE','SEXTING',
+    'SUBMIT PPV PRICING PROOF','SUBMIT TAGGING PROOF','UNSEND MM',
+    'SEND ENDORSEMENT','UPDATE CAMPAIGN/RENEWAL TRACKER',
+    'UPDATE MMS TRACKER','SEND EOD / LOG OUT TD',
+  ];
+
+  if (!EOD_STATE[cn]) {
+    EOD_STATE[cn] = {shift:'MID', sales:{}, mm:{}, flags:{}, checklist:{}, notes:''};
+  }
+
+  function getState() { return EOD_STATE[cn]; }
+
+  function calcGross() {
+    var s = getState().sales;
+    return MODELS_EOD.reduce(function(t,m){ return t + (parseFloat(s[m.key])||0); }, 0);
+  }
+
+  function countCL() {
+    var cl = getState().checklist;
+    var done = Object.values(cl).filter(Boolean).length;
+    return {done: done, total: CKL_LEFT.length + CKL_RIGHT.length};
+  }
+
+  function render() {
+    var st = getState();
+    var gross = calcGross();
+    var cl = countCL();
+
+    var modelRows = MODELS_EOD.map(function(m) {
+      var val = st.sales[m.key] || '';
+      var mmOn = !!st.mm[m.key];
+      return '<tr><td style="font-weight:600">' + m.emoji + ' ' + m.label + '</td>'
+        + '<td><input class="af" style="width:100px;text-align:right;padding:5px 9px" '
+        + 'type="number" min="0" step="0.01" placeholder="$0.00" value="' + val + '" '
+        + 'oninput="EOD_STATE['' + cn + ''].sales['' + m.key + '']=this.value;renderEODGross()">'
+        + '</td><td style="text-align:center">'
+        + '<div class="eod-mm-check' + (mmOn?' on':'') + '" onclick="toggleEODmm('' + cn + '','' + m.key + '')" title="MM Sent">'
+        + (mmOn?'✓':'') + '</div></td>'
+        + '<td><input class="af" style="width:120px;padding:5px 9px;font-size:11px" placeholder="Notes..." '
+        + 'oninput="EOD_STATE['' + cn + ''].notes_' + m.key + '=this.value"></td></tr>';
+    }).join('');
+
+    function clItem(txt, idx, col) {
+      var key = col + '_' + idx;
+      var on = !!st.checklist[key];
+      return '<div class="eod-cl-item' + (on?' on':'') + '" onclick="toggleEODcl('' + cn + '','' + key + '')">'
+        + '<div class="eod-cl-dot">' + (on?'✓':'') + '</div>'
+        + '<span>' + txt + '</span></div>';
+    }
+
+    var flagsHtml = ['Full Shift','Late','Undertime','Before OT','After OT','Cover for Other'].map(function(f) {
+      var key = f.replace(/\s+/g,'_').toLowerCase();
+      var on = !!st.flags[key];
+      return '<label class="eod-flag' + (on?' checked':'') + '">'
+        + '<input type="checkbox"' + (on?' checked':'') + ' onchange="EOD_STATE['' + cn + ''].flags['' + key + '']=this.checked;renderEODFlags('' + cn + '')">'
+        + f + '</label>';
+    }).join('');
+
+    p.innerHTML = '<div class="ph"><div>'
+      + '<div class="pt">📝 EOD Shift Report</div>'
+      + '<div class="ps">' + (isAdmin ? 'Admin view — all submissions' : cn + ' · Submit your end-of-shift report') + '</div>'
+      + '</div></div>'
+
+      // FORM (chatter) or HISTORY (admin)
+      + (!isAdmin ? '<div class="eod-wrap">'
+          // LEFT — form
+          + '<div><div class="eod-section">'
+          + '<div class="eod-section-title">📋 Shift Info</div>'
+          + '<div class="eod-meta">'
+          + '<div class="eod-field"><div class="eod-label">Chatter</div><div style="font-weight:700;font-size:13px">' + cn + '</div></div>'
+          + '<div class="eod-field"><div class="eod-label">Date</div><div style="font-weight:700;font-size:13px">' + today + '</div></div>'
+          + '<div class="eod-field"><div class="eod-label">Shift</div>'
+          + '<select class="af" style="padding:5px 9px" onchange="EOD_STATE['' + cn + ''].shift=this.value">'
+          + ['AM','MID','EVE'].map(function(s){return '<option'+(s===st.shift?' selected':'')+'>'+s+'</option>';}).join('')
+          + '</select></div>'
+          + '<div class="eod-field"><div class="eod-label">Attendance</div></div>'
+          + '</div>'
+          + '<div class="eod-flags" id="eodFlags">' + flagsHtml + '</div>'
+          + '<div class="eod-section-title" style="margin-top:14px">💰 Sales Per Model</div>'
+          + '<table class="eod-model-table"><thead><tr><th>Model</th><th>Sales ($)</th><th>MM</th><th>Notes</th></tr></thead>'
+          + '<tbody>' + modelRows + '</tbody></table>'
+          + '<div class="eod-total"><div class="eod-total-label">TOTAL GROSS</div>'
+          + '<div class="eod-total-val" id="eodGross">$' + gross.toFixed(2) + '</div></div>'
+          + '</div></div>'
+          // RIGHT — checklist
+          + '<div><div class="eod-section">'
+          + '<div class="eod-section-title">✅ Shift Checklist (' + cl.done + '/' + cl.total + ')</div>'
+          + '<div class="eod-cl-grid">'
+          + '<div>' + CKL_LEFT.map(function(t,i){return clItem(t,i,'L');}).join('') + '</div>'
+          + '<div>' + CKL_RIGHT.map(function(t,i){return clItem(t,i,'R');}).join('') + '</div>'
+          + '</div>'
+          + '</div>'
+          + '<div class="eod-submit-row">'
+          + '<div class="eod-progress">Checklist: <strong>' + cl.done + '/' + cl.total + '</strong> · Gross: <strong id="eodGross2">$' + gross.toFixed(2) + '</strong></div>'
+          + '<button class="abtn" style="width:auto;padding:9px 22px" onclick="submitEOD()">Submit EOD Report →</button>'
+          + '</div>'
+          + '</div>'
+          + '</div>'
+        : '')
+
+      // ADMIN HISTORY
+      + '<div class="eod-history">'
+      + '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">' + (isAdmin?'All EOD Reports':'My Submitted Reports') + '</div></div>'
+      + (EOD_REPORTS.length === 0 ? '<div style="color:var(--dim);text-align:center;padding:32px">No reports submitted yet.</div>'
+        : EOD_REPORTS.map(function(r) {
+          var canSee = isAdmin || r.by === cn;
+          if (!canSee) return '';
+          return '<div class="eod-hist-item">'
+            + '<div class="eod-hist-hdr">'
+            + '<div><div class="eod-hist-name">' + r.by + ' · ' + r.shift + ' Shift</div>'
+            + '<div class="eod-hist-meta">' + r.date + ' · Checklist: ' + r.checklist + '/' + r.checklistTotal + '</div></div>'
+            + '<div style="display:flex;align-items:center;gap:8px">'
+            + (r.flagged ? '<span class="eod-flag-badge">🚩 Flagged</span>' : '')
+            + '<div class="eod-hist-gross">$' + r.gross.toFixed(2) + '</div>'
+            + (isAdmin ? '<button class="cov-btn reject" style="font-size:10px" onclick="flagEOD('' + r.id + '',event)">' + (r.flagged?'Unflag':'🚩 Flag') + '</button>' : '')
+            + '</div></div>'
+            + (r.notes ? '<div style="font-size:11.5px;color:var(--dim);margin-top:6px">📝 ' + r.notes + '</div>' : '')
+            + '</div>';
+        }).join(''))
+      + '</div>';
+  }
+
+  window.renderEODGross = function() {
+    var g = calcGross();
+    var el1 = document.getElementById('eodGross');
+    var el2 = document.getElementById('eodGross2');
+    if (el1) el1.textContent = '$' + g.toFixed(2);
+    if (el2) el2.textContent = '$' + g.toFixed(2);
+  };
+
+  window.renderEODFlags = function(c) {
+    // flags re-render handled inline
+  };
+
+  window.toggleEODmm = function(c, key) {
+    EOD_STATE[c].mm[key] = !EOD_STATE[c].mm[key];
+    render();
+  };
+
+  window.toggleEODcl = function(c, key) {
+    EOD_STATE[c].checklist[key] = !EOD_STATE[c].checklist[key];
+    var cl = countCL();
+    // Update counts inline
+    var sec = document.querySelector('.eod-section-title');
+    if (sec && sec.textContent.includes('Checklist')) {
+      sec.textContent = '✅ Shift Checklist (' + cl.done + '/' + cl.total + ')';
+    }
+    var item = document.querySelectorAll('[onclick*="' + key + '"]')[0];
+    if (item) {
+      item.classList.toggle('on', !!EOD_STATE[c].checklist[key]);
+      var dot = item.querySelector('.eod-cl-dot');
+      if (dot) dot.textContent = EOD_STATE[c].checklist[key] ? '✓' : '';
+    }
+  };
+
+  window.submitEOD = function() {
+    var st = getState();
+    var gross = calcGross();
+    var cl = countCL();
+    var today2 = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    EOD_REPORTS.unshift({
+      id: 'EOD-' + String(EOD_REPORTS.length+1).padStart(3,'0'),
+      by: cn, shift: st.shift, date: today2,
+      attendance: Object.assign({}, st.flags),
+      sales: Object.assign({}, st.sales),
+      mm: Object.assign({}, st.mm),
+      gross: gross, notes: st.notes || '',
+      checklist: cl.done, checklistTotal: cl.total, flagged: false
+    });
+    // Reset state
+    EOD_STATE[cn] = {shift:'MID', sales:{}, mm:{}, flags:{}, checklist:{}, notes:''};
+    addNotif('📝 ' + cn + ' submitted EOD report · $' + gross.toFixed(2) + ' gross');
+    showToast('✅ EOD report submitted!');
+    render();
+  };
+
+  window.flagEOD = function(id, e) {
+    e.stopPropagation();
+    var r = EOD_REPORTS.find(function(x){return x.id===id;});
+    if (r) { r.flagged = !r.flagged; showToast(r.flagged ? '🚩 Report flagged' : 'Flag removed'); render(); }
+  };
+
+  render();
+  return p;
+}
+
+// ════════════════════════════════════════
+// SESSION 18: VIOLATION + WARNING LOG
+// ════════════════════════════════════════
+function pViolations() {
+  var p = mkPage('violations');
+  var isAdmin = CU && CU.role === 'admin';
+  var cn = CU ? (CU.cn || '') : '';
+
+  var VIOL_TYPES = ['TOS Compliance','Grammar/Quality','Attendance','Conduct','PPV Non-Compliance','Other'];
+  var CHATTERS = ['Jayce','Sage','Jammy','Adie','Dale','Joan','Fred'];
+
+  function strikeCount(name) {
+    return VIOLATIONS.filter(function(v){ return v.by === name; }).length;
+  }
+
+  function render() {
+    var visible = isAdmin ? VIOLATIONS : VIOLATIONS.filter(function(v){ return v.by === cn; });
+
+    // Strike summary (admin only)
+    var summaryHtml = isAdmin ? '<div class="strike-summary">'
+      + CHATTERS.map(function(name) {
+        var c = CLR[name] || '#FF2D78';
+        var count = strikeCount(name);
+        var countClass = count===0?'zero':count===1?'one':count===2?'two':'three';
+        return '<div class="strike-card">'
+          + '<div class="strike-av" style="background:'+c+'">'+name[0]+'</div>'
+          + '<div class="strike-name">'+name+'</div>'
+          + '<div class="strike-count '+countClass+'">'+count+'</div>'
+          + '<div style="font-size:9.5px;color:var(--mu)">strike'+(count!==1?'s':'')+'</div>'
+          + '</div>';
+      }).join('')
+      + '</div>' : '';
+
+    // Add form (admin only)
+    var formHtml = isAdmin ? '<div class="viol-add-form">'
+      + '<div class="card-title" style="margin-bottom:14px">➕ Log New Violation</div>'
+      + '<div class="viol-form-grid">'
+      + '<div><div class="eod-label" style="margin-bottom:5px">Chatter</div>'
+      + '<select class="af" id="vChatter" style="width:100%"><option value="">Select chatter</option>'
+      + CHATTERS.map(function(n){return '<option>'+n+'</option>';}).join('')
+      + '</select></div>'
+      + '<div><div class="eod-label" style="margin-bottom:5px">Type</div>'
+      + '<select class="af" id="vType" style="width:100%">'
+      + VIOL_TYPES.map(function(t){return '<option>'+t+'</option>';}).join('')
+      + '</select></div>'
+      + '<div><div class="eod-label" style="margin-bottom:5px">Severity</div>'
+      + '<select class="af" id="vSev" style="width:100%">'
+      + '<option value="minor">⚠️ Minor</option><option value="moderate">🟠 Moderate</option><option value="serious">🔴 Serious</option>'
+      + '</select></div>'
+      + '</div>'
+      + '<div style="margin-bottom:12px"><div class="eod-label" style="margin-bottom:5px">Description</div>'
+      + '<textarea class="af" id="vDesc" rows="2" placeholder="Describe the violation..." style="resize:vertical;line-height:1.5"></textarea>'
+      + '</div>'
+      + '<button class="abtn" style="width:auto;padding:9px 22px" onclick="logViolation()">Log Violation →</button>'
+      + '</div>' : '';
+
+    // Violation cards
+    var cards = visible.length === 0
+      ? '<div style="color:var(--dim);text-align:center;padding:32px;font-size:13px">'
+        + (isAdmin ? 'No violations logged yet.' : 'You have no violations on record. Keep it up! ✅') + '</div>'
+      : visible.map(function(v) {
+          var c = CLR[v.by] || '#FF2D78';
+          return '<div class="viol-card '+v.sev+'">'
+            + '<div class="viol-hdr">'
+            + '<div class="viol-av" style="background:'+c+'">'+v.by[0]+'</div>'
+            + '<div><div class="viol-name">'+v.by+'</div><div class="viol-date">'+v.date+'</div></div>'
+            + '<div class="viol-badges">'
+            + '<span class="viol-sev '+v.sev+'">'+(v.sev==='minor'?'⚠️ Minor':v.sev==='moderate'?'🟠 Moderate':'🔴 Serious')+'</span>'
+            + '<span class="viol-strike">Strike #'+strikeCount(v.by)+'</span>'
+            + '</div></div>'
+            + '<div class="viol-body">'
+            + '<span class="viol-type-tag">📋 '+v.type+'</span>'
+            + '<div class="viol-desc">'+v.desc+'</div>'
+            + (v.linked_coaching ? '<div style="margin-top:8px;font-size:11px;color:var(--mint)">🔗 Linked coaching: '+v.linked_coaching+'</div>' : '')
+            + (isAdmin ? '<div style="margin-top:10px"><button class="cov-btn reject" style="font-size:10px" onclick="deleteViol(''+v.id+'')">Remove</button></div>' : '')
+            + '</div></div>';
+        }).join('');
+
+    p.innerHTML = '<div class="ph"><div>'
+      + '<div class="pt">⚠️ Violation & Warning Log</div>'
+      + '<div class="ps">' + (isAdmin ? 'Admin only · All chatter violations and warnings' : 'Your warning history') + '</div>'
+      + '</div></div>'
+      + (isAdmin ? '<div class="notice">🔒 This tab is admin-only. Chatters can only see their own warnings.</div>' : '')
+      + summaryHtml + formHtml
+      + '<div class="viol-grid">'+cards+'</div>';
+  }
+
+  window.logViolation = function() {
+    var chatter = document.getElementById('vChatter').value;
+    var type = document.getElementById('vType').value;
+    var sev = document.getElementById('vSev').value;
+    var desc = (document.getElementById('vDesc').value || '').trim();
+    if (!chatter) { showToast('⚠️ Please select a chatter.'); return; }
+    if (!desc) { showToast('⚠️ Please add a description.'); return; }
+    var today = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    VIOLATIONS.unshift({
+      id: 'VIO-' + String(VIOLATIONS.length+1).padStart(3,'0'),
+      by: chatter, type: type, sev: sev, date: today,
+      desc: desc, linked_coaching: null
+    });
+    document.getElementById('vDesc').value = '';
+    document.getElementById('vChatter').value = '';
+    addNotif('⚠️ Violation logged for ' + chatter + ' — ' + sev + ' · ' + type);
+    showToast('✅ Violation logged.');
+    render();
+  };
+
+  window.deleteViol = function(id) {
+    if (!confirm('Remove this violation record?')) return;
+    VIOLATIONS = VIOLATIONS.filter(function(v){ return v.id !== id; });
+    showToast('Violation removed.');
+    render();
+  };
+
+  render();
+  return p;
+}
+
+window.tgCo=(uid)=>{
+  const b=$('body_'+uid),h=$('chv_'+uid);
+  const o=b.classList.toggle('op');h.classList.toggle('op',o);
+};
+</script>
+
+<!-- CHECKLIST COMPLETE MODAL -->
+<div id="clModal">
+  <div class="clm-box">
+    <div class="clm-icon" id="clmIcon">🎉</div>
+    <div class="clm-title" id="clmTitle">Shift Complete!</div>
+    <div class="clm-sub" id="clmSub">You've completed all your shift tasks. Great work!</div>
+    <div class="clm-stats" id="clmStats"></div>
+    <div class="clm-note" id="clmNoteWrap">
+      <div class="clm-note-lbl">Shift Note (optional)</div>
+      <textarea class="clm-note-input" id="clmNote" rows="2" placeholder="e.g. 2 fans flagged, PPV sent to 3 whales..."></textarea>
+    </div>
+    <div class="clm-actions">
+      <button class="clm-btn clm-btn-ghost" onclick="closeClModal()">Close</button>
+      <button class="clm-btn clm-btn-primary" onclick="submitShiftSummary()">Submit Summary ✓</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
