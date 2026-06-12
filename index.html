@@ -388,6 +388,182 @@ tr:hover td{background:var(--s2);}
 body.maint-on .topbar{top:52px;}
 body.maint-on #maintBanner{display:block;}
 
+
+/* ── NOTIFICATION BELL ── */
+.notif-wrap{position:relative;cursor:pointer;}
+.notif-bell{width:34px;height:34px;border-radius:9px;background:var(--s2);
+  border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;
+  font-size:16px;transition:all .2s;flex-shrink:0;}
+.notif-bell:hover{background:var(--s3);border-color:var(--bdr2);}
+.notif-badge{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;
+  border-radius:20px;background:var(--candy);color:#fff;font-size:9px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;padding:0 4px;
+  border:2px solid var(--bg);animation:notifpop .3s ease;}
+@keyframes notifpop{from{transform:scale(0)}to{transform:scale(1)}}
+.notif-badge.hidden{display:none;}
+.notif-dropdown{position:absolute;top:calc(100% + 8px);right:0;width:310px;
+  background:var(--s1);border:1px solid var(--bdr2);border-radius:14px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);z-index:500;display:none;overflow:hidden;}
+.notif-dropdown.open{display:block;animation:fadeSlide .2s ease;}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.notif-hdr{display:flex;align-items:center;justify-content:space-between;
+  padding:12px 15px;border-bottom:1px solid var(--bdr);}
+.notif-hdr-title{font-family:var(--fh);font-size:13px;font-weight:700;}
+.notif-mark-all{font-size:11px;color:var(--candy);cursor:pointer;font-weight:600;}
+.notif-mark-all:hover{text-decoration:underline;}
+.notif-list{max-height:320px;overflow-y:auto;}
+.notif-item{display:flex;gap:10px;padding:11px 15px;border-bottom:1px solid var(--bdr);
+  cursor:pointer;transition:background .15s;align-items:flex-start;}
+.notif-item:hover{background:var(--s2);}
+.notif-item.unread{background:rgba(255,45,120,.04);}
+.notif-item:last-child{border-bottom:none;}
+.notif-dot{width:7px;height:7px;border-radius:50%;background:var(--candy);
+  flex-shrink:0;margin-top:5px;}
+.notif-dot.read{background:transparent;}
+.notif-content{flex:1;min-width:0;}
+.notif-msg{font-size:12px;color:var(--txt);line-height:1.45;margin-bottom:3px;}
+.notif-time{font-size:10px;color:var(--mu);}
+.notif-empty{padding:28px 15px;text-align:center;color:var(--dim);font-size:12px;}
+.notif-footer{padding:10px 15px;border-top:1px solid var(--bdr);text-align:center;}
+.notif-footer a{font-size:11px;color:var(--candy);cursor:pointer;font-weight:600;}
+
+/* ── NAV RED DOT BADGES ── */
+.nb{position:relative;}
+.nb .ndot{position:absolute;top:4px;right:4px;width:7px;height:7px;
+  border-radius:50%;background:var(--candy);border:2px solid var(--s1);display:none;}
+.nb .ndot.show{display:block;}
+
+/* ── QUICK LINKS TAB ── */
+.ql-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:20px;}
+.ql-cat{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;}
+.ql-cat-hdr{padding:12px 16px;border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;gap:8px;}
+.ql-cat-icon{font-size:18px;}
+.ql-cat-title{font-family:var(--fh);font-weight:700;font-size:13px;}
+.ql-items{padding:8px;}
+.ql-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;
+  text-decoration:none;transition:all .15s;border:1px solid transparent;}
+.ql-item:hover{background:var(--s2);border-color:var(--bdr);}
+.ql-item-icon{font-size:15px;flex-shrink:0;width:28px;text-align:center;}
+.ql-item-info{flex:1;min-width:0;}
+.ql-item-name{font-size:12.5px;font-weight:600;color:var(--txt);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ql-item-type{font-size:10px;color:var(--mu);margin-top:1px;}
+.ql-item-arrow{color:var(--mu);font-size:12px;flex-shrink:0;}
+.ql-item:hover .ql-item-arrow{color:var(--candy);}
+.ql-status-ok{width:6px;height:6px;border-radius:50%;background:var(--mint);flex-shrink:0;}
+.ql-status-warn{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+
+/* ── CHECKLIST COMPLETE MODAL ── */
+#clModal{position:fixed;inset:0;z-index:1000;display:none;
+  align-items:center;justify-content:center;background:rgba(0,0,0,.6);
+  backdrop-filter:blur(6px);}
+#clModal.open{display:flex;animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.clm-box{background:var(--s1);border:1px solid var(--bdr2);border-radius:20px;
+  padding:32px;max-width:420px;width:90%;text-align:center;
+  box-shadow:0 40px 100px rgba(0,0,0,.6);animation:scaleIn .3s ease;}
+@keyframes scaleIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.clm-icon{font-size:48px;margin-bottom:12px;}
+.clm-title{font-family:var(--fh);font-size:20px;font-weight:800;margin-bottom:8px;}
+.clm-sub{font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:20px;}
+.clm-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px;}
+.clm-stat{background:var(--s2);border-radius:10px;padding:12px 8px;}
+.clm-stat-val{font-family:var(--fh);font-size:20px;font-weight:800;margin-bottom:2px;}
+.clm-stat-lbl{font-size:10px;color:var(--dim);}
+.clm-note{background:var(--s2);border-radius:10px;padding:14px;margin-bottom:20px;text-align:left;}
+.clm-note-lbl{font-size:10px;font-weight:700;color:var(--dim);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.clm-note-input{width:100%;background:transparent;border:none;color:var(--dim);
+  font-size:12px;font-family:var(--ff);resize:none;outline:none;line-height:1.5;}
+.clm-actions{display:flex;gap:10px;justify-content:center;}
+.clm-btn{padding:10px 22px;border-radius:10px;font-size:13px;font-weight:700;
+  font-family:var(--ff);cursor:pointer;border:none;transition:all .2s;}
+.clm-btn-primary{background:var(--mint);color:#fff;}
+.clm-btn-primary:hover{background:#04b888;}
+.clm-btn-ghost{background:var(--s2);color:var(--dim);border:1px solid var(--bdr);}
+.clm-btn-ghost:hover{color:var(--txt);}
+
+
+/* ── COVERAGE REQUESTS ── */
+.cov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:20px;}
+.cov-card{background:var(--s1);border:1px solid var(--bdr);border-radius:13px;padding:16px;transition:all .2s;}
+.cov-card:hover{border-color:var(--bdr2);transform:translateY(-2px);}
+.cov-card.urgent{border-left:3px solid var(--candy);}
+.cov-card.overtime{border-left:3px solid var(--gold);}
+.cov-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.cov-type{padding:3px 9px;border-radius:20px;font-size:9.5px;font-weight:700;}
+.cov-type.coverage{background:rgba(255,45,120,.12);color:var(--candy);border:1px solid rgba(255,45,120,.2);}
+.cov-type.overtime{background:rgba(255,209,102,.12);color:var(--gold);border:1px solid rgba(255,209,102,.2);}
+.cov-name{font-weight:700;font-size:13px;margin-bottom:2px;}
+.cov-meta{font-size:11px;color:var(--dim);}
+.cov-shift{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;
+  border-radius:7px;background:var(--s2);font-size:11px;font-weight:700;margin:8px 0;}
+.cov-reason{font-size:12px;color:var(--dim);line-height:1.55;margin-bottom:10px;}
+.cov-actions{display:flex;gap:7px;flex-wrap:wrap;}
+.cov-btn{padding:5px 13px;border-radius:8px;font-size:11px;font-weight:700;
+  cursor:pointer;border:none;font-family:var(--ff);transition:all .2s;}
+.cov-btn.claim{background:var(--mint);color:#fff;}
+.cov-btn.claim:hover{background:#04b888;}
+.cov-btn.approve{background:var(--candy);color:#fff;}
+.cov-btn.approve:hover{background:#d41f62;}
+.cov-btn.reject{background:var(--s2);border:1px solid var(--bdr);color:var(--dim);}
+.cov-btn.reject:hover{color:var(--txt);}
+.cov-status{padding:3px 9px;border-radius:20px;font-size:9.5px;font-weight:700;}
+.cov-status.open{background:rgba(96,165,250,.12);color:var(--sky);border:1px solid rgba(96,165,250,.2);}
+.cov-status.claimed{background:rgba(255,209,102,.12);color:var(--gold);border:1px solid rgba(255,209,102,.2);}
+.cov-status.approved{background:rgba(6,214,160,.12);color:var(--mint);border:1px solid rgba(6,214,160,.2);}
+
+/* ── SHIFT REMINDER BANNER ── */
+#shiftReminder{display:none;background:linear-gradient(135deg,rgba(6,214,160,.12),rgba(96,165,250,.08));
+  border:1px solid rgba(6,214,160,.25);border-radius:12px;padding:13px 18px;
+  margin:0 0 16px;display:flex;align-items:center;gap:12px;}
+#shiftReminder.show{display:flex;animation:slideDown .3s ease;}
+.sr-icon{font-size:22px;flex-shrink:0;}
+.sr-text{flex:1;}
+.sr-title{font-weight:700;font-size:13px;color:var(--mint);margin-bottom:2px;}
+.sr-sub{font-size:11.5px;color:var(--dim);}
+.sr-dismiss{padding:5px 12px;border-radius:8px;background:transparent;
+  border:1px solid rgba(6,214,160,.25);color:var(--mint);font-size:11px;
+  cursor:pointer;font-family:var(--ff);transition:all .2s;flex-shrink:0;}
+.sr-dismiss:hover{background:rgba(6,214,160,.1);}
+
+/* ── GOAL SETTING ── */
+.goal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:24px;}
+.goal-card{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;
+  overflow:hidden;transition:all .2s;}
+.goal-card:hover{border-color:var(--bdr2);transform:translateY(-2px);}
+.goal-hdr{padding:13px 16px;border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:space-between;}
+.goal-name{font-family:var(--fh);font-weight:800;font-size:14px;
+  display:flex;align-items:center;gap:7px;}
+.goal-period{font-size:10px;color:var(--mu);font-weight:400;}
+.goal-body{padding:14px 16px;}
+.goal-row{display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;gap:8px;}
+.goal-label{font-size:11px;color:var(--dim);flex:1;}
+.goal-input{background:var(--s2);border:1px solid var(--bdr);border-radius:7px;
+  color:var(--txt);font-size:12px;font-weight:600;font-family:var(--ff);
+  padding:5px 9px;width:100px;text-align:right;outline:none;transition:border-color .2s;}
+.goal-input:focus{border-color:rgba(255,45,120,.4);}
+.goal-progress-wrap{margin-top:12px;padding-top:12px;border-top:1px solid var(--bdr);}
+.goal-progress-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.goal-progress-label{font-size:11px;color:var(--dim);}
+.goal-progress-pct{font-family:var(--fh);font-size:13px;font-weight:800;}
+.goal-bar{height:6px;background:var(--s3);border-radius:3px;overflow:hidden;}
+.goal-bar-fill{height:100%;border-radius:3px;transition:width .6s ease;}
+.goal-save-btn{width:100%;padding:8px;border-radius:8px;background:var(--s2);
+  border:1px solid var(--bdr);color:var(--dim);font-size:11px;font-weight:600;
+  cursor:pointer;font-family:var(--ff);margin-top:12px;transition:all .2s;}
+.goal-save-btn:hover{background:var(--candy);color:#fff;border-color:var(--candy);}
+.goal-summary{background:var(--s1);border:1px solid var(--bdr);border-radius:14px;
+  padding:18px;margin-bottom:20px;}
+.goal-summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px;}
+.goal-kpi{background:var(--s2);border-radius:10px;padding:13px;text-align:center;}
+.goal-kpi-val{font-family:var(--fh);font-size:22px;font-weight:800;}
+.goal-kpi-lbl{font-size:10px;color:var(--dim);margin-top:3px;}
+.goal-kpi-sub{font-size:10px;color:var(--mu);margin-top:2px;}
+
 </style>
 </head>
 <body>
@@ -454,6 +630,21 @@ body.maint-on #maintBanner{display:block;}
       <div style="display:flex;align-items:center;gap:8px">
         <div class="t-av" id="tAv"></div>
         <div><div class="t-uname" id="tUname"></div><div style="margin-top:2px" id="tBadge"></div></div>
+      </div>
+      <div class="notif-wrap" id="notifWrap">
+        <div class="notif-bell" onclick="toggleNotif()" title="Notifications">🔔
+          <div class="notif-badge hidden" id="notifBadge">0</div>
+        </div>
+        <div class="notif-dropdown" id="notifDropdown">
+          <div class="notif-hdr">
+            <div class="notif-hdr-title">Notifications</div>
+            <span class="notif-mark-all" onclick="markAllRead()">Mark all read</span>
+          </div>
+          <div class="notif-list" id="notifList">
+            <div class="notif-empty">No notifications yet</div>
+          </div>
+          <div class="notif-footer"><a onclick="closeNotif()">Close</a></div>
+        </div>
       </div>
       <span id="syncIndicator" style="font-size:11px;color:var(--dim);padding:4px 10px;background:var(--s2);border:1px solid var(--bdr);border-radius:20px;">⟳ Loading...</span>
       <button class="t-out" onclick="doLogout()">Sign Out</button>
@@ -658,6 +849,36 @@ let REQS=[
 
 // in-memory checklist state per chatter
 const CLST={};
+
+// ── COVERAGE / OVERTIME REQUESTS ──
+let COV_REQS = [
+  {id:'COV-001', type:'coverage', by:'Sage', shift:'AM', date:'Jun 13, 2026',
+   reason:'Medical appointment — unable to make it to shift.', status:'open', claimed_by:null},
+  {id:'COV-002', type:'overtime', by:'Dale', shift:'EVE', date:'Jun 14, 2026',
+   reason:'Want to extend my shift by 2 hours for the campaign push.', status:'approved', claimed_by:null},
+];
+
+// ── GOALS DATA ──
+// Saved per chatter/model in memory
+const GOALS = {
+  chatters: {
+    Jayce: {qa:75, sales:2000, ppv:3, mms:50},
+    Sage:  {qa:75, sales:1500, ppv:3, mms:50},
+    Jammy: {qa:75, sales:3000, ppv:5, mms:80},
+    Adie:  {qa:80, sales:4000, ppv:5, mms:70},
+    Dale:  {qa:80, sales:5000, ppv:6, mms:90},
+    Joan:  {qa:80, sales:6000, ppv:6, mms:100},
+    Fred:  {qa:75, sales:1500, ppv:3, mms:40},
+  },
+  models: {
+    Sabrina: {rev:37000, subs:80, renewals:25, customs:25},
+    Omi:     {rev:5000,  subs:10, renewals:5,  customs:15},
+    Maddy:   {rev:2000,  subs:10, renewals:5,  customs:10},
+    Bee:     {rev:1000,  subs:5,  renewals:3,  customs:5},
+    Izana:   {rev:600,   subs:5,  renewals:3,  customs:0},
+  }
+};
+
 // in-memory schedule
 let SCHED=null;
 
@@ -734,6 +955,8 @@ function launch(user){
   buildPages();
   goPage('dashboard');
   startSync();
+  setTimeout(updateNavDots,1500);
+  if(CU.role==='chatter') setTimeout(function(){checkShiftReminder(CU.cn);},2000);
 }
 
 // ════════════════════════════════════════
@@ -743,18 +966,18 @@ function buildNav(){
   const ADMIN_TABS=[
     ['dashboard','📊 Overview'],['chatters','👥 Chatters'],['performance','📈 Performance'],
     ['coaching','🎯 Coaching'],['model_sales','💸 Model Sales'],['announcements','📣 Announcements'],
-    ['requests','🎫 Requests'],['checklist','✅ Checklist'],['schedule','📅 Schedule'],
-    ['sops','📋 SOPs'],['sales_ref','💲 Sales Guide'],['ppv','💰 PPV Pricing'],['ai','🤖 AI Assistant']
+    ['requests','🎫 Requests'],['checklist','✅ Checklist'],['coverage','🆘 Coverage'],['goals','🎯 Goals'],['schedule','📅 Schedule'],
+    ['quicklinks','🔗 Quick Links'],['sops','📋 SOPs'],['sales_ref','💲 Sales Guide'],['ppv','💰 PPV Pricing'],['ai','🤖 AI Assistant']
   ];
   const CHATTER_TABS=[
     ['dashboard','📊 My Dashboard'],['performance','📈 Performance'],['coaching','🎯 My Coaching'],
     ['announcements','📣 Announcements'],['requests','🎫 Requests'],['checklist','✅ Checklist'],
-    ['schedule','📅 Schedule'],['sops','📋 SOPs'],['sales_ref','💲 Sales Guide'],
+    ['schedule','📅 Schedule'],['quicklinks','🔗 Quick Links'],['sops','📋 SOPs'],['sales_ref','💲 Sales Guide'],
     ['ppv','💰 PPV Pricing'],['ai','🤖 AI Assistant']
   ];
   const tabs=CU.role==='admin'?ADMIN_TABS:CHATTER_TABS;
   $('nav').innerHTML=tabs.map(([id,lbl])=>
-    `<button class="nb" id="nb-${id}" onclick="goPage('${id}')">${lbl}</button>`
+    `<button class="nb" id="nb-${id}" onclick="goPage('${id}')">${lbl}<span class="ndot" id="ndot-${id}"></span></button>`
   ).join('');
 }
 
@@ -773,11 +996,11 @@ function buildPages(){
   const c=$('pages'); c.innerHTML='';
   if(CU.role==='admin'){
     [pAdminDash,pAdminChatters,pAdminPerf,pAdminCoaching,pModelSales,
-     pAnnouncements,pRequests,()=>pChecklist('admin'),pSchedule,pSOPs,pSalesRef,pPPV,pAI
+     pAnnouncements,pRequests,()=>pChecklist('admin'),pCoverage,pGoalSetting,pSchedule,pQuickLinks,pSOPs,pSalesRef,pPPV,pAI
     ].forEach(fn=>c.appendChild(fn()));
   } else {
     [()=>pChatterDash(CU.cn),()=>pChatterPerf(CU.cn),()=>pChatterCoaching(CU.cn),
-     pAnnouncements,()=>pRequests(CU.cn),()=>pChecklist(CU.cn),pSchedule,pSOPs,pSalesRef,pPPV,pAI
+     pAnnouncements,()=>pRequests(CU.cn),()=>pChecklist(CU.cn),pCoverage,pGoalSetting,pSchedule,pQuickLinks,pSOPs,pSalesRef,pPPV,pAI
     ].forEach(fn=>c.appendChild(fn()));
   }
 }
@@ -788,6 +1011,14 @@ function pChatterDash(n){
   const rate=Math.round((d.mms.ok/d.mms.t)*100);
   const ts=d.sales.reduce((a,b)=>a+b,0);
   p.innerHTML=`
+  <div id="shiftReminder">
+    <div class="sr-icon">⏰</div>
+    <div class="sr-text">
+      <div class="sr-title">Shift Starting Soon!</div>
+      <div class="sr-sub" id="srSubText">Your shift is starting soon — get ready and clock in on Time Doctor!</div>
+    </div>
+    <button class="sr-dismiss" onclick="dismissShiftReminder()">Got it</button>
+  </div>
   <div class="ph"><div>
     <div class="pt" style="display:flex;align-items:center;gap:9px">
       <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,${c},${c}77);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:13px;color:#fff">${n[0]}</div>${n}
@@ -1124,7 +1355,35 @@ function pChecklist(cn){
     ${sec('During Shift','⚡',CKL.during,'during')}
     ${sec('Post-Shift','🌙',CKL.post,'post')}`;
   };
-  window.tgCL=(c,id)=>{CLST[c][id]=!CLST[c][id];if(CU&&CU.cn===c||CU.role==='admin'){const pg=$('page-checklist');if(pg&&pg.classList.contains('on')){const fn=CU.role==='admin'?pChecklist('admin'):pChecklist(CU.cn);pg.replaceWith(fn);fn.classList.add('on');$('nb-checklist').classList.add('on');}}};
+  window.tgCL=(c,id)=>{
+    CLST[c][id]=!CLST[c][id];
+    // Refresh checklist page
+    if(CU&&(CU.cn===c||CU.role==='admin')){
+      const pg=$('page-checklist');
+      if(pg&&pg.classList.contains('on')){
+        const fn=CU.role==='admin'?pChecklist('admin'):pChecklist(CU.cn);
+        pg.replaceWith(fn);fn.classList.add('on');$('nb-checklist').classList.add('on');
+      }
+    }
+    // Check completion
+    const s=CLST[c]||{};
+    let tot=0,dn=0;
+    Object.values(CKL).forEach(items=>items.forEach(()=>tot++));
+    Object.values(s).forEach(v=>{if(v)dn++;});
+    // Show modal when all done
+    if(dn===tot&&tot>0&&CLST[c][id]===true){
+      const secs=[
+        {label:'Pre-Shift',done:CKL.pre.filter((_,i)=>s['pre_'+i]).length,total:CKL.pre.length},
+        {label:'During',done:CKL.during.filter((_,i)=>s['during_'+i]).length,total:CKL.during.length},
+        {label:'Post-Shift',done:CKL.post.filter((_,i)=>s['post_'+i]).length,total:CKL.post.length},
+      ];
+      setTimeout(()=>showClModal(c,dn,tot,secs),200);
+    }
+    // Notify admin when shift starts (first item checked)
+    if(CU&&CU.role!=='admin'&&CLST[c][id]===true&&dn===1){
+      addNotif('🟢 '+c+' started their shift checklist');
+    }
+  };
   window.rstCL=(c)=>{if(confirm('Reset all checklist items?')){CLST[c]={};render();}};
   render();
   return p;
@@ -1441,10 +1700,526 @@ function startSync() {
   setInterval(syncLiveData, 5 * 60 * 1000);
 }
 
+
+// ════════════════════════════════════════
+// NOTIFICATIONS SYSTEM
+// ════════════════════════════════════════
+let NOTIFS = [];
+
+function addNotif(msg, type) {
+  NOTIFS.unshift({ id: Date.now(), msg: msg, type: type||'info', read: false,
+    time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) });
+  renderNotifs();
+}
+
+function renderNotifs() {
+  const unread = NOTIFS.filter(function(n){return !n.read;}).length;
+  const badge = document.getElementById('notifBadge');
+  if (badge) {
+    badge.textContent = unread > 9 ? '9+' : unread;
+    badge.classList.toggle('hidden', unread === 0);
+  }
+  const list = document.getElementById('notifList');
+  if (!list) return;
+  if (NOTIFS.length === 0) {
+    list.innerHTML = '<div class="notif-empty">🔔 No notifications yet</div>';
+    return;
+  }
+  list.innerHTML = NOTIFS.slice(0, 20).map(function(n) {
+    return '<div class="notif-item' + (n.read?'':' unread') + '" onclick="readNotif(' + n.id + ')">'
+      + '<div class="notif-dot' + (n.read?' read':'') + '"></div>'
+      + '<div class="notif-content">'
+      + '<div class="notif-msg">' + n.msg + '</div>'
+      + '<div class="notif-time">' + n.time + '</div>'
+      + '</div></div>';
+  }).join('');
+  updateNavDots();
+}
+
+function readNotif(id) {
+  var n = NOTIFS.find(function(x){return x.id===id;});
+  if (n) n.read = true;
+  renderNotifs();
+}
+
+function markAllRead() {
+  NOTIFS.forEach(function(n){n.read=true;});
+  renderNotifs();
+}
+
+function toggleNotif() {
+  var dd = document.getElementById('notifDropdown');
+  if (dd) dd.classList.toggle('open');
+}
+
+function closeNotif() {
+  var dd = document.getElementById('notifDropdown');
+  if (dd) dd.classList.remove('open');
+}
+
+document.addEventListener('click', function(e) {
+  var wrap = document.getElementById('notifWrap');
+  if (wrap && !wrap.contains(e.target)) closeNotif();
+});
+
+function updateNavDots() {
+  var reqDot = document.querySelector('#nb-requests .ndot');
+  if (reqDot) {
+    var pending = REQS.filter(function(r){return r.status==='Pending';}).length;
+    reqDot.classList.toggle('show', pending > 0);
+  }
+  if (CU && CU.role === 'admin') {
+    var perfDot = document.querySelector('#nb-performance .ndot');
+    if (perfDot) {
+      var hasLow = Object.values(PERF).some(function(d){return (d.qs||d.latestScore||0) < 60;});
+      perfDot.classList.toggle('show', hasLow);
+    }
+  }
+}
+
+// ════════════════════════════════════════
+// QUICK LINKS HUB
+// ════════════════════════════════════════
+var QUICK_LINKS = [
+  { cat: '📊 Trackers & Sheets', icon: '📗', links: [
+    { name: 'TRACKER EK1&2 (QA Scores)', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit', ok: true },
+    { name: 'MMS Tracker', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1IuG0jsv8zpF0l835u45rPNn5xAyM9JGDVN6Es4OMH-8/edit', ok: true },
+    { name: 'PPV Pricing Sheet', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1_LbogJfEjxUDSxtG6tO8BaKonrU85R71L2G_nqJcFwU/edit', ok: true },
+    { name: 'Campaign Tracker', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1KcgGQNfdcvMFEoNoImLp7ITurci2vAwc_AveKz8u6rU/edit', ok: true },
+    { name: 'BFF Sheet', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1r-rqRfXGhM6U90D0Vm63sqr8dVqt0ITVWsRuZHTwa_E/edit', ok: true },
+    { name: 'Calibration Sheet', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1HTpeV-bXvmzaCGl_YLg9pi0QswQLCVNZzOgEftOuXnM/edit', ok: true },
+    { name: 'Sales Tracker (Net/PPV)', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1Re0u3EWPbwqWImAHds5GVGPCT0rvHVEBQQAoBjMHwq0/edit', ok: true },
+  ]},
+  { cat: '📋 SOPs & Documents', icon: '📄', links: [
+    { name: 'Main SOP', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1CwPKLRT-HBr4j7i6uERxijaX6yydyVsxDi4JR4ymP_4/edit', ok: true },
+    { name: 'Tagging SOP', type: 'Google Docs', url: 'https://docs.google.com/document/d/1YuSxnAMnFNysG2m0HIgWd3wcv_fcLWJ2Wp3hBfNPvxU/edit', ok: true },
+    { name: 'Mass Message Library', type: 'Google Docs', url: 'https://docs.google.com/document/d/13wFYOi6F_yissaoKrr3qvWoGC9I4efTkBQwhi7JesGg/edit', ok: true },
+    { name: 'How to Add a Story', type: 'Loom Video', url: 'https://www.loom.com/share/cd12861e17f645e4aa3152d2c422827d', ok: false },
+  ]},
+  { cat: 'Tools & Platforms', icon: '⚙️', links: [
+    { name: 'Time Doctor Download', type: 'App', url: 'https://www.timedoctor.com/download.html', ok: true },
+    { name: 'Custom Request Form', type: 'Fillout Form', url: 'https://fillout.com', ok: true },
+    { name: 'Infloww (Chatter Platform)', type: 'Platform', url: 'https://app.infloww.com', ok: true },
+  ]},
+  { cat: '📣 Team Comms', icon: '💬', links: [
+    { name: 'Discord Server', type: 'Discord', url: '#', ok: true },
+    { name: 'Model Dashboard (Notion)', type: 'Notion', url: '#', ok: false },
+    { name: 'Custom Request Status', type: 'Notion', url: '#', ok: false },
+  ]},
+];
+
+function pQuickLinks() {
+  var p = mkPage('quicklinks');
+  var warnCount = QUICK_LINKS.reduce(function(s,c){return s+c.links.filter(function(l){return !l.ok;}).length;},0);
+  var cats = QUICK_LINKS.map(function(cat) {
+    var items = cat.links.map(function(l) {
+      return '<a class="ql-item" href="' + l.url + '" target="_blank" rel="noopener">'
+        + '<div class="' + (l.ok?'ql-status-ok':'ql-status-warn') + '"></div>'
+        + '<div class="ql-item-info">'
+        + '<div class="ql-item-name">' + l.name + '</div>'
+        + '<div class="ql-item-type">' + l.type + (l.ok?'':' · ⚠️ May need update') + '</div>'
+        + '</div><div class="ql-item-arrow">↗</div></a>';
+    }).join('');
+    return '<div class="ql-cat">'
+      + '<div class="ql-cat-hdr"><span class="ql-cat-icon">' + cat.icon + '</span>'
+      + '<span class="ql-cat-title">' + cat.cat + '</span></div>'
+      + '<div class="ql-items">' + items + '</div></div>';
+  }).join('');
+  p.innerHTML = '<div class="ph"><div><div class="pt">🔗 Quick Links Hub</div>'
+    + '<div class="ps">All tools, sheets, and platforms in one place</div></div></div>'
+    + (warnCount>0?'<div class="notice">⚠️ '+warnCount+' link'+(warnCount>1?'s':'')+' may need updating (marked in yellow). Contact admin.</div>':'')
+    + '<div class="ql-cats">' + cats + '</div>';
+  return p;
+}
+
+// ════════════════════════════════════════
+// CHECKLIST COMPLETION MODAL
+// ════════════════════════════════════════
+var _clModalData = {};
+
+function showClModal(cn, done, total, sections) {
+  var isComplete = done === total;
+  var pct = Math.round((done/total)*100);
+  document.getElementById('clmIcon').textContent = isComplete ? '🎉' : '⚠️';
+  document.getElementById('clmTitle').textContent = isComplete ? 'Shift Complete!' : 'Shift Ended — Incomplete';
+  document.getElementById('clmSub').textContent = isComplete
+    ? 'Great shift, ' + cn + '! All ' + total + ' tasks completed.'
+    : done + ' of ' + total + ' tasks completed (' + pct + '%). Note any reasons below.';
+  document.getElementById('clmStats').innerHTML = sections.map(function(s) {
+    var col = s.done===s.total ? 'var(--mint)' : 'var(--gold)';
+    return '<div class="clm-stat">'
+      + '<div class="clm-stat-val" style="color:' + col + '">' + s.done + '/' + s.total + '</div>'
+      + '<div class="clm-stat-lbl">' + s.label + '</div></div>';
+  }).join('');
+  document.getElementById('clmNote').placeholder = isComplete
+    ? 'e.g. Pushed 5 PPVs, 2 high-value fans engaged...'
+    : 'e.g. Internet issue, will submit EOD tomorrow...';
+  document.getElementById('clModal').classList.add('open');
+  _clModalData = {cn:cn, done:done, total:total, pct:pct, isComplete:isComplete};
+}
+
+function closeClModal() {
+  document.getElementById('clModal').classList.remove('open');
+}
+
+function submitShiftSummary() {
+  var note = document.getElementById('clmNote').value.trim();
+  var d = _clModalData;
+  if (CU && CU.role !== 'admin') {
+    var msg = d.isComplete
+      ? '✅ ' + d.cn + ' completed all shift tasks (' + d.total + '/' + d.total + ')'
+      : '⚠️ ' + d.cn + ' submitted shift with ' + d.done + '/' + d.total + ' tasks (' + d.pct + '%)' + (note ? ': ' + note : '');
+    addNotif(msg, d.isComplete ? 'success' : 'warn');
+  }
+  closeClModal();
+  document.getElementById('clmNote').value = '';
+  showToast(d.isComplete ? '✅ Shift summary submitted!' : '⚠️ Shift summary submitted with notes.');
+}
+
+// ════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════
+function showToast(msg, dur) {
+  dur = dur || 3000;
+  var t = document.getElementById('toastEl');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toastEl';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);'
+      + 'background:var(--s1);border:1px solid var(--bdr2);border-radius:10px;'
+      + 'padding:10px 20px;font-size:13px;font-weight:600;color:var(--txt);'
+      + 'z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.4);transition:opacity .3s;white-space:nowrap;';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  if (t._timer) clearTimeout(t._timer);
+  t._timer = setTimeout(function(){t.style.opacity='0';}, dur);
+}
+
+
+
+// ════════════════════════════════════════
+// SESSION 8: SCHED-C — COVERAGE REQUESTS + OVERTIME + SHIFT REMINDER
+// ════════════════════════════════════════
+
+// Shift reminder — shows banner on dashboard if shift starts within 60 min
+function checkShiftReminder(cn) {
+  if (!cn) return;
+  var now = new Date();
+  var phHour = (now.getUTCHours() + 8) % 24; // PHT = UTC+8
+  // Shift start times in PHT
+  var shifts = {AM: 8, MID: 16, EVE: 0}; // 8AM, 4PM, 12AM PHT (approximate)
+  var myShift = PERF[cn] ? PERF[cn].sh : null;
+  if (!myShift) return;
+  var shiftKey = myShift.split('/')[0].trim();
+  var startHr = shifts[shiftKey] || shifts['AM'];
+  var diff = startHr - phHour;
+  if (diff < 0) diff += 24;
+  var banner = document.getElementById('shiftReminder');
+  if (diff <= 1 && diff >= 0 && banner) {
+    banner.classList.add('show');
+    var mins = Math.round(diff * 60);
+    var el = document.getElementById('srSubText');
+    if (el) el.textContent = mins <= 10
+      ? 'Your ' + shiftKey + ' shift is starting very soon — clock in on Time Doctor!'
+      : 'Your ' + shiftKey + ' shift starts in about ' + mins + ' minutes. Get ready!';
+  }
+}
+
+function dismissShiftReminder() {
+  var banner = document.getElementById('shiftReminder');
+  if (banner) banner.classList.remove('show');
+}
+
+// Coverage request page (Sched-C)
+function pCoverage() {
+  var p = mkPage('coverage');
+  var isAdmin = CU && CU.role === 'admin';
+
+  function render() {
+    var myCovReqs = isAdmin ? COV_REQS : COV_REQS.filter(function(r) {
+      return r.by === CU.cn || r.claimed_by === CU.cn;
+    });
+    var openReqs = COV_REQS.filter(function(r) { return r.status === 'open' && r.by !== (CU.cn||''); });
+
+    var formHtml = !isAdmin ? `
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-title">📢 Request Coverage or Overtime</div>
+        <div class="g2" style="margin-bottom:12px">
+          <div>
+            <div style="font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:600">Request Type</div>
+            <select class="af" id="covType" style="width:100%;cursor:pointer">
+              <option value="coverage">🆘 I Need Coverage (can't make my shift)</option>
+              <option value="overtime">⏰ Overtime / Extra Shift Request</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:600">Shift & Date</div>
+            <select class="af" id="covShift" style="width:100%;cursor:pointer">
+              <option value="AM">AM Shift</option>
+              <option value="MID">MID Shift</option>
+              <option value="EVE">EVE Shift</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:600">Reason / Details</div>
+          <textarea class="af" id="covReason" rows="3" placeholder="e.g. Medical appointment, internet issue, want to extend shift for campaign push..." style="resize:vertical;line-height:1.5"></textarea>
+        </div>
+        <button class="abtn" style="width:auto;padding:9px 22px" onclick="submitCovReq()">Submit Request →</button>
+      </div>` : '';
+
+    var openAvail = !isAdmin && openReqs.length > 0 ? `
+      <div class="notice" style="margin-bottom:16px">
+        🆘 <strong>${openReqs.length} open coverage request${openReqs.length>1?'s':''}</strong> — someone needs help! Can you cover?
+      </div>` : '';
+
+    var cards = COV_REQS.map(function(r) {
+      var isOwn = r.by === (CU.cn||'');
+      var canClaim = !isAdmin && r.status === 'open' && !isOwn && r.type === 'coverage';
+      var shiftColor = r.shift==='AM'?'#F97316':r.shift==='MID'?'#86AC6A':'#60A5FA';
+      return '<div class="cov-card ' + r.type + '">'
+        + '<div class="cov-hdr">'
+        + '<div><div class="cov-name">' + r.by + (isOwn?' (You)':'') + '</div>'
+        + '<div class="cov-meta">' + r.date + (r.claimed_by?' · Claimed by '+r.claimed_by:'') + '</div></div>'
+        + '<div style="display:flex;gap:5px;align-items:center">'
+        + '<span class="cov-type ' + r.type + '">' + (r.type==='coverage'?'🆘 Coverage':'⏰ Overtime') + '</span>'
+        + '<span class="cov-status ' + r.status + '">' + r.status.charAt(0).toUpperCase()+r.status.slice(1) + '</span>'
+        + '</div></div>'
+        + '<div class="cov-shift" style="color:'+shiftColor+'">'+r.shift+' Shift</div>'
+        + '<div class="cov-reason">' + r.reason + '</div>'
+        + '<div class="cov-actions">'
+        + (canClaim ? '<button class="cov-btn claim" onclick="claimCoverage(''+r.id+'')">✋ I Can Cover</button>' : '')
+        + (isAdmin && r.status==='claimed' ? '<button class="cov-btn approve" onclick="approveCov(''+r.id+'')">✅ Approve</button>' : '')
+        + (isAdmin && r.status==='open' ? '<button class="cov-btn approve" onclick="approveCov(''+r.id+'')">✅ Approve</button>' : '')
+        + (isAdmin ? '<button class="cov-btn reject" onclick="rejectCov(''+r.id+'')">✕ Reject</button>' : '')
+        + '</div></div>';
+    }).join('');
+
+    p.innerHTML = '<div class="ph"><div><div class="pt">🆘 Coverage & Overtime Requests</div>'
+      + '<div class="ps">Request shift coverage or extra hours — admin approves all requests</div></div></div>'
+      + openAvail + formHtml
+      + '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:14px">All Requests</div></div>'
+      + '<div class="cov-grid">' + (cards||'<div style="color:var(--dim);font-size:13px">No requests yet.</div>') + '</div>';
+  }
+
+  window.submitCovReq = function() {
+    var type = document.getElementById('covType').value;
+    var shift = document.getElementById('covShift').value;
+    var reason = (document.getElementById('covReason').value||'').trim();
+    if (!reason) { showToast('⚠️ Please add a reason.'); return; }
+    var d = new Date();
+    var dt = d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    COV_REQS.unshift({
+      id: 'COV-' + String(COV_REQS.length+1).padStart(3,'0'),
+      type: type, by: CU.cn, shift: shift, date: dt,
+      reason: reason, status: 'open', claimed_by: null
+    });
+    addNotif('🆘 ' + CU.cn + ' submitted a ' + type + ' request for ' + shift + ' shift');
+    document.getElementById('covReason').value = '';
+    showToast('✅ Request submitted! Admin has been notified.');
+    render();
+  };
+
+  window.claimCoverage = function(id) {
+    var r = COV_REQS.find(function(x){return x.id===id;});
+    if (!r) return;
+    r.status = 'claimed';
+    r.claimed_by = CU.cn;
+    addNotif('✋ ' + CU.cn + ' can cover ' + r.by + "'s " + r.shift + ' shift — awaiting admin approval');
+    showToast('✋ Coverage claimed! Waiting for admin to confirm.');
+    render();
+  };
+
+  window.approveCov = function(id) {
+    var r = COV_REQS.find(function(x){return x.id===id;});
+    if (!r) return;
+    r.status = 'approved';
+    addNotif('✅ Coverage/overtime approved: ' + r.by + ' ' + r.shift + ' shift on ' + r.date);
+    showToast('✅ Request approved!');
+    render();
+  };
+
+  window.rejectCov = function(id) {
+    var r = COV_REQS.find(function(x){return x.id===id;});
+    if (!r) return;
+    r.status = 'rejected';
+    showToast('Request rejected.');
+    render();
+  };
+
+  render();
+  return p;
+}
+
+// ════════════════════════════════════════
+// SESSION 22: GOAL SETTING
+// ════════════════════════════════════════
+function pGoalSetting() {
+  var p = mkPage('goals');
+  var isAdmin = CU && CU.role === 'admin';
+  var MONTHS_LABEL = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var curMonth = MONTHS_LABEL[new Date().getMonth()] + ' ' + new Date().getFullYear();
+
+  function pct(actual, goal) {
+    if (!goal || goal===0) return 0;
+    return Math.min(Math.round((actual/goal)*100), 100);
+  }
+
+  function barColor(p) {
+    return p >= 90 ? 'var(--mint)' : p >= 60 ? 'var(--gold)' : 'var(--candy)';
+  }
+
+  function chatterCard(name) {
+    var g = GOALS.chatters[name] || {qa:75,sales:2000,ppv:3,mms:50};
+    var d = PERF[name] || {};
+    var clr = CLR[name] || '#FF2D78';
+    var actualQA = d.qs || d.latestScore || 0;
+    var actualSales = d.sales ? d.sales.reduce(function(a,b){return a+b;},0) : 0;
+    var actualMMS = d.mms ? d.mms.t : 0;
+    var qaP = pct(actualQA, g.qa);
+    var salesP = pct(actualSales, g.sales);
+    var mmsP = pct(actualMMS, g.mms);
+    var canEdit = isAdmin || (CU.cn === name);
+    return '<div class="goal-card">'
+      + '<div class="goal-hdr">'
+      + '<div class="goal-name"><div style="width:28px;height:28px;border-radius:7px;background:'+clr+';display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff">'+name[0]+'</div>'+name+'</div>'
+      + '<div class="goal-period">'+curMonth+'</div></div>'
+      + '<div class="goal-body">'
+      + '<div class="goal-row"><div class="goal-label">🎯 QA Score Target</div>'
+      + (canEdit ? '<input class="goal-input" id="g_qa_'+name+'" value="'+g.qa+'" type="number" min="0" max="100">' : '<span style="font-weight:700;font-size:13px">'+g.qa+'</span>')
+      + '</div>'
+      + '<div class="goal-row"><div class="goal-label">💰 Sales Target ($)</div>'
+      + (canEdit ? '<input class="goal-input" id="g_sales_'+name+'" value="'+g.sales+'" type="number" min="0">' : '<span style="font-weight:700;font-size:13px">$'+g.sales.toLocaleString()+'</span>')
+      + '</div>'
+      + '<div class="goal-row"><div class="goal-label">📩 PPV Goal (per shift)</div>'
+      + (canEdit ? '<input class="goal-input" id="g_ppv_'+name+'" value="'+g.ppv+'" type="number" min="0">' : '<span style="font-weight:700;font-size:13px">'+g.ppv+'</span>')
+      + '</div>'
+      + '<div class="goal-row"><div class="goal-label">💬 MMS Target</div>'
+      + (canEdit ? '<input class="goal-input" id="g_mms_'+name+'" value="'+g.mms+'" type="number" min="0">' : '<span style="font-weight:700;font-size:13px">'+g.mms+'</span>')
+      + '</div>'
+      + '<div class="goal-progress-wrap">'
+      + '<div class="goal-progress-row"><div class="goal-progress-label">QA Score</div><div class="goal-progress-pct" style="color:'+barColor(qaP)+'">'+actualQA+' / '+g.qa+'</div></div>'
+      + '<div class="goal-bar"><div class="goal-bar-fill" style="width:'+qaP+'%;background:'+barColor(qaP)+'"></div></div>'
+      + '<div style="margin-top:8px"></div>'
+      + '<div class="goal-progress-row"><div class="goal-progress-label">Sales</div><div class="goal-progress-pct" style="color:'+barColor(salesP)+'">$'+actualSales.toLocaleString()+' / $'+g.sales.toLocaleString()+'</div></div>'
+      + '<div class="goal-bar"><div class="goal-bar-fill" style="width:'+salesP+'%;background:'+barColor(salesP)+'"></div></div>'
+      + '</div>'
+      + (canEdit ? '<button class="goal-save-btn" onclick="saveGoal(''+name+'')">💾 Save Goals</button>' : '')
+      + '</div></div>';
+  }
+
+  function modelCard(name) {
+    var g = GOALS.models[name] || {rev:5000,subs:10,renewals:5,customs:10};
+    var emojis = {Sabrina:'👑',Omi:'🔥',Maddy:'💋',Bee:'🐝',Izana:'💎'};
+    var colors = {Sabrina:'#FF2D78',Omi:'#FFD166',Maddy:'#C084FC',Bee:'#60A5FA',Izana:'#06D6A0'};
+    var clr = colors[name] || '#FF2D78';
+    return '<div class="goal-card">'
+      + '<div class="goal-hdr">'
+      + '<div class="goal-name">'+(emojis[name]||'⭐')+' '+name+'</div>'
+      + '<div class="goal-period">'+curMonth+'</div></div>'
+      + '<div class="goal-body">'
+      + '<div class="goal-row"><div class="goal-label">💰 Revenue Target ($)</div>'
+      + (isAdmin ? '<input class="goal-input" id="gm_rev_'+name+'" value="'+g.rev+'" type="number">' : '<span style="font-weight:700">$'+g.rev.toLocaleString()+'</span>')
+      + '</div>'
+      + '<div class="goal-row"><div class="goal-label">👥 New Subscribers</div>'
+      + (isAdmin ? '<input class="goal-input" id="gm_subs_'+name+'" value="'+g.subs+'" type="number">' : '<span style="font-weight:700">'+g.subs+'</span>')
+      + '</div>'
+      + '<div class="goal-row"><div class="goal-label">🔄 Renewals Target</div>'
+      + (isAdmin ? '<input class="goal-input" id="gm_ren_'+name+'" value="'+g.renewals+'" type="number">' : '<span style="font-weight:700">'+g.renewals+'</span>')
+      + '</div>'
+      + '<div class="goal-row"><div class="goal-label">🎨 Custom Content Goal</div>'
+      + (isAdmin ? '<input class="goal-input" id="gm_cust_'+name+'" value="'+g.customs+'" type="number">' : '<span style="font-weight:700">'+g.customs+'</span>')
+      + '</div>'
+      + (isAdmin ? '<button class="goal-save-btn" onclick="saveModelGoal(''+name+'')">💾 Save Goals</button>' : '')
+      + '</div></div>';
+  }
+
+  // Team overview summary
+  var chatterNames = Object.keys(GOALS.chatters);
+  var onTrack = chatterNames.filter(function(n){
+    var d = PERF[n]||{}; var g = GOALS.chatters[n]||{};
+    return (d.qs||d.latestScore||0) >= (g.qa||75);
+  }).length;
+
+  var summaryHtml = isAdmin ? '<div class="goal-summary">'
+    + '<div class="card-title">📊 Team Goals Overview — '+curMonth+'</div>'
+    + '<div class="goal-summary-grid">'
+    + '<div class="goal-kpi"><div class="goal-kpi-val" style="color:var(--mint)">'+(onTrack)+'/'+(chatterNames.length)+'</div><div class="goal-kpi-lbl">On Track QA</div></div>'
+    + '<div class="goal-kpi"><div class="goal-kpi-val" style="color:var(--gold)">$'+
+      Object.values(GOALS.models).reduce(function(s,g){return s+g.rev;},0).toLocaleString()+'</div><div class="goal-kpi-lbl">Total Rev Target</div></div>'
+    + '<div class="goal-kpi"><div class="goal-kpi-val" style="color:var(--lav)">'+
+      Object.values(GOALS.chatters).reduce(function(s,g){return s+g.ppv;},0)+'</div><div class="goal-kpi-lbl">Total PPV Goal/shift</div></div>'
+    + '<div class="goal-kpi"><div class="goal-kpi-val" style="color:var(--sky)">'+
+      Object.values(GOALS.models).reduce(function(s,g){return s+g.subs;},0)+'</div><div class="goal-kpi-lbl">Total Sub Target</div></div>'
+    + '</div></div>' : '';
+
+  // Build chatter section
+  var chatterSection = '';
+  if (isAdmin) {
+    chatterSection = '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">👥 Chatter Goals</div></div>'
+      + '<div class="goal-grid">' + chatterNames.map(chatterCard).join('') + '</div>';
+  } else if (CU.cn) {
+    chatterSection = '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">🎯 My Goals</div></div>'
+      + '<div class="goal-grid">' + chatterCard(CU.cn) + '</div>';
+  }
+
+  var modelSection = isAdmin ? '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">⭐ Model Goals</div></div>'
+    + '<div class="goal-grid">' + Object.keys(GOALS.models).map(modelCard).join('') + '</div>' : '';
+
+  p.innerHTML = '<div class="ph"><div>'
+    + '<div class="pt">🎯 Goal Setting</div>'
+    + '<div class="ps">Monthly targets for chatters and models · '+curMonth+'</div>'
+    + '</div></div>'
+    + summaryHtml + chatterSection + modelSection;
+
+  return p;
+}
+
+window.saveGoal = function(name) {
+  var qa = parseFloat(document.getElementById('g_qa_'+name).value)||75;
+  var sales = parseFloat(document.getElementById('g_sales_'+name).value)||2000;
+  var ppv = parseFloat(document.getElementById('g_ppv_'+name).value)||3;
+  var mms = parseFloat(document.getElementById('g_mms_'+name).value)||50;
+  GOALS.chatters[name] = {qa:qa, sales:sales, ppv:ppv, mms:mms};
+  showToast('✅ Goals saved for '+name+'!');
+  if (CU && CU.role==='admin') addNotif('🎯 Goals updated for '+name+' — '+name[0]+' targets set for this month');
+};
+
+window.saveModelGoal = function(name) {
+  var rev = parseFloat(document.getElementById('gm_rev_'+name).value)||5000;
+  var subs = parseFloat(document.getElementById('gm_subs_'+name).value)||10;
+  var ren = parseFloat(document.getElementById('gm_ren_'+name).value)||5;
+  var cust = parseFloat(document.getElementById('gm_cust_'+name).value)||10;
+  GOALS.models[name] = {rev:rev, subs:subs, renewals:ren, customs:cust};
+  showToast('✅ Goals saved for '+name+'!');
+};
+
+
 window.tgCo=(uid)=>{
   const b=$('body_'+uid),h=$('chv_'+uid);
   const o=b.classList.toggle('op');h.classList.toggle('op',o);
 };
 </script>
+
+<!-- CHECKLIST COMPLETE MODAL -->
+<div id="clModal">
+  <div class="clm-box">
+    <div class="clm-icon" id="clmIcon">🎉</div>
+    <div class="clm-title" id="clmTitle">Shift Complete!</div>
+    <div class="clm-sub" id="clmSub">You've completed all your shift tasks. Great work!</div>
+    <div class="clm-stats" id="clmStats"></div>
+    <div class="clm-note" id="clmNoteWrap">
+      <div class="clm-note-lbl">Shift Note (optional)</div>
+      <textarea class="clm-note-input" id="clmNote" rows="2" placeholder="e.g. 2 fans flagged, PPV sent to 3 whales..."></textarea>
+    </div>
+    <div class="clm-actions">
+      <button class="clm-btn clm-btn-ghost" onclick="closeClModal()">Close</button>
+      <button class="clm-btn clm-btn-primary" onclick="submitShiftSummary()">Submit Summary ✓</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
