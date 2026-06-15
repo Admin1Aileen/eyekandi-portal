@@ -966,6 +966,165 @@ body.light ::-webkit-scrollbar-thumb{background:var(--s4);}
   cursor:pointer;font-size:15px;transition:all .2s;flex-shrink:0;}
 .darkmode-btn:hover{background:var(--s3);border-color:var(--bdr2);}
 
+
+/* ── PROOF UPLOAD ── */
+.proof-section{background:var(--s1);border:1px solid var(--bdr);border-radius:var(--r-lg);
+  padding:18px;margin-bottom:16px;}
+.proof-section-title{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:14px;
+  display:flex;align-items:center;gap:7px;padding-bottom:10px;border-bottom:1px solid var(--bdr);}
+.proof-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.proof-card{background:var(--s2);border:1px solid var(--bdr);border-radius:var(--r-md);
+  padding:14px;display:flex;flex-direction:column;gap:10px;}
+.proof-upload-zone{border:2px dashed var(--bdr2);border-radius:var(--r-sm);padding:20px;
+  text-align:center;cursor:pointer;transition:all .2s;position:relative;}
+.proof-upload-zone:hover{border-color:rgba(255,45,120,.4);background:rgba(255,45,120,.04);}
+.proof-upload-zone.has-file{border-color:rgba(6,214,160,.4);background:rgba(6,214,160,.04);}
+.proof-upload-icon{font-size:24px;margin-bottom:6px;}
+.proof-upload-txt{font-size:11.5px;color:var(--dim);line-height:1.5;}
+.proof-upload-input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.proof-preview{width:100%;max-height:120px;object-fit:cover;border-radius:var(--r-sm);display:none;}
+.proof-preview.show{display:block;}
+.proof-fields{display:flex;flex-direction:column;gap:8px;}
+.proof-submit-row{display:flex;justify-content:flex-end;padding-top:12px;
+  border-top:1px solid var(--bdr);margin-top:4px;}
+
+/* ── PROOF HISTORY ── */
+.proof-hist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:16px;}
+.proof-hist-item{background:var(--s2);border:1px solid var(--bdr);border-radius:var(--r-md);
+  overflow:hidden;transition:all .2s;}
+.proof-hist-item:hover{border-color:var(--bdr2);transform:translateY(-1px);}
+.proof-hist-img{width:100%;height:100px;object-fit:cover;}
+.proof-hist-info{padding:8px 10px;}
+.proof-hist-model{font-size:11px;font-weight:700;color:var(--candy);margin-bottom:2px;}
+.proof-hist-meta{font-size:10.5px;color:var(--dim);}
+
+/* ── ANNOUNCEMENT ATTACHMENT ── */
+.ann-attachment{width:100%;max-height:200px;object-fit:cover;border-radius:var(--r-sm);
+  margin-top:10px;display:block;}
+.ann-file-link{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;
+  border-radius:var(--r-sm);background:var(--s2);border:1px solid var(--bdr);
+  color:var(--dim);font-size:11px;text-decoration:none;margin-top:8px;transition:all .2s;}
+.ann-file-link:hover{color:var(--txt);border-color:var(--bdr2);}
+
+/* ── CHECKLIST SUBMIT ── */
+.cl-submit-row{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;background:var(--s2);border-radius:var(--r-md);
+  border:1px solid var(--bdr);margin-top:16px;flex-wrap:wrap;gap:10px;}
+.cl-submit-info{font-size:12px;color:var(--dim);line-height:1.7;}
+
+/* ── SHIFT REPORT DISPLAY ── */
+.shift-board{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+@media(max-width:700px){.shift-board{grid-template-columns:1fr;}}
+.shift-col{background:var(--s1);border:1px solid var(--bdr);border-radius:var(--r-lg);overflow:hidden;}
+.shift-col-hdr{padding:12px 16px;border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:space-between;}
+.shift-col-title{font-family:var(--fh);font-size:13px;font-weight:700;}
+.shift-live{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;
+  border-radius:20px;font-size:10px;font-weight:700;
+  background:rgba(6,214,160,.12);color:var(--mint);border:1px solid rgba(6,214,160,.2);}
+.shift-live-dot{width:6px;height:6px;border-radius:50%;background:var(--mint);
+  animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.shift-col-body{padding:12px 16px;}
+.shift-chatter-row{display:flex;align-items:center;gap:10px;padding:8px 0;
+  border-bottom:1px solid var(--bdr);}
+.shift-chatter-row:last-child{border-bottom:none;}
+.shift-av-sm{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;
+  justify-content:center;font-family:var(--fh);font-weight:800;font-size:11px;color:#fff;flex-shrink:0;}
+.shift-chatter-name{font-size:12px;font-weight:600;flex:1;}
+.shift-sales{font-family:var(--fh);font-size:13px;font-weight:800;color:var(--gold);}
+.shift-empty{padding:20px;text-align:center;color:var(--mu);font-size:12px;}
+
+
+/* ── PROOF REVIEW STATUS ── */
+.proof-status{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;
+  border-radius:20px;font-size:9.5px;font-weight:700;margin-top:6px;}
+.proof-status.pending{background:rgba(96,165,250,.12);color:var(--sky);border:1px solid rgba(96,165,250,.2);}
+.proof-status.approved{background:rgba(6,214,160,.12);color:var(--mint);border:1px solid rgba(6,214,160,.2);}
+.proof-status.revise{background:rgba(255,209,102,.12);color:var(--gold);border:1px solid rgba(255,209,102,.2);}
+.proof-status.reviewed{background:rgba(192,132,252,.12);color:var(--lav);border:1px solid rgba(192,132,252,.2);}
+.proof-admin-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;
+  padding-top:8px;border-top:1px solid var(--bdr);}
+.proof-note-input{width:100%;background:var(--s2);border:1px solid var(--bdr);
+  border-radius:var(--r-sm);padding:7px 10px;color:var(--txt);font-size:11.5px;
+  font-family:var(--ff);resize:none;outline:none;margin-top:6px;transition:border-color .2s;}
+.proof-note-input:focus{border-color:rgba(255,45,120,.4);}
+.proof-hist-item-full{background:var(--s1);border:1px solid var(--bdr);border-radius:var(--r-md);
+  overflow:hidden;transition:all .2s;display:flex;flex-direction:column;}
+.proof-hist-item-full:hover{border-color:var(--bdr2);}
+.proof-hist-img-full{width:100%;height:130px;object-fit:cover;cursor:pointer;}
+.proof-hist-body{padding:10px 12px;flex:1;}
+.proof-hist-status-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+
+
+/* ── PROOF ACCORDION HISTORY ── */
+.proof-hist-accordion{display:flex;flex-direction:column;gap:8px;}
+.proof-acc-item{background:var(--s2);border:1px solid var(--bdr);border-radius:var(--r-md);
+  overflow:hidden;transition:all .2s;}
+.proof-acc-hdr{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;
+  user-select:none;transition:background .15s;}
+.proof-acc-hdr:hover{background:var(--s3);}
+.proof-acc-thumb{width:40px;height:40px;border-radius:8px;object-fit:cover;flex-shrink:0;}
+.proof-acc-thumb-ph{width:40px;height:40px;border-radius:8px;background:var(--s4);
+  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.proof-acc-info{flex:1;min-width:0;}
+.proof-acc-title{font-size:12.5px;font-weight:700;margin-bottom:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.proof-acc-meta{font-size:10.5px;color:var(--dim);}
+.proof-acc-right{display:flex;align-items:center;gap:7px;flex-shrink:0;}
+.proof-acc-chev{color:var(--mu);font-size:13px;transition:transform .2s;}
+.proof-acc-item.open .proof-acc-chev{transform:rotate(90deg);}
+.proof-acc-body{display:none;padding:0 14px 14px;border-top:1px solid var(--bdr);}
+.proof-acc-item.open .proof-acc-body{display:block;}
+.proof-acc-img{width:100%;max-height:200px;object-fit:contain;border-radius:var(--r-sm);
+  margin:12px 0;background:var(--s3);cursor:zoom-in;}
+.proof-acc-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.proof-acc-field{background:var(--s1);border-radius:var(--r-sm);padding:8px 10px;}
+.proof-acc-field-lbl{font-size:9.5px;font-weight:700;color:var(--mu);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;}
+.proof-acc-field-val{font-size:12.5px;font-weight:600;color:var(--txt);}
+
+/* ── COUNT BADGE ── */
+.proof-count-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;
+  border-radius:20px;font-size:11px;font-weight:700;
+  background:rgba(255,45,120,.12);color:var(--candy);border:1px solid rgba(255,45,120,.2);}
+.proof-stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+.proof-stat{background:var(--s1);border:1px solid var(--bdr);border-radius:var(--r-md);
+  padding:12px 16px;display:flex;align-items:center;gap:10px;flex:1;min-width:140px;}
+.proof-stat-icon{font-size:22px;flex-shrink:0;}
+.proof-stat-val{font-family:var(--fh);font-size:22px;font-weight:800;}
+.proof-stat-lbl{font-size:10.5px;color:var(--dim);margin-top:1px;}
+
+/* ── SINGLE ACTIVE CARD ── */
+.proof-active-card{background:var(--s1);border:1px solid var(--bdr2);
+  border-radius:var(--r-lg);padding:20px;margin-bottom:20px;
+  box-shadow:var(--shadow-md);}
+.proof-active-hdr{display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--bdr);}
+.proof-active-title{font-family:var(--fh);font-size:14px;font-weight:800;}
+
+
+/* ── PROOF PAGE SEGREGATION ── */
+.proof-page-banner{padding:12px 16px;border-radius:var(--r-md);margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;}
+.proof-page-banner.ppv{background:rgba(255,209,102,.08);border:1px solid rgba(255,209,102,.2);}
+.proof-page-banner.tag{background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.2);}
+.proof-page-banner.stories{background:rgba(6,214,160,.08);border:1px solid rgba(6,214,160,.2);}
+.proof-page-banner-icon{font-size:24px;flex-shrink:0;}
+.proof-page-banner-title{font-family:var(--fh);font-size:14px;font-weight:800;}
+.proof-page-banner-sub{font-size:11.5px;color:var(--dim);margin-top:2px;}
+.proof-chatter-section{margin-bottom:20px;}
+.proof-chatter-hdr{display:flex;align-items:center;gap:8px;padding:8px 0;
+  margin-bottom:8px;border-bottom:1px solid var(--bdr);}
+.proof-chatter-av{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;
+  justify-content:center;font-family:var(--fh);font-weight:800;font-size:10px;color:#fff;}
+.proof-chatter-name{font-size:12px;font-weight:700;}
+.proof-chatter-count{font-size:10.5px;color:var(--dim);}
+
+
+/* ── NOTIF ACTION BUTTONS IN BELL ── */
+.notif-item .btn{padding:3px 10px;font-size:10px;height:auto;line-height:1.4;}
+
 </style>
 </head>
 <body>
@@ -1113,15 +1272,17 @@ initMaintenance();
 // ACCOUNTS — pure in-memory, zero deps
 // ════════════════════════════════════════
 const ACCS=[
-  {u:'admin',    p:'EKadmin2026!', r:'admin',   cn:null},
-  {u:'eyekandi', p:'EK2026!',      r:'admin',   cn:null},
-  {u:'jayce',    p:'Jayce2026!',   r:'chatter', cn:'Jayce'},
-  {u:'sage',     p:'Sage2026!',    r:'chatter', cn:'Sage'},
-  {u:'jammy',    p:'Jammy2026!',   r:'chatter', cn:'Jammy'},
-  {u:'adie',     p:'Adie2026!',    r:'chatter', cn:'Adie'},
-  {u:'dale',     p:'Dale2026!',    r:'chatter', cn:'Dale'},
-  {u:'joan',     p:'Joan2026!',    r:'chatter', cn:'Joan'},
-  {u:'fred',     p:'Fred2026!',    r:'chatter', cn:'Fred'},
+  {u:'admin',    p:'EKadmin2026!', r:'admin',   cn:null,    dn:'Admin'},
+  {u:'eyekandi', p:'EK2026!',      r:'admin',   cn:null,    dn:'EYE KANDI'},
+  {u:'aj',       p:'AJ2026!',      r:'admin',   cn:null,    dn:'AJ'},
+  {u:'phing',    p:'Phing2026!',   r:'admin',   cn:null,    dn:'Ms. Phing'},
+  {u:'jayce',    p:'Jayce2026!',   r:'chatter', cn:'Jayce', dn:'Jayce'},
+  {u:'sage',     p:'Sage2026!',    r:'chatter', cn:'Sage',  dn:'Sage'},
+  {u:'jammy',    p:'Jammy2026!',   r:'chatter', cn:'Jammy', dn:'Jammy'},
+  {u:'adie',     p:'Adie2026!',    r:'chatter', cn:'Adie',  dn:'Adie'},
+  {u:'dale',     p:'Dale2026!',    r:'chatter', cn:'Dale',  dn:'Dale'},
+  {u:'joan',     p:'Joan2026!',    r:'chatter', cn:'Joan',  dn:'Joan'},
+  {u:'fred',     p:'Fred2026!',    r:'chatter', cn:'Fred',  dn:'Fred'},
 ];
 const XACCS=[]; // signed up accounts
 let CU=null;
@@ -1332,6 +1493,25 @@ let VIOLATIONS = [
 // HELPERS
 // ════════════════════════════════════════
 const $=id=>document.getElementById(id);
+
+function showToast(msg,dur){
+  dur=dur||3000;
+  var t=document.getElementById('ek_toast');
+  if(!t){
+    t=document.createElement('div');
+    t.id='ek_toast';
+    t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);'
+      +'background:var(--s1);border:1px solid var(--bdr2);border-radius:var(--r-md);'
+      +'padding:10px 20px;font-size:13px;font-weight:600;color:var(--txt);'
+      +'z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.4);transition:opacity .3s;white-space:nowrap;opacity:0;';
+    document.body.appendChild(t);
+  }
+  t.textContent=msg;
+  t.style.opacity='1';
+  if(t._tmr)clearTimeout(t._tmr);
+  t._tmr=setTimeout(function(){t.style.opacity='0';},dur);
+}
+
 const mkPage=id=>{const p=document.createElement('div');p.className='page';p.id='page-'+id;return p;};
 const col=v=>v>=90?'var(--mint)':v>=75?'var(--gold)':'var(--candy)';
 const barHtml=(sales,color)=>{
@@ -1414,6 +1594,7 @@ function launch(user){
   }
   startSync();
   setTimeout(updateNavDots,1500);
+  startNotifPolling();
   if(CU.role==='chatter') setTimeout(function(){checkShiftReminder(CU.cn);},2000);
 }
 
@@ -1438,9 +1619,11 @@ const ADMIN_GROUPS = [
   { id:'sales', label:'💸 Sales', subs:[
     ['model_sales','💸 Model Sales'],['eod','📝 EOD Report'],
     ['content_reqs','🎬 Content'],['sales_ref','💲 Sales Guide'],['ppv','💰 PPV Pricing'],
+    ['ppv_proof','💰 PPV Proof'],['tag_proof','🏷️ Tag Proof'],['stories_proof','📖 Stories'],
   ]},
   { id:'operations', label:'📋 Operations', subs:[
     ['checklist','✅ Checklist'],['coverage','🆘 Coverage'],['schedule','📅 Schedule'],
+    ['shift_report','⏱️ Shift Report'],
   ]},
   { id:'resources', label:'📚 Resources', subs:[
     ['sops','📋 SOPs'],['quicklinks','🔗 Quick Links'],
@@ -1461,12 +1644,14 @@ const CHATTER_GROUPS = [
   { id:'myshift', label:'💬 My Shift', subs:[
     ['checklist','✅ Checklist'],['eod','📝 EOD Report'],
     ['coverage','🆘 Coverage'],['schedule','📅 Schedule'],
+    ['shift_report','⏱️ Shift Report'],
   ]},
   { id:'coaching', label:'🎯 Coaching', subs:[
     ['coaching','🎯 My Coaching'],
   ]},
   { id:'sales', label:'💸 Sales', subs:[
     ['sales_ref','💲 Sales Guide'],['ppv','💰 PPV Pricing'],['content_reqs','🎬 Content'],
+    ['ppv_proof','💰 PPV Proof'],['tag_proof','🏷️ Tag Proof'],['stories_proof','📖 Stories'],
   ]},
   { id:'resources', label:'📚 Resources', subs:[
     ['sops','📋 SOPs'],['quicklinks','🔗 Quick Links'],
@@ -1539,6 +1724,109 @@ function goPage(id){
   if(parentGrp && ACTIVE_GROUP!==parentGrp.id) openGroup(parentGrp.id);
 }
 
+// ════════════════════════════════════════
+// NOTIFICATION SYSTEM v3
+// Shared localStorage store — all admins receive admin notifs
+// Admins: admin, eyekandi, aj, phing
+// ════════════════════════════════════════
+var ADMIN_USERS = ['admin','eyekandi','aj','phing'];
+var NOTIF_KEY = 'ek_notifs_v3';
+var NOTIF_TIMER = null;
+
+function loadNotifStore(){
+  try{var r=localStorage.getItem(NOTIF_KEY);return r?JSON.parse(r):[];}catch(e){return [];}
+}
+function saveNotifStore(arr){
+  try{localStorage.setItem(NOTIF_KEY,JSON.stringify(arr.slice(0,100)));}catch(e){}
+}
+function getMyNotifs(){
+  if(!CU)return[];
+  return loadNotifStore().filter(function(n){
+    if(n.target==='admin') return CU.role==='admin';
+    if(n.target==='all') return true;
+    if(n.target===CU.u) return true;
+    return false;
+  });
+}
+function isReadByMe(n){return CU&&n.readBy&&n.readBy.indexOf(CU.u)!==-1;}
+
+// target: 'admin'=all admins | 'all'=everyone | username=specific user
+function addNotif(msg,type,target,action){
+  var all=loadNotifStore();
+  all.unshift({
+    id:Date.now(),msg:msg,type:type||'info',target:target||'admin',
+    time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),
+    date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}),
+    readBy:[],action:action||null,actioned:null
+  });
+  saveNotifStore(all);
+  renderNotifs();
+}
+function readNotif(id){
+  var all=loadNotifStore();
+  var n=all.find(function(x){return x.id===id;});
+  if(n&&CU&&n.readBy.indexOf(CU.u)===-1){n.readBy.push(CU.u);saveNotifStore(all);}
+  renderNotifs();
+}
+function markAllRead(){
+  var all=loadNotifStore();
+  getMyNotifs().forEach(function(n){if(CU&&n.readBy.indexOf(CU.u)===-1)n.readBy.push(CU.u);});
+  saveNotifStore(all);renderNotifs();
+}
+function notifAction(nId,action){
+  if(!CU||CU.role!=='admin')return;
+  var all=loadNotifStore();
+  var n=all.find(function(x){return x.id===nId;});
+  if(!n||!n.action)return;
+  var arr=n.action.pid==='ppv_proof'?PPV_PROOFS:n.action.pid==='tag_proof'?TAG_PROOFS:STORY_PROOFS;
+  var item=arr.find(function(x){return x.id===n.action.proofId;});
+  if(item){
+    item.status=action;
+    var lbl={approved:'Approved',revise:'Needs Revision',rejected:'Rejected'};
+    addNotif('Proof by '+item.by+' ['+item.model+'] - '+(lbl[action]||action)+' by '+CU.u,'info',item.by);
+    showToast((lbl[action]||action)+'!');
+    n.actioned=action;saveNotifStore(all);
+  }
+  readNotif(nId);
+}
+function toggleNotif(){var dd=$('notifDropdown');if(dd)dd.classList.toggle('open');}
+function closeNotif(){var dd=$('notifDropdown');if(dd)dd.classList.remove('open');}
+document.addEventListener('click',function(e){var w=$('notifWrap');if(w&&!w.contains(e.target))closeNotif();});
+
+function renderNotifs(){
+  var mine=getMyNotifs();
+  var unread=mine.filter(function(n){return !isReadByMe(n);}).length;
+  var badge=$('notifBadge');
+  if(badge){badge.textContent=unread>9?'9+':unread;badge.classList.toggle('hidden',unread===0);}
+  var list=$('notifList');
+  if(!list)return;
+  if(!mine.length){list.innerHTML='<div class="notif-empty">No notifications yet</div>';updateNavDots();return;}
+  list.innerHTML=mine.slice(0,25).map(function(n){
+    var read=isReadByMe(n);
+    var ab='';
+    if(CU&&CU.role==='admin'&&n.action&&n.action.type==='proof'&&!n.actioned){
+      ab='<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px">'
+        +'<button class="btn btn-mint btn-sm" style="font-size:10px;padding:3px 9px" onclick="notifAction('+n.id+',\'approved\')">Approve</button>'
+        +'<button class="btn btn-gold btn-sm" style="font-size:10px;padding:3px 9px" onclick="notifAction('+n.id+',\'revise\')">Revise</button>'
+        +'<button class="btn btn-ghost btn-sm" style="font-size:10px;padding:3px 9px;color:var(--candy)" onclick="notifAction('+n.id+',\'rejected\')">Reject</button>'
+        +'</div>';
+    }
+    if(n.actioned)ab='<div style="font-size:10px;color:var(--mu);margin-top:4px">Actioned: '+n.actioned+'</div>';
+    var tgt=n.target==='admin'?' [Admin]':n.target==='all'?' [All]':'';
+    return '<div class="notif-item'+(read?'':' unread')+'" onclick="readNotif('+n.id+')">'
+      +'<div class="notif-dot'+(read?' read':'')+'"></div>'
+      +'<div class="notif-content">'
+      +'<div class="notif-msg">'+n.msg+'</div>'
+      +'<div class="notif-time">'+n.date+' '+n.time+tgt+'</div>'
+      +ab+'</div></div>';
+  }).join('');
+  updateNavDots();
+}
+function startNotifPolling(){
+  if(NOTIF_TIMER)clearInterval(NOTIF_TIMER);
+  NOTIF_TIMER=setInterval(renderNotifs,30000);
+}
+
 function updateNavDots(){
   // Requests dot
   const pendingReqs = REQS.filter(function(r){return r.status==='Pending';}).length;
@@ -1561,11 +1849,11 @@ function buildPages(){
   const c=$('pages'); c.innerHTML='';
   if(CU.role==='admin'){
     [pAdminDash,pAdminChatters,pAdminPerf,pAdminCoaching,pModelSales,
-     pAnnouncements,pRequests,()=>pChecklist('admin'),pCoverage,pGoalSetting,pEOD,pViolations,pLeaderboard,pContentReqs,pProfiles,pSchedule,pQuickLinks,pSOPs,pSalesRef,pPPV,pAI
+     pAnnouncements,pRequests,()=>pChecklist('admin'),pCoverage,pGoalSetting,pEOD,pViolations,pLeaderboard,pContentReqs,pProfiles,pPPVProof,pTagProof,pStoriesProof,pShiftReport,pSchedule,pQuickLinks,pSOPs,pSalesRef,pPPV,pAI
     ].forEach(fn=>c.appendChild(fn()));
   } else {
     [()=>pChatterDash(CU.cn),()=>pChatterPerf(CU.cn),()=>pChatterCoaching(CU.cn),
-     pAnnouncements,()=>pRequests(CU.cn),()=>pChecklist(CU.cn),pCoverage,pGoalSetting,pEOD,pViolations,pLeaderboard,pContentReqs,pProfiles,pSchedule,pQuickLinks,pSOPs,pSalesRef,pPPV,pAI
+     pAnnouncements,()=>pRequests(CU.cn),()=>pChecklist(CU.cn),pCoverage,pGoalSetting,pEOD,pViolations,pLeaderboard,pContentReqs,pProfiles,pPPVProof,pTagProof,pStoriesProof,pShiftReport,pSchedule,pQuickLinks,pSOPs,pSalesRef,pPPV,pAI
     ].forEach(fn=>c.appendChild(fn()));
   }
 }
@@ -1808,30 +2096,91 @@ function pModelSales(){
 // ─── ANNOUNCEMENTS ───
 function pAnnouncements(){
   const p=mkPage('announcements');
+  var annFile = null; // store base64 of attachment
+
   const renderAnns=()=>{
-    const cards=ANNS.map(a=>`<div class="anc ${a.ty}">
-      <div class="ant"><div class="ants">${a.ti}</div><div class="antd">${a.dt}</div></div>
-      <div class="anb">${a.bo}</div>
-      <span class="antag ${a.ty==='global'?'tg':a.ty==='callout'?'tc':'ti'}">${a.ty==='global'?'📢 Global':a.ty==='callout'?'⚠️ Call-Out':'ℹ️ Info'}</span>
-    </div>`).join('');
-    const form=CU.role==='admin'?`
-      <div class="fform" style="margin-bottom:20px">
-        <div style="font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:14px">📣 Post Announcement</div>
-        <label class="ffl">Title</label><input class="ffi" id="ati" placeholder="Announcement title">
-        <label class="ffl">Message</label><textarea class="ffi ffta" id="abo" placeholder="Write your message..."></textarea>
-        <label class="ffl">Type</label>
-        <select class="ffi" id="aty"><option value="global">📢 Global</option><option value="callout">⚠️ Call-Out</option><option value="info">ℹ️ Info</option></select>
-        <button class="sbmt" onclick="postAnn()">Post →</button>
-      </div>`:'';
-    p.innerHTML=`<div class="ph"><div><div class="pt">📣 Announcements</div><div class="ps">Team updates and call-outs</div></div></div>
-    ${form}<div class="anl">${cards}</div>`;
+    // Filter announcements by audience
+    var visibleAnns = ANNS.filter(function(a) {
+      if (!a.audience || a.audience==='all') return true;
+      if (a.audience==='admin') return CU && CU.role==='admin';
+      if (a.audience==='chatter') return CU && CU.role==='chatter';
+      return true;
+    });
+    const cards=visibleAnns.map(a=>{
+      var isImg = a.file && a.file.startsWith('data:image');
+      return '<div class="anc '+a.ty+'">'
+        +'<div class="ant"><div class="ants">'+a.ti+'</div><div class="antd">'+a.dt+'</div></div>'
+        +'<div class="anb">'+a.bo+'</div>'
+        +(isImg ? '<img class="ann-attachment" src="'+a.file+'" alt="Attachment">' : '')
+        +(a.file && !isImg ? '<a class="ann-file-link" href="'+a.file+'" download="attachment">📎 Download Attachment</a>' : '')
+        +'<span class="antag '+(a.ty==='global'?'tg':a.ty==='callout'?'tc':'ti')+'">'+(a.ty==='global'?'📢 Global':a.ty==='callout'?'⚠️ Call-Out':'ℹ️ Info')+'</span>'
+        +(a.audience&&a.audience!=='all'?'<span class="antag" style="background:rgba(96,165,250,.12);color:var(--sky);border-color:rgba(96,165,250,.2);margin-left:5px">'+(a.audience==='chatter'?'👥 Chatters Only':'👑 Admins Only')+'</span>':'')
+        +'</div>';
+    }).join('');
+
+    var form = CU.role==='admin' ? '<div class="fform" style="margin-bottom:20px">'
+      +'<div style="font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:14px">📣 Post Announcement</div>'
+      +'<label class="ffl">Title</label><input class="ffi" id="ati" placeholder="Announcement title">'
+      +'<label class="ffl">Message</label><textarea class="ffi ffta" id="abo" placeholder="Write your message..."></textarea>'
+      +'<label class="ffl">Type</label>'
+      +'<select class="ffi" id="aty"><option value="global">📢 Global</option><option value="callout">⚠️ Call-Out</option><option value="info">ℹ️ Info</option></select>'
+      +'<label class="ffl">Send To</label>'
+      +'<select class="ffi" id="atarget">'
+      +'<option value="all">🌐 Everyone (Chatters + Admins)</option>'
+      +'<option value="chatter">👥 Chatters Only</option>'
+      +'<option value="admin">👑 Admins Only</option>'
+      +'</select>'
+      +'<label class="ffl">Attachment <span style="color:var(--mu);font-weight:400">(optional — image or file)</span></label>'
+      +'<div class="proof-upload-zone" id="annUploadZone" onclick="annPickFile()">'
+      +'<input type="file" id="annFileInput" accept="image/*,.pdf,.doc,.docx" style="display:none" onchange="handleAnnFile(this.files[0])">'
+      +'<div class="proof-upload-icon">📎</div>'
+      +'<div class="proof-upload-txt">Click to attach image or file</div>'
+      +'</div>'
+      +'<img id="annPreview" class="proof-preview" src="" alt="Preview">'
+      +'<div id="annFileName" style="font-size:11px;color:var(--mint);margin-top:5px;display:none"></div>'
+      +'<div class="proof-submit-row"><button class="btn btn-primary btn-lg" onclick="postAnn()">Post Announcement →</button></div>'
+      +'</div>' : '';
+
+    p.innerHTML='<div class="ph"><div><div class="pt">📣 Announcements</div>'
+      +'<div class="ps">Team updates and call-outs</div></div></div>'
+      +form+'<div class="anl">'+cards+'</div>';
   };
+
+  window.annPickFile = function(){ var el=document.getElementById("annFileInput"); if(el)el.click(); };
+  window.handleAnnFile = function(file) {
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      annFile = e.target.result;
+      var zone = document.getElementById('annUploadZone');
+      var preview = document.getElementById('annPreview');
+      var fname = document.getElementById('annFileName');
+      if(zone) zone.classList.add('has-file');
+      if(file.type.startsWith('image/') && preview) {
+        preview.src = annFile;
+        preview.classList.add('show');
+      }
+      if(fname) { fname.textContent = '📎 '+file.name; fname.style.display='block'; }
+    };
+    reader.readAsDataURL(file);
+  };
+
   renderAnns();
-  window.postAnn=()=>{
-    const ti=($('ati').value||'').trim(),bo=($('abo').value||'').trim(),ty=$('aty').value;
-    if(!ti||!bo){alert('Please fill in title and message.');return;}
-    const dt=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-    ANNS.unshift({ty,ti,dt,bo});
+
+  window.postAnn=function(){
+    var ti=(document.getElementById('ati').value||'').trim();
+    var bo=(document.getElementById('abo').value||'').trim();
+    var ty=document.getElementById('aty').value;
+    var tgt=document.getElementById('atarget').value;
+    if(!ti||!bo){showToast('Please fill in title and message.');return;}
+    var dt=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    // Map chatter to 'all' for display but restrict in notif
+    var notifTarget = tgt==='chatter'?'all':tgt==='admin'?'admin':'all';
+    ANNS.unshift({ty:ty,ti:ti,dt:dt,bo:bo,file:annFile||null,audience:tgt});
+    annFile=null;
+    var audLabel = tgt==='chatter'?'👥 Chatters':tgt==='admin'?'👑 Admins':'🌐 Everyone';
+    addNotif('📣 New announcement: '+ti+' → '+audLabel,  'info', notifTarget);
+    showToast('✅ Announcement posted to '+audLabel+'!');
     renderAnns();
   };
   return p;
@@ -1875,6 +2224,7 @@ function pRequests(cn){
     const ti=($('rti').value||'').trim(),de=($('rde').value||'').trim(),ca=$('rca').value;
     if(!ti||!de){alert('Please fill in title and description.');return;}
     const dt=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    addNotif('New request submitted by '+(cn||'admin'),'info','admin');
     REQS.push({id:`REQ-${String(REQS.length+1).padStart(3,'0')}`,ti,r:CU.role,by:cn||'admin',cat:ca,st:'new',dt,de});
     renderReqs();
   };
@@ -1918,7 +2268,14 @@ function pChecklist(cn){
     </div>
     ${sec('Pre-Shift','🌅',CKL.pre,'pre')}
     ${sec('During Shift','⚡',CKL.during,'during')}
-    ${sec('Post-Shift','🌙',CKL.post,'post')}`;
+    ${sec('Post-Shift','🌙',CKL.post,'post')}
+    <div class="cl-submit-row">
+      <div class="cl-submit-info">Completed: <strong>${dn}/${tot}</strong> tasks &nbsp;·&nbsp; <strong>${pct}%</strong></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost btn-sm" onclick="rstCL('${cn}')">Reset</button>
+        <button class="btn btn-primary" onclick="submitChecklist('${cn}')">✓ Submit Shift</button>
+      </div>
+    </div>`;
   };
   window.tgCL=(c,id)=>{
     CLST[c][id]=!CLST[c][id];
@@ -1946,10 +2303,25 @@ function pChecklist(cn){
     }
     // Notify admin when shift starts (first item checked)
     if(CU&&CU.role!=='admin'&&CLST[c][id]===true&&dn===1){
-      addNotif('🟢 '+c+' started their shift checklist');
+      addNotif('🟢 '+c+' started their shift checklist','info','admin');
     }
   };
   window.rstCL=(c)=>{if(confirm('Reset all checklist items?')){CLST[c]={};render();}};
+
+  // Submit shift checklist
+  window.submitChecklist = function(c) {
+    var s = CLST[c]||{};
+    var tot = 0, dn = 0;
+    Object.values(CKL).forEach(function(items){items.forEach(function(){tot++;});});
+    Object.values(s).forEach(function(v){if(v)dn++;});
+    var pct = Math.round((dn/tot)*100);
+    var secs = [
+      {label:'Pre-Shift', done:CKL.pre.filter(function(_,i){return s['pre_'+i];}).length, total:CKL.pre.length},
+      {label:'During', done:CKL.during.filter(function(_,i){return s['during_'+i];}).length, total:CKL.during.length},
+      {label:'Post-Shift', done:CKL.post.filter(function(_,i){return s['post_'+i];}).length, total:CKL.post.length},
+    ];
+    showClModal(c, dn, tot, secs);
+  };
   render();
   return p;
 }
@@ -2266,1335 +2638,482 @@ function startSync() {
 }
 
 
-// ════════════════════════════════════════
-// NOTIFICATIONS SYSTEM
-// ════════════════════════════════════════
-let NOTIFS = [];
 
-function addNotif(msg, type) {
-  NOTIFS.unshift({ id: Date.now(), msg: msg, type: type||'info', read: false,
-    time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) });
-  renderNotifs();
+// ════════════════════════════════════════
+// NOTIFICATION SYSTEM v3
+// ════════════════════════════════════════
+var ADMIN_USERS = ['admin','eyekandi','aj','phing'];
+var NOTIF_KEY = 'ek_notifs_v3';
+var NOTIF_TIMER = null;
+
+function loadNotifStore(){try{var r=localStorage.getItem(NOTIF_KEY);return r?JSON.parse(r):[];}catch(e){return [];}}
+function saveNotifStore(arr){try{localStorage.setItem(NOTIF_KEY,JSON.stringify(arr.slice(0,100)));}catch(e){}}
+function getMyNotifs(){
+  if(!CU)return[];
+  return loadNotifStore().filter(function(n){
+    if(n.target==='admin')return CU.role==='admin';
+    if(n.target==='all')return true;
+    if(n.target===CU.u)return true;
+    return false;
+  });
 }
-
-function renderNotifs() {
-  const unread = NOTIFS.filter(function(n){return !n.read;}).length;
-  const badge = document.getElementById('notifBadge');
-  if (badge) {
-    badge.textContent = unread > 9 ? '9+' : unread;
-    badge.classList.toggle('hidden', unread === 0);
-  }
-  const list = document.getElementById('notifList');
-  if (!list) return;
-  if (NOTIFS.length === 0) {
-    list.innerHTML = '<div class="notif-empty">🔔 No notifications yet</div>';
-    return;
-  }
-  list.innerHTML = NOTIFS.slice(0, 20).map(function(n) {
-    return '<div class="notif-item' + (n.read?'':' unread') + '" onclick="readNotif(' + n.id + ')">'
-      + '<div class="notif-dot' + (n.read?' read':'') + '"></div>'
-      + '<div class="notif-content">'
-      + '<div class="notif-msg">' + n.msg + '</div>'
-      + '<div class="notif-time">' + n.time + '</div>'
-      + '</div></div>';
+function isReadByMe(n){return CU&&n.readBy&&n.readBy.indexOf(CU.u)!==-1;}
+function addNotif(msg,type,target,action){
+  var all=loadNotifStore();
+  all.unshift({id:Date.now(),msg:msg,type:type||'info',target:target||'admin',
+    time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),
+    date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}),
+    readBy:[],action:action||null,actioned:null});
+  saveNotifStore(all);renderNotifs();
+}
+function readNotif(id){
+  var all=loadNotifStore();var n=all.find(function(x){return x.id===id;});
+  if(n&&CU&&n.readBy.indexOf(CU.u)===-1){n.readBy.push(CU.u);saveNotifStore(all);}renderNotifs();
+}
+function markAllRead(){
+  var all=loadNotifStore();
+  getMyNotifs().forEach(function(n){if(CU&&n.readBy.indexOf(CU.u)===-1)n.readBy.push(CU.u);});
+  saveNotifStore(all);renderNotifs();
+}
+function notifAction(nId,action){
+  if(!CU||CU.role!=='admin')return;
+  var all=loadNotifStore();var n=all.find(function(x){return x.id===nId;});
+  if(!n||!n.action)return;
+  var arr=n.action.pid==='ppv_proof'?PPV_PROOFS:n.action.pid==='tag_proof'?TAG_PROOFS:STORY_PROOFS;
+  var item=arr?arr.find(function(x){return x.id===n.action.proofId;}):null;
+  if(item){item.status=action;addNotif('Proof by '+item.by+' ['+item.model+'] - '+action+' by '+CU.u,'info',item.by);showToast(action+'!');n.actioned=action;saveNotifStore(all);}
+  readNotif(nId);
+}
+function toggleNotif(){var dd=$('notifDropdown');if(dd)dd.classList.toggle('open');}
+function closeNotif(){var dd=$('notifDropdown');if(dd)dd.classList.remove('open');}
+document.addEventListener('click',function(e){var w=$('notifWrap');if(w&&!w.contains(e.target))closeNotif();});
+function renderNotifs(){
+  var mine=getMyNotifs();
+  var unread=mine.filter(function(n){return !isReadByMe(n);}).length;
+  var badge=$('notifBadge');
+  if(badge){badge.textContent=unread>9?'9+':unread;badge.classList.toggle('hidden',unread===0);}
+  var list=$('notifList');if(!list)return;
+  if(!mine.length){list.innerHTML='<div class="notif-empty">No notifications yet</div>';updateNavDots();return;}
+  list.innerHTML=mine.slice(0,25).map(function(n){
+    var read=isReadByMe(n);
+    var ab='';
+    if(CU&&CU.role==='admin'&&n.action&&n.action.type==='proof'&&!n.actioned){
+      ab='<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px">'
+        +'<button class="btn btn-mint btn-sm" style="font-size:10px;padding:3px 9px" onclick="notifAction('+n.id+",\'approved\')>Approve</button>"
+        +'<button class="btn btn-gold btn-sm" style="font-size:10px;padding:3px 9px" onclick="notifAction('+n.id+",\'revise\')>Revise</button>"
+        +'<button class="btn btn-ghost btn-sm" style="font-size:10px;padding:3px 9px;color:var(--candy)" onclick="notifAction('+n.id+",\'rejected\')>Reject</button>"
+        +'</div>';
+    }
+    if(n.actioned)ab='<div style="font-size:10px;color:var(--mu);margin-top:4px">Actioned: '+n.actioned+'</div>';
+    return '<div class="notif-item'+(read?'':' unread')+'" onclick="readNotif('+n.id+')">'
+      +'<div class="notif-dot'+(read?' read':'')+'"></div>'
+      +'<div class="notif-content"><div class="notif-msg">'+n.msg+'</div>'
+      +'<div class="notif-time">'+n.date+' '+n.time+'</div>'+ab+'</div></div>';
   }).join('');
   updateNavDots();
 }
+function startNotifPolling(){if(NOTIF_TIMER)clearInterval(NOTIF_TIMER);NOTIF_TIMER=setInterval(renderNotifs,30000);}
 
-function readNotif(id) {
-  var n = NOTIFS.find(function(x){return x.id===id;});
-  if (n) n.read = true;
-  renderNotifs();
-}
+// ════════════════════════════════════════
+// DARK MODE
+// ════════════════════════════════════════
+var DARK_MODE=true;
+function toggleDarkMode(){DARK_MODE=!DARK_MODE;applyTheme();showToast(DARK_MODE?'Dark mode on':'Light mode on');}
+function applyTheme(){var btn=$('darkModeBtn');if(DARK_MODE){document.body.classList.remove('light');if(btn)btn.textContent='🌙';}else{document.body.classList.add('light');if(btn)btn.textContent='☀️';}try{localStorage.setItem('ek_theme',DARK_MODE?'dark':'light');}catch(e){}}
+(function(){try{if(localStorage.getItem('ek_theme')==='light'){DARK_MODE=false;document.body.classList.add('light');}}catch(e){}})();
 
-function markAllRead() {
-  NOTIFS.forEach(function(n){n.read=true;});
-  renderNotifs();
-}
+// ════════════════════════════════════════
+// LANGUAGE TOGGLE
+// ════════════════════════════════════════
+var LANG='EN';
+var TRANSLATIONS={EN:{signin:'Sign In',signout:'Sign Out'},FIL:{signin:'Mag-sign In',signout:'Mag-sign Out'}};
+function t(key){return(TRANSLATIONS[LANG]&&TRANSLATIONS[LANG][key])||(TRANSLATIONS['EN'][key])||key;}
+function toggleLang(){LANG=LANG==='EN'?'FIL':'EN';var sw=$('langSwitch'),flag=$('langFlag'),lbl=$('langLbl');if(sw)sw.classList.toggle('on',LANG==='FIL');if(flag)flag.textContent=LANG==='FIL'?'🇺🇸':'🇵🇭';if(lbl)lbl.textContent=LANG==='FIL'?'EN':'FIL';showToast(LANG==='FIL'?'Filipino mode on':'English mode on');}
 
-function toggleNotif() {
-  var dd = document.getElementById('notifDropdown');
-  if (dd) dd.classList.toggle('open');
-}
-
-function closeNotif() {
-  var dd = document.getElementById('notifDropdown');
-  if (dd) dd.classList.remove('open');
-}
-
-document.addEventListener('click', function(e) {
-  var wrap = document.getElementById('notifWrap');
-  if (wrap && !wrap.contains(e.target)) closeNotif();
-});
-
-function updateNavDots() {
-  var reqDot = document.querySelector('#nb-requests .ndot');
-  if (reqDot) {
-    var pending = REQS.filter(function(r){return r.status==='Pending';}).length;
-    reqDot.classList.toggle('show', pending > 0);
-  }
-  if (CU && CU.role === 'admin') {
-    var perfDot = document.querySelector('#nb-performance .ndot');
-    if (perfDot) {
-      var hasLow = Object.values(PERF).some(function(d){return (d.qs||d.latestScore||0) < 60;});
-      perfDot.classList.toggle('show', hasLow);
-    }
-  }
+// ════════════════════════════════════════
+// AUTH HELPERS
+// ════════════════════════════════════════
+function authTab(t){
+  document.querySelectorAll('.at').forEach(function(b,i){b.classList.toggle('active',['login','signup'][i]===t);});
+  $('lf').style.display=t==='login'?'block':'none';
+  $('sf').style.display=t==='signup'?'block':'none';
+  $('aerr').style.display='none';
 }
 
 // ════════════════════════════════════════
-// QUICK LINKS HUB
+// SHIFT REMINDER
 // ════════════════════════════════════════
-var QUICK_LINKS = [
-  { cat: '📊 Trackers & Sheets', icon: '📗', links: [
-    { name: 'TRACKER EK1&2 (QA Scores)', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit', ok: true },
-    { name: 'MMS Tracker', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1IuG0jsv8zpF0l835u45rPNn5xAyM9JGDVN6Es4OMH-8/edit', ok: true },
-    { name: 'PPV Pricing Sheet', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1_LbogJfEjxUDSxtG6tO8BaKonrU85R71L2G_nqJcFwU/edit', ok: true },
-    { name: 'Campaign Tracker', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1KcgGQNfdcvMFEoNoImLp7ITurci2vAwc_AveKz8u6rU/edit', ok: true },
-    { name: 'BFF Sheet', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1r-rqRfXGhM6U90D0Vm63sqr8dVqt0ITVWsRuZHTwa_E/edit', ok: true },
-    { name: 'Calibration Sheet', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1HTpeV-bXvmzaCGl_YLg9pi0QswQLCVNZzOgEftOuXnM/edit', ok: true },
-    { name: 'Sales Tracker (Net/PPV)', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1Re0u3EWPbwqWImAHds5GVGPCT0rvHVEBQQAoBjMHwq0/edit', ok: true },
-  ]},
-  { cat: '📋 SOPs & Documents', icon: '📄', links: [
-    { name: 'Main SOP', type: 'Google Sheets', url: 'https://docs.google.com/spreadsheets/d/1CwPKLRT-HBr4j7i6uERxijaX6yydyVsxDi4JR4ymP_4/edit', ok: true },
-    { name: 'Tagging SOP', type: 'Google Docs', url: 'https://docs.google.com/document/d/1YuSxnAMnFNysG2m0HIgWd3wcv_fcLWJ2Wp3hBfNPvxU/edit', ok: true },
-    { name: 'Mass Message Library', type: 'Google Docs', url: 'https://docs.google.com/document/d/13wFYOi6F_yissaoKrr3qvWoGC9I4efTkBQwhi7JesGg/edit', ok: true },
-    { name: 'How to Add a Story', type: 'Loom Video', url: 'https://www.loom.com/share/cd12861e17f645e4aa3152d2c422827d', ok: false },
-  ]},
-  { cat: 'Tools & Platforms', icon: '⚙️', links: [
-    { name: 'Time Doctor Download', type: 'App', url: 'https://www.timedoctor.com/download.html', ok: true },
-    { name: 'Custom Request Form', type: 'Fillout Form', url: 'https://fillout.com', ok: true },
-    { name: 'Infloww (Chatter Platform)', type: 'Platform', url: 'https://app.infloww.com', ok: true },
-  ]},
-  { cat: '📣 Team Comms', icon: '💬', links: [
-    { name: 'Discord Server', type: 'Discord', url: 'https://discord.gg/7QKp4JJc', ok: true },
-    { name: 'Model Dashboard (Notion)', type: 'Notion', url: '#', ok: false },
-    { name: 'Custom Request Status', type: 'Notion', url: '#', ok: false },
-  ]},
-];
-
-function pQuickLinks() {
-  var p = mkPage('quicklinks');
-  var warnCount = QUICK_LINKS.reduce(function(s,c){return s+c.links.filter(function(l){return !l.ok;}).length;},0);
-  var cats = QUICK_LINKS.map(function(cat) {
-    var items = cat.links.map(function(l) {
-      return '<a class="ql-item" href="' + l.url + '" target="_blank" rel="noopener">'
-        + '<div class="' + (l.ok?'ql-status-ok':'ql-status-warn') + '"></div>'
-        + '<div class="ql-item-info">'
-        + '<div class="ql-item-name">' + l.name + '</div>'
-        + '<div class="ql-item-type">' + l.type + (l.ok?'':' · ⚠️ May need update') + '</div>'
-        + '</div><div class="ql-item-arrow">↗</div></a>';
-    }).join('');
-    return '<div class="ql-cat">'
-      + '<div class="ql-cat-hdr"><span class="ql-cat-icon">' + cat.icon + '</span>'
-      + '<span class="ql-cat-title">' + cat.cat + '</span></div>'
-      + '<div class="ql-items">' + items + '</div></div>';
-  }).join('');
-  p.innerHTML = '<div class="ph"><div><div class="pt">🔗 Quick Links Hub</div>'
-    + '<div class="ps">All tools, sheets, and platforms in one place</div></div></div>'
-    + (warnCount>0?'<div class="notice">⚠️ '+warnCount+' link'+(warnCount>1?'s':'')+' may need updating (marked in yellow). Contact admin.</div>':'')
-    + '<div class="ql-cats">' + cats + '</div>';
-  return p;
-}
-
-// ════════════════════════════════════════
-// CHECKLIST COMPLETION MODAL
-// ════════════════════════════════════════
-var _clModalData = {};
-
-function showClModal(cn, done, total, sections) {
-  var isComplete = done === total;
-  var pct = Math.round((done/total)*100);
-  document.getElementById('clmIcon').textContent = isComplete ? '🎉' : '⚠️';
-  document.getElementById('clmTitle').textContent = isComplete ? 'Shift Complete!' : 'Shift Ended — Incomplete';
-  document.getElementById('clmSub').textContent = isComplete
-    ? 'Great shift, ' + cn + '! All ' + total + ' tasks completed.'
-    : done + ' of ' + total + ' tasks completed (' + pct + '%). Note any reasons below.';
-  document.getElementById('clmStats').innerHTML = sections.map(function(s) {
-    var col = s.done===s.total ? 'var(--mint)' : 'var(--gold)';
-    return '<div class="clm-stat">'
-      + '<div class="clm-stat-val" style="color:' + col + '">' + s.done + '/' + s.total + '</div>'
-      + '<div class="clm-stat-lbl">' + s.label + '</div></div>';
-  }).join('');
-  document.getElementById('clmNote').placeholder = isComplete
-    ? 'e.g. Pushed 5 PPVs, 2 high-value fans engaged...'
-    : 'e.g. Internet issue, will submit EOD tomorrow...';
-  document.getElementById('clModal').classList.add('open');
-  _clModalData = {cn:cn, done:done, total:total, pct:pct, isComplete:isComplete};
-}
-
-function closeClModal() {
-  document.getElementById('clModal').classList.remove('open');
-}
-
-function submitShiftSummary() {
-  var note = document.getElementById('clmNote').value.trim();
-  var d = _clModalData;
-  if (CU && CU.role !== 'admin') {
-    var msg = d.isComplete
-      ? '✅ ' + d.cn + ' completed all shift tasks (' + d.total + '/' + d.total + ')'
-      : '⚠️ ' + d.cn + ' submitted shift with ' + d.done + '/' + d.total + ' tasks (' + d.pct + '%)' + (note ? ': ' + note : '');
-    addNotif(msg, d.isComplete ? 'success' : 'warn');
-  }
-  closeClModal();
-  document.getElementById('clmNote').value = '';
-  showToast(d.isComplete ? '✅ Shift summary submitted!' : '⚠️ Shift summary submitted with notes.');
-}
-
-// ════════════════════════════════════════
-// TOAST
-// ════════════════════════════════════════
-function showToast(msg, dur) {
-  dur = dur || 3000;
-  var t = document.getElementById('toastEl');
-  if (!t) {
-    t = document.createElement('div');
-    t.id = 'toastEl';
-    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);'
-      + 'background:var(--s1);border:1px solid var(--bdr2);border-radius:10px;'
-      + 'padding:10px 20px;font-size:13px;font-weight:600;color:var(--txt);'
-      + 'z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.4);transition:opacity .3s;white-space:nowrap;';
-    document.body.appendChild(t);
-  }
-  t.textContent = msg;
-  t.style.opacity = '1';
-  if (t._timer) clearTimeout(t._timer);
-  t._timer = setTimeout(function(){t.style.opacity='0';}, dur);
-}
-
-
-
-// ════════════════════════════════════════
-// SESSION 8: SCHED-C — COVERAGE REQUESTS + OVERTIME + SHIFT REMINDER
-// ════════════════════════════════════════
-
-// Shift reminder — shows banner on dashboard if shift starts within 60 min
-function checkShiftReminder(cn) {
-  if (!cn) return;
-  var now = new Date();
-  var phHour = (now.getUTCHours() + 8) % 24; // PHT = UTC+8
-  // Shift start times in PHT
-  var shifts = {AM: 8, MID: 16, EVE: 0}; // 8AM, 4PM, 12AM PHT (approximate)
-  var myShift = PERF[cn] ? PERF[cn].sh : null;
-  if (!myShift) return;
-  var shiftKey = myShift.split('/')[0].trim();
-  var startHr = shifts[shiftKey] || shifts['AM'];
-  var diff = startHr - phHour;
-  if (diff < 0) diff += 24;
-  var banner = document.getElementById('shiftReminder');
-  if (diff <= 1 && diff >= 0 && banner) {
+function checkShiftReminder(cn){
+  if(!cn)return;
+  var now=new Date();
+  var phHour=(now.getUTCHours()+8)%24;
+  var shifts={AM:8,MID:16,EVE:0};
+  var d=PERF[cn];if(!d)return;
+  var shiftKey=(d.sh||d.shift||'AM').split('/')[0].trim();
+  var startHr=shifts[shiftKey]||8;
+  var diff=startHr-phHour;if(diff<0)diff+=24;
+  var banner=$('shiftReminder');
+  if(diff<=1&&diff>=0&&banner){
     banner.classList.add('show');
-    var mins = Math.round(diff * 60);
-    var el = document.getElementById('srSubText');
-    if (el) el.textContent = mins <= 10
-      ? 'Your ' + shiftKey + ' shift is starting very soon — clock in on Time Doctor!'
-      : 'Your ' + shiftKey + ' shift starts in about ' + mins + ' minutes. Get ready!';
+    var el=$('srSubText');
+    if(el)el.textContent=diff<=0?'Your '+shiftKey+' shift is starting now — clock in on Time Doctor!':'Your '+shiftKey+' shift starts soon. Get ready!';
   }
 }
+function dismissShiftReminder(){var b=$('shiftReminder');if(b)b.classList.remove('show');}
 
-function dismissShiftReminder() {
-  var banner = document.getElementById('shiftReminder');
-  if (banner) banner.classList.remove('show');
+// ════════════════════════════════════════
+// CHECKLIST MODAL
+// ════════════════════════════════════════
+var _clModalData={};
+function showClModal(cn,done,total,sections){
+  var isComplete=done===total;
+  $('clmIcon').textContent=isComplete?'🎉':'⚠️';
+  $('clmTitle').textContent=isComplete?'Shift Complete!':'Shift Ended — Incomplete';
+  $('clmSub').textContent=isComplete?'Great shift, '+cn+'! All '+total+' tasks completed.':done+' of '+total+' tasks completed.';
+  $('clmStats').innerHTML=sections.map(function(s){var col=s.done===s.total?'var(--mint)':'var(--gold)';return '<div class="clm-stat"><div class="clm-stat-val" style="color:'+col+'">'+s.done+'/'+s.total+'</div><div class="clm-stat-lbl">'+s.label+'</div></div>';}).join('');
+  $('clmNote').placeholder=isComplete?'e.g. Pushed 5 PPVs today...':'e.g. Internet issue...';
+  $('clModal').classList.add('open');
+  _clModalData={cn:cn,done:done,total:total,isComplete:isComplete};
+}
+function closeClModal(){$('clModal').classList.remove('open');}
+function submitShiftSummary(){
+  var note=$('clmNote').value.trim();
+  var d=_clModalData;
+  if(CU&&CU.role!=='admin'){addNotif((d.isComplete?'Shift complete: ':'Shift submitted: ')+d.cn+' ('+d.done+'/'+d.total+')'+(note?' - '+note:''),'info','admin');}
+  closeClModal();
+  $('clmNote').value='';
+  showToast(d.isComplete?'Shift summary submitted!':'Shift summary submitted with notes.');
 }
 
-// Coverage request page (Sched-C)
-function pCoverage() {
-  var p = mkPage('coverage');
-  var isAdmin = CU && CU.role === 'admin';
+// ════════════════════════════════════════
+// COACHING TOGGLE
+// ════════════════════════════════════════
+window.toggleCoach=window.tgCo=function(uid){
+  var body=$('body_'+uid),chev=$('chev_'+uid);
+  if(!body)return;
+  var open=body.classList.toggle('open');
+  if(chev)chev.classList.toggle('open',open);
+};
 
-  function render() {
-    var myCovReqs = isAdmin ? COV_REQS : COV_REQS.filter(function(r) {
-      return r.by === CU.cn || r.claimed_by === CU.cn;
-    });
-    var openReqs = COV_REQS.filter(function(r) { return r.status === 'open' && r.by !== (CU.cn||''); });
+// ════════════════════════════════════════
+// FILTER HELPERS
+// ════════════════════════════════════════
+window.filterSV=function(v,btn){
+  document.querySelectorAll('.fr .fb').forEach(function(b){b.classList.remove('active','on');});
+  btn.classList.add('active');
+  document.querySelectorAll('.sv-card').forEach(function(c){c.style.display=(v==='all'||c.dataset.s===v)?'':'none';});
+};
+window.filterPPV=function(v,btn){
+  document.querySelectorAll('#page-ppv .fr .fb').forEach(function(b){b.classList.remove('active','on');});
+  btn.classList.add('active');
+  document.querySelectorAll('.ppv-card').forEach(function(c){c.style.display=(v==='all'||c.dataset.ppv===v)?'':'none';});
+};
 
-    var formHtml = !isAdmin ? `
-      <div class="card" style="margin-bottom:20px">
-        <div class="card-title">📢 Request Coverage or Overtime</div>
-        <div class="g2" style="margin-bottom:12px">
-          <div>
-            <div style="font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:600">Request Type</div>
-            <select class="af" id="covType" style="width:100%;cursor:pointer">
-              <option value="coverage">🆘 I Need Coverage (can't make my shift)</option>
-              <option value="overtime">⏰ Overtime / Extra Shift Request</option>
-            </select>
-          </div>
-          <div>
-            <div style="font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:600">Shift & Date</div>
-            <select class="af" id="covShift" style="width:100%;cursor:pointer">
-              <option value="AM">AM Shift</option>
-              <option value="MID">MID Shift</option>
-              <option value="EVE">EVE Shift</option>
-            </select>
-          </div>
-        </div>
-        <div style="margin-bottom:12px">
-          <div style="font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:600">Reason / Details</div>
-          <textarea class="af" id="covReason" rows="3" placeholder="e.g. Medical appointment, internet issue, want to extend shift for campaign push..." style="resize:vertical;line-height:1.5"></textarea>
-        </div>
-        <button class="abtn" style="width:auto;padding:9px 22px" onclick="submitCovReq()">Submit Request →</button>
-      </div>` : '';
+// ════════════════════════════════════════
+// SCHEDULE
+// ════════════════════════════════════════
+window.handleSchedFile=function(file){if(!file)return;var reader=new FileReader();reader.onload=function(e){SCHED=e.target.result;var pg=$('page-schedule');if(pg&&pg.classList.contains('on')){var fn=pSchedule();fn.classList.add('on');pg.replaceWith(fn);}};reader.readAsDataURL(file);};
+window.clearSched=function(){if(confirm('Replace current schedule?')){SCHED=null;var pg=$('page-schedule');if(pg&&pg.classList.contains('on')){var fn=pSchedule();fn.classList.add('on');pg.replaceWith(fn);}}};
 
-    var openAvail = !isAdmin && openReqs.length > 0 ? `
-      <div class="notice" style="margin-bottom:16px">
-        🆘 <strong>${openReqs.length} open coverage request${openReqs.length>1?'s':''}</strong> — someone needs help! Can you cover?
-      </div>` : '';
 
-    var cards = COV_REQS.map(function(r) {
-      var isOwn = r.by === (CU.cn||'');
-      var canClaim = !isAdmin && r.status === 'open' && !isOwn && r.type === 'coverage';
-      var shiftColor = r.shift==='AM'?'#F97316':r.shift==='MID'?'#86AC6A':'#60A5FA';
-      return '<div class="cov-card ' + r.type + '">'
-        + '<div class="cov-hdr">'
-        + '<div><div class="cov-name">' + r.by + (isOwn?' (You)':'') + '</div>'
-        + '<div class="cov-meta">' + r.date + (r.claimed_by?' · Claimed by '+r.claimed_by:'') + '</div></div>'
-        + '<div style="display:flex;gap:5px;align-items:center">'
-        + '<span class="cov-type ' + r.type + '">' + (r.type==='coverage'?'🆘 Coverage':'⏰ Overtime') + '</span>'
-        + '<span class="cov-status ' + r.status + '">' + r.status.charAt(0).toUpperCase()+r.status.slice(1) + '</span>'
-        + '</div></div>'
-        + '<div class="cov-shift" style="color:'+shiftColor+'">'+r.shift+' Shift</div>'
-        + '<div class="cov-reason">' + r.reason + '</div>'
-        + '<div class="cov-actions">'
-        + (canClaim ? '<button class=\'cov-btn claim\' onclick=\'claimCoverage("'+r.id+'")\'>✋ I Can Cover</button>' : '')
-        + (isAdmin && r.status==='claimed' ? '<button class=\'cov-btn approve\' onclick=\'approveCov("'+r.id+'")\'>✅ Approve</button>' : '')
-        + (isAdmin && r.status==='open' ? '<button class=\'cov-btn approve\' onclick=\'approveCov("'+r.id+'")\'>✅ Approve</button>' : '')
-        + (isAdmin ? '<button class=\'cov-btn reject\' onclick=\'rejectCov("'+r.id+'")\'>✕ Reject</button>' : '')
-        + '</div></div>';
-    }).join('');
+// ════════════════════════════════════════
+// MISSING PAGE BUILDERS — restored
+// ════════════════════════════════════════
 
-    p.innerHTML = '<div class="ph"><div><div class="pt">🆘 Coverage & Overtime Requests</div>'
-      + '<div class="ps">Request shift coverage or extra hours — admin approves all requests</div></div></div>'
-      + openAvail + formHtml
-      + '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:14px">All Requests</div></div>'
-      + '<div class="cov-grid">' + (cards||'<div style="color:var(--dim);font-size:13px">No requests yet.</div>') + '</div>';
-  }
+// ── EOD REPORT ──
+var EOD_STATE={};var EOD_CN='';
+var MODELS_EOD=[{key:'sabVIP',label:'SABRINA VIP',emoji:'👑'},{key:'sabFree',label:'SAB FREE',emoji:'🔓'},{key:'omi',label:'OMI',emoji:'🔥'},{key:'bee',label:'BEE',emoji:'🐝'},{key:'izana',label:'IZANA',emoji:'💎'},{key:'maddy',label:'MADDY (DAISY)',emoji:'💋'}];
+var CKL_LEFT=['LOG IN / CONFIRM ACCESS','USE TIMEDOCTOR','CHECK SOP CHANNEL',"CHECK MODEL'S FF UP CHANNEL",'CHECK ENDORSEMENT & QA CHANNEL','POSTED STORIES / MID SHIFT','UPDATE FAN NOTES','4MM ON SAB','4MM ON OMI','4MM ON BEE','4MM ON IZANA','4MM ON MADDY/DAISY'];
+var CKL_RIGHT=['OFFERED VIP','OFFERED CUSTOM','OFFERED VC','OFFERED GFE','SEXTING','SUBMIT PPV PRICING PROOF','SUBMIT TAGGING PROOF','UNSEND MM','SEND ENDORSEMENT','UPDATE CAMPAIGN/RENEWAL TRACKER','UPDATE MMS TRACKER','SEND EOD / LOG OUT TD'];
+function eodCalcGross(){var s=EOD_STATE[EOD_CN]?EOD_STATE[EOD_CN].sales:{};return MODELS_EOD.reduce(function(t,m){return t+(parseFloat(s[m.key])||0);},0);}
+function eodCountCL(){var cl=EOD_STATE[EOD_CN]?EOD_STATE[EOD_CN].checklist:{};var done=Object.values(cl).filter(Boolean).length;return{done:done,total:CKL_LEFT.length+CKL_RIGHT.length};}
+window.eodShiftChange=function(el){if(EOD_STATE[EOD_CN])EOD_STATE[EOD_CN].shift=el.value;};
+window.eodSaleInput=function(el){if(!EOD_STATE[EOD_CN])return;EOD_STATE[EOD_CN].sales[el.dataset.mkey]=el.value;var g=eodCalcGross();var g1=$('eodGross');if(g1)g1.textContent='$'+g.toFixed(2);var g2=$('eodGross2');if(g2)g2.textContent='$'+g.toFixed(2);};
+window.eodMMToggle=function(el){if(!EOD_STATE[EOD_CN])return;var key=el.dataset.mkey;EOD_STATE[EOD_CN].mm[key]=!EOD_STATE[EOD_CN].mm[key];el.classList.toggle('on',!!EOD_STATE[EOD_CN].mm[key]);el.textContent=EOD_STATE[EOD_CN].mm[key]?'✓':'';};
+window.eodFlagToggle=function(el){if(!EOD_STATE[EOD_CN])return;var key=el.dataset.fkey;EOD_STATE[EOD_CN].flags[key]=!EOD_STATE[EOD_CN].flags[key];el.classList.toggle('checked',!!EOD_STATE[EOD_CN].flags[key]);};
+window.eodCLToggle=function(el){if(!EOD_STATE[EOD_CN])return;var key=el.dataset.clkey;EOD_STATE[EOD_CN].checklist[key]=!EOD_STATE[EOD_CN].checklist[key];el.classList.toggle('on',!!EOD_STATE[EOD_CN].checklist[key]);var dot=el.querySelector('.eod-cl-dot');if(dot)dot.textContent=EOD_STATE[EOD_CN].checklist[key]?'✓':'';var cl=eodCountCL();var c1=$('eodCLCount');if(c1)c1.textContent='('+cl.done+'/'+cl.total+')';var c2=$('eodCLProg');if(c2)c2.textContent=cl.done+'/'+cl.total;};
+window.submitEOD=function(){var st=EOD_STATE[EOD_CN];if(!st){showToast('Error: no shift state.');return;}var gross=eodCalcGross();var cl=eodCountCL();var today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});if(!window.EOD_REPORTS)window.EOD_REPORTS=[];EOD_REPORTS.unshift({id:'EOD-'+String(EOD_REPORTS.length+1).padStart(3,'0'),by:EOD_CN,shift:st.shift,date:today,sales:Object.assign({},st.sales),mm:Object.assign({},st.mm),gross:gross,notes:'',checklist:cl.done,checklistTotal:cl.total,flagged:false});EOD_STATE[EOD_CN]={shift:'MID',sales:{},mm:{},flags:{},checklist:{}};addNotif('EOD submitted: '+EOD_CN+' $'+gross.toFixed(2),'info','admin');showToast('EOD report submitted!');renderEODHistory();};
+window.flagEOD=function(el){var id=el.dataset.eid;var r=EOD_REPORTS.find(function(x){return x.id===id;});if(r){r.flagged=!r.flagged;showToast(r.flagged?'Flagged':'Flag removed');renderEODHistory();}};
+window.renderEODHistory=function(){var wrap=$('eodHistoryWrap');if(!wrap)return;if(!window.EOD_REPORTS||!EOD_REPORTS.length){wrap.innerHTML='<div style="color:var(--dim);padding:20px 0;font-size:13px">No reports yet.</div>';return;}var isAdmin=CU&&CU.role==='admin';var list=isAdmin?EOD_REPORTS:EOD_REPORTS.filter(function(r){return r.by===EOD_CN;});wrap.innerHTML=list.map(function(r){return'<div class="eod-hist-item"><div class="eod-hist-hdr"><div><div class="eod-hist-name">'+r.by+' · '+r.shift+' Shift</div><div class="eod-hist-meta">'+r.date+' · Checklist: '+r.checklist+'/'+r.checklistTotal+'</div></div><div style="display:flex;align-items:center;gap:8px">'+(r.flagged?'<span class="eod-flag-badge">Flagged</span>':'')+'<div class="eod-hist-gross">$'+r.gross.toFixed(2)+'</div>'+(isAdmin?'<button class="btn btn-ghost btn-sm" data-eid="'+r.id+'" onclick="flagEOD(this)">'+(r.flagged?'Unflag':'Flag')+'</button>':'')+'</div></div></div>';}).join('');};
+window.eodNoteInput=function(el){if(EOD_STATE[EOD_CN])EOD_STATE[EOD_CN]['note_'+el.dataset.mkey]=el.value;};
 
-  window.submitCovReq = function() {
-    var type = document.getElementById('covType').value;
-    var shift = document.getElementById('covShift').value;
-    var reason = (document.getElementById('covReason').value||'').trim();
-    if (!reason) { showToast('⚠️ Please add a reason.'); return; }
-    var d = new Date();
-    var dt = d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-    COV_REQS.unshift({
-      id: 'COV-' + String(COV_REQS.length+1).padStart(3,'0'),
-      type: type, by: CU.cn, shift: shift, date: dt,
-      reason: reason, status: 'open', claimed_by: null
-    });
-    addNotif('🆘 ' + CU.cn + ' submitted a ' + type + ' request for ' + shift + ' shift');
-    document.getElementById('covReason').value = '';
-    showToast('✅ Request submitted! Admin has been notified.');
-    render();
-  };
-
-  window.claimCoverage = function(id) {
-    var r = COV_REQS.find(function(x){return x.id===id;});
-    if (!r) return;
-    r.status = 'claimed';
-    r.claimed_by = CU.cn;
-    addNotif('✋ ' + CU.cn + ' can cover ' + r.by + "'s " + r.shift + ' shift — awaiting admin approval');
-    showToast('✋ Coverage claimed! Waiting for admin to confirm.');
-    render();
-  };
-
-  window.approveCov = function(id) {
-    var r = COV_REQS.find(function(x){return x.id===id;});
-    if (!r) return;
-    r.status = 'approved';
-    addNotif('✅ Coverage/overtime approved: ' + r.by + ' ' + r.shift + ' shift on ' + r.date);
-    showToast('✅ Request approved!');
-    render();
-  };
-
-  window.rejectCov = function(id) {
-    var r = COV_REQS.find(function(x){return x.id===id;});
-    if (!r) return;
-    r.status = 'rejected';
-    showToast('Request rejected.');
-    render();
-  };
-
-  render();
+function pEOD(){
+  var p=mkPage('eod');var isAdmin=CU&&CU.role==='admin';
+  EOD_CN=CU?(CU.cn||'admin'):'admin';
+  if(!EOD_STATE[EOD_CN])EOD_STATE[EOD_CN]={shift:'MID',sales:{},mm:{},flags:{},checklist:{}};
+  var gross=eodCalcGross();var cl=eodCountCL();
+  var today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  var modelRows=MODELS_EOD.map(function(m){var val=EOD_STATE[EOD_CN].sales[m.key]||'';var mmOn=!!EOD_STATE[EOD_CN].mm[m.key];return'<tr><td style="font-weight:600">'+m.emoji+' '+m.label+'</td><td><input class="af" style="width:100px;text-align:right;padding:5px 9px" type="number" min="0" step="0.01" placeholder="$0.00" value="'+val+'" data-mkey="'+m.key+'" onchange="eodSaleInput(this)"></td><td style="text-align:center"><div class="eod-mm-check'+(mmOn?' on':'')+'" data-mkey="'+m.key+'" onclick="eodMMToggle(this)">'+(mmOn?'✓':'')+'</div></td><td><input class="af" style="width:120px;padding:5px 9px;font-size:11px" placeholder="Notes..." data-mkey="'+m.key+'" onchange="eodNoteInput(this)"></td></tr>';}).join('');
+  var flagList=['Full Shift','Late','Undertime','Before OT','After OT','Cover for Other'];
+  var flagsHtml=flagList.map(function(f){var key=f.replace(/\s+/g,'_').toLowerCase();var on=!!EOD_STATE[EOD_CN].flags[key];return'<label class="eod-flag'+(on?' checked':'')+'" data-fkey="'+key+'" onclick="eodFlagToggle(this)">'+f+'</label>';}).join('');
+  var shiftOpts=['AM','MID','EVE'].map(function(s){return'<option'+(s===EOD_STATE[EOD_CN].shift?' selected':'')+'>'+s+'</option>';}).join('');
+  function clItems(items,col){return items.map(function(txt,i){var key=col+'_'+i;var on=!!EOD_STATE[EOD_CN].checklist[key];return'<div class="eod-cl-item'+(on?' on':'')+'" data-clkey="'+key+'" onclick="eodCLToggle(this)"><div class="eod-cl-dot">'+(on?'✓':'')+'</div><span>'+txt+'</span></div>';}).join('');}
+  p.innerHTML='<div class="ph"><div><div class="pt">📝 EOD Shift Report</div><div class="ps">'+(isAdmin?'Admin view':EOD_CN)+' · Submit end-of-shift report</div></div></div>'
+  +(!isAdmin?'<div class="eod-wrap"><div><div class="eod-section"><div class="eod-section-title">📋 Shift Info</div><div class="eod-meta"><div class="eod-field"><div class="eod-label">Chatter</div><div style="font-weight:700">'+EOD_CN+'</div></div><div class="eod-field"><div class="eod-label">Date</div><div style="font-weight:700">'+today+'</div></div><div class="eod-field"><div class="eod-label">Shift</div><select class="af" style="padding:5px 9px" onchange="eodShiftChange(this)">'+shiftOpts+'</select></div></div><div class="eod-flags">'+flagsHtml+'</div><div class="eod-section-title" style="margin-top:14px">💰 Sales Per Model</div><table class="eod-model-table"><thead><tr><th>Model</th><th>Sales ($)</th><th>MM</th><th>Notes</th></tr></thead><tbody>'+modelRows+'</tbody></table><div class="eod-total"><div class="eod-total-label">TOTAL GROSS</div><div class="eod-total-val" id="eodGross">$'+gross.toFixed(2)+'</div></div></div></div><div><div class="eod-section"><div class="eod-section-title">✅ Checklist <span id="eodCLCount">('+cl.done+'/'+cl.total+')</span></div><div class="eod-cl-grid"><div>'+clItems(CKL_LEFT,'L')+'</div><div>'+clItems(CKL_RIGHT,'R')+'</div></div></div><div class="eod-submit-row"><div class="eod-progress">Checklist: <strong id="eodCLProg">'+cl.done+'/'+cl.total+'</strong> · Gross: <strong id="eodGross2">$'+gross.toFixed(2)+'</strong></div><button class="abtn" style="width:auto;padding:9px 22px" onclick="submitEOD()">Submit EOD →</button></div></div></div>':'')
+  +'<div class="eod-history"><div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">'+(isAdmin?'All EOD Reports':'My Reports')+'</div></div><div id="eodHistoryWrap"></div></div>';
+  setTimeout(window.renderEODHistory,0);
   return p;
 }
 
-// ════════════════════════════════════════
-// SESSION 22: GOAL SETTING
-// ════════════════════════════════════════
-function pGoalSetting() {
-  var p = mkPage('goals');
-  var isAdmin = CU && CU.role === 'admin';
-  var MONTHS_LABEL = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var curMonth = MONTHS_LABEL[new Date().getMonth()] + ' ' + new Date().getFullYear();
+// ── VIOLATIONS ──
+window.VIOLATIONS=window.VIOLATIONS||[];
+window.logViolation=function(){var chatter=document.getElementById('vChatter').value;var type=document.getElementById('vType').value;var sev=document.getElementById('vSev').value;var desc=(document.getElementById('vDesc').value||'').trim();if(!chatter){showToast('Please select a chatter.');return;}if(!desc){showToast('Please add a description.');return;}var today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});window.VIOLATIONS.unshift({id:'VIO-'+String(window.VIOLATIONS.length+1).padStart(3,'0'),by:chatter,type:type,sev:sev,date:today,desc:desc,linked_coaching:null});document.getElementById('vDesc').value='';document.getElementById('vChatter').value='';addNotif('Violation: '+chatter+' - '+sev+' '+type,'warn','admin');showToast('Violation logged.');renderViol();};
+window.deleteViol=function(id){if(!confirm('Remove this violation?'))return;window.VIOLATIONS=window.VIOLATIONS.filter(function(v){return v.id!==id;});showToast('Removed.');renderViol();};
+function renderViol(){var wrap=$('violListWrap');if(!wrap)return;var isAdmin=CU&&CU.role==='admin';var cn=CU?(CU.cn||''):'';var visible=isAdmin?window.VIOLATIONS:window.VIOLATIONS.filter(function(v){return v.by===cn;});if(!visible.length){wrap.innerHTML='<div style="color:var(--dim);padding:20px;font-size:13px">'+(isAdmin?'No violations logged.':'No violations on record.')+'</div>';return;}wrap.innerHTML=visible.map(function(v){var c=CLR[v.by]||'#FF2D78';return'<div class="viol-card '+v.sev+'"><div class="viol-hdr"><div class="viol-av" style="background:'+c+'">'+v.by[0]+'</div><div><div class="viol-name">'+v.by+'</div><div class="viol-date">'+v.date+'</div></div><div class="viol-badges"><span class="viol-sev '+v.sev+'">'+(v.sev==='minor'?'Minor':v.sev==='moderate'?'Moderate':'Serious')+'</span></div></div><div class="viol-body"><span class="viol-type-tag">'+v.type+'</span><div class="viol-desc">'+v.desc+'</div>'+(isAdmin?'<div style="margin-top:8px"><button class="btn btn-ghost btn-sm" onclick="deleteViol(\''+v.id+'\')">Remove</button></div>':'')+'</div></div>';}).join('');}
 
-  function pct(actual, goal) {
-    if (!goal || goal===0) return 0;
-    return Math.min(Math.round((actual/goal)*100), 100);
+function pViolations(){
+  var p=mkPage('violations');var isAdmin=CU&&CU.role==='admin';var cn=CU?(CU.cn||''):'';
+  var CHATTERS_V=['Jayce','Sage','Jammy','Adie','Dale','Joan','Fred'];
+  var VIOL_TYPES=['TOS Compliance','Grammar/Quality','Attendance','Conduct','PPV Non-Compliance','Other'];
+  function strikeCount(name){return(window.VIOLATIONS||[]).filter(function(v){return v.by===name;}).length;}
+  var summaryHtml=isAdmin?'<div class="strike-summary">'+CHATTERS_V.map(function(name){var c=CLR[name]||'#FF2D78';var count=strikeCount(name);var cls=count===0?'zero':count===1?'one':count===2?'two':'three';return'<div class="strike-card"><div class="strike-av" style="background:'+c+'">'+name[0]+'</div><div class="strike-name">'+name+'</div><div class="strike-count '+cls+'">'+count+'</div><div style="font-size:9.5px;color:var(--mu)">strike'+(count!==1?'s':'')+'</div></div>';}).join('')+'</div>':'';
+  var formHtml=isAdmin?'<div class="viol-add-form"><div class="card-title" style="margin-bottom:14px">➕ Log New Violation</div><div class="viol-form-grid"><div><div class="eod-label" style="margin-bottom:5px">Chatter</div><select class="af" id="vChatter" style="width:100%"><option value="">Select chatter</option>'+CHATTERS_V.map(function(n){return'<option>'+n+'</option>';}).join('')+'</select></div><div><div class="eod-label" style="margin-bottom:5px">Type</div><select class="af" id="vType" style="width:100%">'+VIOL_TYPES.map(function(t){return'<option>'+t+'</option>';}).join('')+'</select></div><div><div class="eod-label" style="margin-bottom:5px">Severity</div><select class="af" id="vSev" style="width:100%"><option value="minor">Minor</option><option value="moderate">Moderate</option><option value="serious">Serious</option></select></div></div><div style="margin-bottom:12px"><div class="eod-label" style="margin-bottom:5px">Description</div><textarea class="af" id="vDesc" rows="2" placeholder="Describe the violation..." style="resize:vertical"></textarea></div><div class="viol-form-actions"><button class="btn btn-primary" onclick="logViolation()">Log Violation →</button></div></div>':'';
+  p.innerHTML='<div class="ph"><div><div class="pt">⚠️ Violation & Warning Log</div><div class="ps">'+(isAdmin?'Admin only · All violations':'Your warning history')+'</div></div></div>'+summaryHtml+formHtml+'<div class="viol-grid" id="violListWrap"></div>';
+  setTimeout(renderViol,0);return p;
+}
+
+// ── COVERAGE ──
+window.COV_REQS=window.COV_REQS||[{id:'COV-001',type:'coverage',by:'Sage',shift:'AM',date:'Jun 13, 2026',reason:'Medical appointment.',status:'open',claimed_by:null},{id:'COV-002',type:'overtime',by:'Dale',shift:'EVE',date:'Jun 14, 2026',reason:'Want to extend shift for campaign push.',status:'approved',claimed_by:null}];
+window.submitCovReq=function(){var type=document.getElementById('covType').value;var shift=document.getElementById('covShift').value;var reason=(document.getElementById('covReason').value||'').trim();if(!reason){showToast('Please add a reason.');return;}var d=new Date();var dt=d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});window.COV_REQS.unshift({id:'COV-'+String(window.COV_REQS.length+1).padStart(3,'0'),type:type,by:CU.cn,shift:shift,date:dt,reason:reason,status:'open',claimed_by:null});addNotif('Request: '+CU.cn+' - '+type+' ('+shift+' shift)','info','admin');document.getElementById('covReason').value='';showToast('Request submitted!');renderCov();};
+window.claimCoverage=function(id){var r=window.COV_REQS.find(function(x){return x.id===id;});if(!r)return;r.status='claimed';r.claimed_by=CU.cn;addNotif(CU.cn+' can cover '+r.by+' shift - awaiting approval','info','admin');showToast('Coverage claimed! Waiting for admin.');renderCov();};
+window.approveCov=function(id){var r=window.COV_REQS.find(function(x){return x.id===id;});if(!r)return;r.status='approved';addNotif('Coverage approved: '+r.by+' '+r.shift+' shift','success','all');showToast('Approved!');renderCov();};
+window.rejectCov=function(id){var r=window.COV_REQS.find(function(x){return x.id===id;});if(!r)return;r.status='rejected';showToast('Rejected.');renderCov();};
+function renderCov(){var wrap=$('covListWrap');if(!wrap)return;var isAdmin=CU&&CU.role==='admin';var cn=CU?(CU.cn||''):'';var shiftColors={AM:'#F97316',MID:'#60A5FA',EVE:'#C084FC'};wrap.innerHTML=window.COV_REQS.map(function(r){var isOwn=r.by===cn;var canClaim=!isAdmin&&r.status==='open'&&!isOwn&&r.type==='coverage';var sc=shiftColors[r.shift]||'#60A5FA';return'<div class="cov-card '+r.type+'"><div class="cov-hdr"><div><div class="cov-name">'+r.by+(isOwn?' (You)':'')+'</div><div class="cov-meta">'+r.date+(r.claimed_by?' · Claimed by '+r.claimed_by:'')+'</div></div><div style="display:flex;gap:5px;align-items:center"><span class="cov-type '+r.type+'">'+(r.type==='coverage'?'Coverage':'Overtime')+'</span><span class="cov-status '+r.status+'">'+r.status.charAt(0).toUpperCase()+r.status.slice(1)+'</span></div></div><div class="cov-shift" style="color:'+sc+'">'+r.shift+' Shift</div><div class="cov-reason">'+r.reason+'</div><div class="cov-actions">'+(canClaim?'<button class="cov-btn claim" onclick="claimCoverage(\''+r.id+'\')">I Can Cover</button>':'')+(isAdmin&&(r.status==='claimed'||r.status==='open')?'<button class="cov-btn approve" onclick="approveCov(\''+r.id+'\')">Approve</button>':'')+(isAdmin?'<button class="cov-btn reject" onclick="rejectCov(\''+r.id+'\')">Reject</button>':'')+'</div></div>';}).join('');}
+
+function pCoverage(){
+  var p=mkPage('coverage');var isAdmin=CU&&CU.role==='admin';var cn=CU?(CU.cn||''):'';
+  var openReqs=window.COV_REQS.filter(function(r){return r.status==='open'&&r.by!==cn;});
+  var formHtml=!isAdmin?'<div class="card" style="margin-bottom:20px"><div class="card-title">📢 Request Coverage or Overtime</div><div class="g2" style="margin-bottom:12px"><div><div style="font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:600">Request Type</div><select class="af" id="covType" style="width:100%"><option value="coverage">Coverage (I cannot make my shift)</option><option value="overtime">Overtime / Extra Shift</option></select></div><div><div style="font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:600">Shift</div><select class="af" id="covShift" style="width:100%"><option value="AM">AM Shift</option><option value="MID">MID Shift</option><option value="EVE">EVE Shift</option></select></div></div><div style="margin-bottom:12px"><div style="font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:600">Reason</div><textarea class="af" id="covReason" rows="3" placeholder="Reason for request..." style="resize:vertical"></textarea></div><button class="abtn" style="width:auto;padding:9px 22px" onclick="submitCovReq()">Submit Request →</button></div>':'';
+  var openBanner=!isAdmin&&openReqs.length?'<div class="notice">'+openReqs.length+' open coverage request(s) — can you help?</div>':'';
+  p.innerHTML='<div class="ph"><div><div class="pt">🆘 Coverage & Overtime</div><div class="ps">Request shift coverage or extra hours</div></div></div>'+openBanner+formHtml+'<div class="cov-grid" id="covListWrap"></div>';
+  setTimeout(renderCov,0);return p;
+}
+
+// ── GOAL SETTING ──
+window.GOALS=window.GOALS||{chatters:{Jayce:{qa:75,sales:2000,ppv:3,mms:50},Sage:{qa:75,sales:1500,ppv:3,mms:50},Jammy:{qa:75,sales:3000,ppv:5,mms:80},Adie:{qa:80,sales:4000,ppv:5,mms:70},Dale:{qa:80,sales:5000,ppv:6,mms:90},Joan:{qa:80,sales:6000,ppv:6,mms:100},Fred:{qa:75,sales:1500,ppv:3,mms:40}},models:{Sabrina:{rev:37000,subs:80,renewals:25,customs:25},Omi:{rev:5000,subs:10,renewals:5,customs:15},Maddy:{rev:2000,subs:10,renewals:5,customs:10},Bee:{rev:1000,subs:5,renewals:3,customs:5},Izana:{rev:600,subs:5,renewals:3,customs:0}}};
+window.saveGoal=function(name){var qa=parseFloat(document.getElementById('g_qa_'+name).value)||75;var sales=parseFloat(document.getElementById('g_sales_'+name).value)||2000;var ppv=parseFloat(document.getElementById('g_ppv_'+name).value)||3;var mms=parseFloat(document.getElementById('g_mms_'+name).value)||50;window.GOALS.chatters[name]={qa:qa,sales:sales,ppv:ppv,mms:mms};showToast('Goals saved for '+name+'!');addNotif('Goals updated for '+name,'info','admin');};
+window.saveModelGoal=function(name){var rev=parseFloat(document.getElementById('gm_rev_'+name).value)||5000;var subs=parseFloat(document.getElementById('gm_subs_'+name).value)||10;var ren=parseFloat(document.getElementById('gm_ren_'+name).value)||5;var cust=parseFloat(document.getElementById('gm_cust_'+name).value)||10;window.GOALS.models[name]={rev:rev,subs:subs,renewals:ren,customs:cust};showToast('Goals saved for '+name+'!');};
+
+function pGoalSetting(){
+  var p=mkPage('goals');var isAdmin=CU&&CU.role==='admin';var cn=CU?(CU.cn||''):'';
+  var curMonth=new Date().toLocaleDateString('en-US',{month:'short',year:'numeric'});
+  function pct(a,g){if(!g||g===0)return 0;return Math.min(Math.round((a/g)*100),100);}
+  function barColor(p){return p>=90?'var(--mint)':p>=60?'var(--gold)':'var(--candy)';}
+  function chatterCard(name){
+    var g=window.GOALS.chatters[name]||{qa:75,sales:2000,ppv:3,mms:50};
+    var d=PERF[name]||{};var clr=CLR[name]||'#FF2D78';
+    var actualQA=d.qs||d.latestScore||0;
+    var actualSales=d.sales?d.sales.reduce(function(a,b){return a+b;},0):0;
+    var qaP=pct(actualQA,g.qa);var salesP=pct(actualSales,g.sales);
+    var canEdit=isAdmin||(cn===name);
+    return'<div class="goal-card"><div class="goal-hdr"><div class="goal-name"><div style="width:28px;height:28px;border-radius:7px;background:'+clr+';display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff">'+name[0]+'</div>'+name+'</div><div class="goal-period">'+curMonth+'</div></div><div class="goal-body">'
+    +'<div class="goal-row"><div class="goal-label">QA Score Target</div>'+(canEdit?'<input class="goal-input" id="g_qa_'+name+'" value="'+g.qa+'" type="number" min="0" max="100">':'<span style="font-weight:700">'+g.qa+'</span>')+'</div>'
+    +'<div class="goal-row"><div class="goal-label">Sales Target ($)</div>'+(canEdit?'<input class="goal-input" id="g_sales_'+name+'" value="'+g.sales+'" type="number" min="0">':'<span style="font-weight:700">$'+g.sales.toLocaleString()+'</span>')+'</div>'
+    +'<div class="goal-row"><div class="goal-label">PPV Goal/shift</div>'+(canEdit?'<input class="goal-input" id="g_ppv_'+name+'" value="'+g.ppv+'" type="number" min="0">':'<span style="font-weight:700">'+g.ppv+'</span>')+'</div>'
+    +'<div class="goal-row"><div class="goal-label">MMS Target</div>'+(canEdit?'<input class="goal-input" id="g_mms_'+name+'" value="'+g.mms+'" type="number" min="0">':'<span style="font-weight:700">'+g.mms+'</span>')+'</div>'
+    +'<div class="goal-progress-wrap"><div class="goal-progress-row"><div class="goal-progress-label">QA Score</div><div class="goal-progress-pct" style="color:'+barColor(qaP)+'">'+actualQA+'/'+g.qa+'</div></div><div class="goal-bar"><div class="goal-bar-fill" style="width:'+qaP+'%;background:'+barColor(qaP)+'"></div></div><div style="margin-top:8px"></div><div class="goal-progress-row"><div class="goal-progress-label">Sales</div><div class="goal-progress-pct" style="color:'+barColor(salesP)+'">$'+actualSales.toLocaleString()+'/$'+g.sales.toLocaleString()+'</div></div><div class="goal-bar"><div class="goal-bar-fill" style="width:'+salesP+'%;background:'+barColor(salesP)+'"></div></div></div>'
+    +(canEdit?'<button class="goal-save-btn" onclick="saveGoal(\''+name+'\')">Save Goals</button>':'')+'</div></div>';
   }
-
-  function barColor(p) {
-    return p >= 90 ? 'var(--mint)' : p >= 60 ? 'var(--gold)' : 'var(--candy)';
-  }
-
-  function chatterCard(name) {
-    var g = GOALS.chatters[name] || {qa:75,sales:2000,ppv:3,mms:50};
-    var d = PERF[name] || {};
-    var clr = CLR[name] || '#FF2D78';
-    var actualQA = d.qs || d.latestScore || 0;
-    var actualSales = d.sales ? d.sales.reduce(function(a,b){return a+b;},0) : 0;
-    var actualMMS = d.mms ? d.mms.t : 0;
-    var qaP = pct(actualQA, g.qa);
-    var salesP = pct(actualSales, g.sales);
-    var mmsP = pct(actualMMS, g.mms);
-    var canEdit = isAdmin || (CU.cn === name);
-    return '<div class="goal-card">'
-      + '<div class="goal-hdr">'
-      + '<div class="goal-name"><div style="width:28px;height:28px;border-radius:7px;background:'+clr+';display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff">'+name[0]+'</div>'+name+'</div>'
-      + '<div class="goal-period">'+curMonth+'</div></div>'
-      + '<div class="goal-body">'
-      + '<div class="goal-row"><div class="goal-label">🎯 QA Score Target</div>'
-      + (canEdit ? '<input class="goal-input" id="g_qa_'+name+'" value="'+g.qa+'" type="number" min="0" max="100">' : '<span style="font-weight:700;font-size:13px">'+g.qa+'</span>')
-      + '</div>'
-      + '<div class="goal-row"><div class="goal-label">💰 Sales Target ($)</div>'
-      + (canEdit ? '<input class="goal-input" id="g_sales_'+name+'" value="'+g.sales+'" type="number" min="0">' : '<span style="font-weight:700;font-size:13px">$'+g.sales.toLocaleString()+'</span>')
-      + '</div>'
-      + '<div class="goal-row"><div class="goal-label">📩 PPV Goal (per shift)</div>'
-      + (canEdit ? '<input class="goal-input" id="g_ppv_'+name+'" value="'+g.ppv+'" type="number" min="0">' : '<span style="font-weight:700;font-size:13px">'+g.ppv+'</span>')
-      + '</div>'
-      + '<div class="goal-row"><div class="goal-label">💬 MMS Target</div>'
-      + (canEdit ? '<input class="goal-input" id="g_mms_'+name+'" value="'+g.mms+'" type="number" min="0">' : '<span style="font-weight:700;font-size:13px">'+g.mms+'</span>')
-      + '</div>'
-      + '<div class="goal-progress-wrap">'
-      + '<div class="goal-progress-row"><div class="goal-progress-label">QA Score</div><div class="goal-progress-pct" style="color:'+barColor(qaP)+'">'+actualQA+' / '+g.qa+'</div></div>'
-      + '<div class="goal-bar"><div class="goal-bar-fill" style="width:'+qaP+'%;background:'+barColor(qaP)+'"></div></div>'
-      + '<div style="margin-top:8px"></div>'
-      + '<div class="goal-progress-row"><div class="goal-progress-label">Sales</div><div class="goal-progress-pct" style="color:'+barColor(salesP)+'">$'+actualSales.toLocaleString()+' / $'+g.sales.toLocaleString()+'</div></div>'
-      + '<div class="goal-bar"><div class="goal-bar-fill" style="width:'+salesP+'%;background:'+barColor(salesP)+'"></div></div>'
-      + '</div>'
-      + (canEdit ? '<button class="goal-save-btn" onclick=\'saveGoal("'+name+'")\'>💾 Save Goals</button>' : '')
-      + '</div></div>';
-  }
-
-  function modelCard(name) {
-    var g = GOALS.models[name] || {rev:5000,subs:10,renewals:5,customs:10};
-    var emojis = {Sabrina:'👑',Omi:'🔥',Maddy:'💋',Bee:'🐝',Izana:'💎'};
-    var colors = {Sabrina:'#FF2D78',Omi:'#FFD166',Maddy:'#C084FC',Bee:'#60A5FA',Izana:'#06D6A0'};
-    var clr = colors[name] || '#FF2D78';
-    return '<div class="goal-card">'
-      + '<div class="goal-hdr">'
-      + '<div class="goal-name">'+(emojis[name]||'⭐')+' '+name+'</div>'
-      + '<div class="goal-period">'+curMonth+'</div></div>'
-      + '<div class="goal-body">'
-      + '<div class="goal-row"><div class="goal-label">💰 Revenue Target ($)</div>'
-      + (isAdmin ? '<input class="goal-input" id="gm_rev_'+name+'" value="'+g.rev+'" type="number">' : '<span style="font-weight:700">$'+g.rev.toLocaleString()+'</span>')
-      + '</div>'
-      + '<div class="goal-row"><div class="goal-label">👥 New Subscribers</div>'
-      + (isAdmin ? '<input class="goal-input" id="gm_subs_'+name+'" value="'+g.subs+'" type="number">' : '<span style="font-weight:700">'+g.subs+'</span>')
-      + '</div>'
-      + '<div class="goal-row"><div class="goal-label">🔄 Renewals Target</div>'
-      + (isAdmin ? '<input class="goal-input" id="gm_ren_'+name+'" value="'+g.renewals+'" type="number">' : '<span style="font-weight:700">'+g.renewals+'</span>')
-      + '</div>'
-      + '<div class="goal-row"><div class="goal-label">🎨 Custom Content Goal</div>'
-      + (isAdmin ? '<input class="goal-input" id="gm_cust_'+name+'" value="'+g.customs+'" type="number">' : '<span style="font-weight:700">'+g.customs+'</span>')
-      + '</div>'
-      + (isAdmin ? '<button class="goal-save-btn" onclick=\'saveModelGoal("'+name+'")\'>💾 Save Goals</button>' : '')
-      + '</div></div>';
-  }
-
-  // Team overview summary
-  var chatterNames = Object.keys(GOALS.chatters);
-  var onTrack = chatterNames.filter(function(n){
-    var d = PERF[n]||{}; var g = GOALS.chatters[n]||{};
-    return (d.qs||d.latestScore||0) >= (g.qa||75);
-  }).length;
-
-  var summaryHtml = isAdmin ? '<div class="goal-summary">'
-    + '<div class="card-title">📊 Team Goals Overview — '+curMonth+'</div>'
-    + '<div class="goal-summary-grid">'
-    + '<div class="goal-kpi"><div class="goal-kpi-val" style="color:var(--mint)">'+(onTrack)+'/'+(chatterNames.length)+'</div><div class="goal-kpi-lbl">On Track QA</div></div>'
-    + '<div class="goal-kpi"><div class="goal-kpi-val" style="color:var(--gold)">$'+
-      Object.values(GOALS.models).reduce(function(s,g){return s+g.rev;},0).toLocaleString()+'</div><div class="goal-kpi-lbl">Total Rev Target</div></div>'
-    + '<div class="goal-kpi"><div class="goal-kpi-val" style="color:var(--lav)">'+
-      Object.values(GOALS.chatters).reduce(function(s,g){return s+g.ppv;},0)+'</div><div class="goal-kpi-lbl">Total PPV Goal/shift</div></div>'
-    + '<div class="goal-kpi"><div class="goal-kpi-val" style="color:var(--sky)">'+
-      Object.values(GOALS.models).reduce(function(s,g){return s+g.subs;},0)+'</div><div class="goal-kpi-lbl">Total Sub Target</div></div>'
-    + '</div></div>' : '';
-
-  // Build chatter section
-  var chatterSection = '';
-  if (isAdmin) {
-    chatterSection = '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">👥 Chatter Goals</div></div>'
-      + '<div class="goal-grid">' + chatterNames.map(chatterCard).join('') + '</div>';
-  } else if (CU.cn) {
-    chatterSection = '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">🎯 My Goals</div></div>'
-      + '<div class="goal-grid">' + chatterCard(CU.cn) + '</div>';
-  }
-
-  var modelSection = isAdmin ? '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">⭐ Model Goals</div></div>'
-    + '<div class="goal-grid">' + Object.keys(GOALS.models).map(modelCard).join('') + '</div>' : '';
-
-  p.innerHTML = '<div class="ph"><div>'
-    + '<div class="pt">🎯 Goal Setting</div>'
-    + '<div class="ps">Monthly targets for chatters and models · '+curMonth+'</div>'
-    + '</div></div>'
-    + summaryHtml + chatterSection + modelSection;
-
+  var chatterNames=Object.keys(window.GOALS.chatters);
+  var chatterSection=isAdmin?'<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">👥 Chatter Goals</div></div><div class="goal-grid">'+chatterNames.map(chatterCard).join('')+'</div>':cn?'<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">My Goals</div></div><div class="goal-grid">'+chatterCard(cn)+'</div>':'';
+  var modelSection=isAdmin?'<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">⭐ Model Goals</div></div><div class="goal-grid">'+Object.keys(window.GOALS.models).map(function(name){var g=window.GOALS.models[name];var emojis={Sabrina:'👑',Omi:'🔥',Maddy:'💋',Bee:'🐝',Izana:'💎'};return'<div class="goal-card"><div class="goal-hdr"><div class="goal-name">'+(emojis[name]||'⭐')+' '+name+'</div><div class="goal-period">'+curMonth+'</div></div><div class="goal-body"><div class="goal-row"><div class="goal-label">Revenue Target ($)</div><input class="goal-input" id="gm_rev_'+name+'" value="'+g.rev+'" type="number"></div><div class="goal-row"><div class="goal-label">New Subscribers</div><input class="goal-input" id="gm_subs_'+name+'" value="'+g.subs+'" type="number"></div><div class="goal-row"><div class="goal-label">Renewals</div><input class="goal-input" id="gm_ren_'+name+'" value="'+g.renewals+'" type="number"></div><div class="goal-row"><div class="goal-label">Custom Content</div><input class="goal-input" id="gm_cust_'+name+'" value="'+g.customs+'" type="number"></div><button class="goal-save-btn" onclick="saveModelGoal(\''+name+'\')">Save Goals</button></div></div>';}).join('')+'</div>':'';
+  p.innerHTML='<div class="ph"><div><div class="pt">🎯 Goal Setting</div><div class="ps">Monthly targets · '+curMonth+'</div></div></div>'+chatterSection+modelSection;
   return p;
 }
 
-window.saveGoal = function(name) {
-  var qa = parseFloat(document.getElementById('g_qa_'+name).value)||75;
-  var sales = parseFloat(document.getElementById('g_sales_'+name).value)||2000;
-  var ppv = parseFloat(document.getElementById('g_ppv_'+name).value)||3;
-  var mms = parseFloat(document.getElementById('g_mms_'+name).value)||50;
-  GOALS.chatters[name] = {qa:qa, sales:sales, ppv:ppv, mms:mms};
-  showToast('✅ Goals saved for '+name+'!');
-  if (CU && CU.role==='admin') addNotif('🎯 Goals updated for '+name+' — '+name[0]+' targets set for this month');
-};
+// ── LEADERBOARD ──
+window.lbFilter=function(key,btn){document.querySelectorAll('.lb-filter .fb').forEach(function(b){b.classList.remove('active','on');});btn.classList.add('active');renderLB(key);};
+function getBadges(name){var d=PERF[name]||{};var badges=[];var totalSales=d.sales?d.sales.reduce(function(a,b){return a+b;},0):0;var qa=d.qs||d.latestScore||0;if(totalSales>=15000)badges.push({label:'Top Seller',cls:'badge-gold'});if(qa>=65)badges.push({label:'QA Star',cls:'badge-mint'});if(d.mms&&d.mms.t>=250)badges.push({label:'MMS King',cls:'badge-sky'});if((d.campaignTips||0)>=500)badges.push({label:'Campaign MVP',cls:'badge-lav'});return badges;}
+function renderLB(metric){var METRICS={sales:function(n){var d=PERF[n];return d&&d.sales?d.sales.reduce(function(a,b){return a+b;},0):0;},qa:function(n){var d=PERF[n];return d?(d.qs||d.latestScore||0):0;},mms:function(n){var d=PERF[n];return d&&d.mms?d.mms.t:0;},tips:function(n){var d=PERF[n];return d?(d.campaignTips||0):0;}};var FMTS={sales:function(v){return'$'+v.toLocaleString();},qa:function(v){return v+' pts';},mms:function(v){return v+' sent';},tips:function(v){return'$'+v.toLocaleString();}};var COLS={sales:'var(--gold)',qa:'var(--mint)',mms:'var(--sky)',tips:'var(--lav)'};var fn=METRICS[metric]||METRICS.sales;var fmt=FMTS[metric]||FMTS.sales;var col=COLS[metric]||'var(--gold)';var names=Object.keys(PERF);var ranked=names.slice().sort(function(a,b){return fn(b)-fn(a);});var wrap=$('lbListWrap');if(!wrap)return;wrap.innerHTML=ranked.map(function(name,idx){var val=fn(name);var clr=CLR[name]||'#FF2D78';var rank=idx+1;var badges=getBadges(name);var isMe=CU&&CU.cn===name;return'<div class="lb-row rank-'+(rank<=3?rank:'n')+'"'+(isMe?' style="box-shadow:0 0 0 2px '+clr+'33"':'')+'>'+( rank<=3?'<div class="lb-rank r'+rank+'">'+(rank===1?'🥇':rank===2?'🥈':'🥉')+'</div>':'<div class="lb-rank rn">#'+rank+'</div>')+'<div class="lb-av" style="background:'+clr+'">'+name[0]+'</div><div class="lb-info"><div class="lb-name">'+name+(isMe?' (You)':'')+'</div><div class="lb-badges">'+badges.map(function(b){return'<span class="badge '+b.cls+'">'+b.label+'</span>';}).join('')+'</div></div><div class="lb-val" style="color:'+col+'">'+fmt(val)+'</div></div>';}).join('');}
 
-window.saveModelGoal = function(name) {
-  var rev = parseFloat(document.getElementById('gm_rev_'+name).value)||5000;
-  var subs = parseFloat(document.getElementById('gm_subs_'+name).value)||10;
-  var ren = parseFloat(document.getElementById('gm_ren_'+name).value)||5;
-  var cust = parseFloat(document.getElementById('gm_cust_'+name).value)||10;
-  GOALS.models[name] = {rev:rev, subs:subs, renewals:ren, customs:cust};
-  showToast('✅ Goals saved for '+name+'!');
-};
-
-
-
-// ════════════════════════════════════════
-// SESSION 16: EOD REPORT
-// ════════════════════════════════════════
-var EOD_STATE = {};
-var EOD_CN = '';
-
-var MODELS_EOD = [
-  {key:'sabVIP',  label:'SABRINA VIP',   emoji:'👑'},
-  {key:'sabFree', label:'SAB FREE',      emoji:'🔓'},
-  {key:'omi',     label:'OMI',           emoji:'🔥'},
-  {key:'bee',     label:'BEE',           emoji:'🐝'},
-  {key:'izana',   label:'IZANA',         emoji:'💎'},
-  {key:'maddy',   label:'MADDY (DAISY)', emoji:'💋'},
-];
-var CKL_LEFT = [
-  'LOG IN / CONFIRM ACCESS','USE TIMEDOCTOR','CHECK SOP CHANNEL',
-  "CHECK MODEL'S FF UP CHANNEL",'CHECK ENDORSEMENT & QA CHANNEL',
-  'POSTED STORIES / MID SHIFT','UPDATE FAN NOTES',
-  '4MM ON SAB','4MM ON OMI','4MM ON BEE','4MM ON IZANA','4MM ON MADDY/DAISY',
-];
-var CKL_RIGHT = [
-  'OFFERED VIP','OFFERED CUSTOM','OFFERED VC','OFFERED GFE','SEXTING',
-  'SUBMIT PPV PRICING PROOF','SUBMIT TAGGING PROOF','UNSEND MM',
-  'SEND ENDORSEMENT','UPDATE CAMPAIGN/RENEWAL TRACKER',
-  'UPDATE MMS TRACKER','SEND EOD / LOG OUT TD',
-];
-
-function eodCalcGross() {
-  var s = EOD_STATE[EOD_CN] ? EOD_STATE[EOD_CN].sales : {};
-  return MODELS_EOD.reduce(function(t,m){ return t + (parseFloat(s[m.key])||0); }, 0);
-}
-function eodCountCL() {
-  var cl = EOD_STATE[EOD_CN] ? EOD_STATE[EOD_CN].checklist : {};
-  var done = Object.values(cl).filter(Boolean).length;
-  return {done:done, total: CKL_LEFT.length + CKL_RIGHT.length};
+function pLeaderboard(){
+  var p=mkPage('leaderboard');
+  var topSeller=Object.keys(PERF).reduce(function(a,b){var av=PERF[a].sales?PERF[a].sales.reduce(function(x,y){return x+y;},0):0;var bv=PERF[b].sales?PERF[b].sales.reduce(function(x,y){return x+y;},0):0;return bv>av?b:a;});
+  var topQA=Object.keys(PERF).reduce(function(a,b){return(PERF[b].qs||PERF[b].latestScore||0)>(PERF[a].qs||PERF[a].latestScore||0)?b:a;});
+  var METRIC_BTNS=[{key:'sales',label:'💰 Sales'},{key:'qa',label:'⭐ QA Score'},{key:'mms',label:'💬 MMS Count'},{key:'tips',label:'🎯 Tips'}];
+  p.innerHTML='<div class="ph"><div><div class="pt">🏆 Leaderboard</div><div class="ps">Team rankings from latest QA data</div></div></div>'
+  +'<div class="g4" style="margin-bottom:20px"><div class="kpi" style="--ac:var(--gold)"><div class="kl">Top Seller</div><div class="kv" style="color:var(--gold);font-size:20px">'+topSeller+'</div></div><div class="kpi" style="--ac:var(--mint)"><div class="kl">QA Leader</div><div class="kv" style="color:var(--mint);font-size:20px">'+topQA+'</div></div><div class="kpi" style="--ac:var(--lav)"><div class="kl">Total Badges</div><div class="kv" style="color:var(--lav)">'+Object.keys(PERF).reduce(function(s,n){return s+getBadges(n).length;},0)+'</div></div><div class="kpi" style="--ac:var(--sky)"><div class="kl">Chatters</div><div class="kv" style="color:var(--sky)">'+Object.keys(PERF).length+'</div></div></div>'
+  +'<div class="lb-filter">'+METRIC_BTNS.map(function(m){return'<button class="fb'+(m.key==='sales'?' active':'')+'" onclick="lbFilter(\''+m.key+'\',this)">'+m.label+'</button>';}).join('')+'</div>'
+  +'<div class="lb-wrap" id="lbListWrap"></div>';
+  setTimeout(function(){renderLB('sales');},0);return p;
 }
 
-window.eodShiftChange = function(el) { if(EOD_STATE[EOD_CN]) EOD_STATE[EOD_CN].shift = el.value; };
-window.eodSaleInput = function(el) {
-  if(!EOD_STATE[EOD_CN]) return;
-  EOD_STATE[EOD_CN].sales[el.dataset.mkey] = el.value;
-  var g = eodCalcGross();
-  var g1 = document.getElementById('eodGross'); if(g1) g1.textContent = '$'+g.toFixed(2);
-  var g2 = document.getElementById('eodGross2'); if(g2) g2.textContent = '$'+g.toFixed(2);
-};
-window.eodMMToggle = function(el) {
-  if(!EOD_STATE[EOD_CN]) return;
-  var key = el.dataset.mkey;
-  EOD_STATE[EOD_CN].mm[key] = !EOD_STATE[EOD_CN].mm[key];
-  el.classList.toggle('on', !!EOD_STATE[EOD_CN].mm[key]);
-  el.textContent = EOD_STATE[EOD_CN].mm[key] ? '✓' : '';
-};
-window.eodFlagToggle = function(el) {
-  if(!EOD_STATE[EOD_CN]) return;
-  var key = el.dataset.fkey;
-  EOD_STATE[EOD_CN].flags[key] = !EOD_STATE[EOD_CN].flags[key];
-  el.classList.toggle('checked', !!EOD_STATE[EOD_CN].flags[key]);
-};
-window.eodCLToggle = function(el) {
-  if(!EOD_STATE[EOD_CN]) return;
-  var key = el.dataset.clkey;
-  EOD_STATE[EOD_CN].checklist[key] = !EOD_STATE[EOD_CN].checklist[key];
-  el.classList.toggle('on', !!EOD_STATE[EOD_CN].checklist[key]);
-  var dot = el.querySelector('.eod-cl-dot'); if(dot) dot.textContent = EOD_STATE[EOD_CN].checklist[key] ? '✓' : '';
-  var cl = eodCountCL();
-  var c1 = document.getElementById('eodCLCount'); if(c1) c1.textContent = '('+cl.done+'/'+cl.total+')';
-  var c2 = document.getElementById('eodCLProg');  if(c2) c2.textContent = cl.done+'/'+cl.total;
-};
-window.flagEOD = function(el) {
-  var id = el.dataset.eid;
-  var r = EOD_REPORTS.find(function(x){return x.id===id;});
-  if(r){ r.flagged=!r.flagged; showToast(r.flagged ? '🚩 Report flagged' : 'Flag removed'); renderEODHistory(); }
-};
-function renderEODHistory() {
-  var isAdmin = CU && CU.role==='admin';
-  var cn = EOD_CN;
-  var wrap = document.getElementById('eodHistoryWrap');
-  if(!wrap) return;
-  var list = EOD_REPORTS.filter(function(r){ return isAdmin || r.by===cn; });
-  if(list.length===0){ wrap.innerHTML='<div style="color:var(--dim);text-align:center;padding:32px">No reports submitted yet.</div>'; return; }
-  wrap.innerHTML = list.map(function(r) {
-    return '<div class="eod-hist-item">'
-      + '<div class="eod-hist-hdr">'
-      + '<div><div class="eod-hist-name">'+r.by+' · '+r.shift+' Shift</div>'
-      + '<div class="eod-hist-meta">'+r.date+' · Checklist: '+r.checklist+'/'+r.checklistTotal+'</div></div>'
-      + '<div style="display:flex;align-items:center;gap:8px">'
-      + (r.flagged ? '<span class="eod-flag-badge">🚩 Flagged</span>' : '')
-      + '<div class="eod-hist-gross">$'+r.gross.toFixed(2)+'</div>'
-      + (isAdmin ? '<button class="cov-btn reject" style="font-size:10px" data-eid="'+r.id+'" onclick="flagEOD(this)">'+(r.flagged?'Unflag':'🚩 Flag')+'</button>' : '')
-      + '</div></div>'
-      + (r.notes ? '<div style="font-size:11.5px;color:var(--dim);margin-top:6px">📝 '+r.notes+'</div>' : '')
-      + '</div>';
+// ── CONTENT REQUESTS ──
+window.CONTENT_REQS=window.CONTENT_REQS||[{id:'CR-001',title:'Custom Lingerie Set',model:'Sabrina',type:'Photo Set',fan:'Fan #1042',by:'Joan',date:'Jun 5, 2026',status:'delivered',desc:'5-photo set in red lingerie. Delivered via PPV $150.',price:'$150'},{id:'CR-002',title:'JOI Video 10 min',model:'Omi',type:'Video',fan:'Fan #0338',by:'Dale',date:'Jun 7, 2026',status:'inprod',desc:'Custom JOI content. In production.',price:'$200'}];
+var CR_STATUS_LABELS={new:'New',pending:'Pending',approved:'Approved',inprod:'In Production',delivered:'Delivered',closed:'Closed'};
+var CR_STATUS_NEXT={new:'pending',pending:'approved',approved:'inprod',inprod:'delivered',delivered:'closed'};
+window.advanceCR=function(id){var r=window.CONTENT_REQS.find(function(x){return x.id===id;});if(!r||!CR_STATUS_NEXT[r.status])return;r.status=CR_STATUS_NEXT[r.status];addNotif('Content updated: '+r.title+' - '+(CR_STATUS_LABELS[r.status]||r.status),'info','admin');showToast('Status updated!');renderCRList('all');};
+window.closeCR=function(id){var r=window.CONTENT_REQS.find(function(x){return x.id===id;});if(!r)return;r.status='closed';showToast('Closed.');renderCRList('all');};
+window.submitCR=function(){var title=(document.getElementById('crTitle').value||'').trim();var model=document.getElementById('crModel').value;var type=document.getElementById('crType').value;var desc=(document.getElementById('crDesc').value||'').trim();var price=(document.getElementById('crPrice').value||'').trim();if(!title||!desc){showToast('Please fill title and description.');return;}var today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});window.CONTENT_REQS.unshift({id:'CR-'+String(window.CONTENT_REQS.length+1).padStart(3,'0'),title:title,model:model,type:type,by:CU?CU.cn||'Admin':'Admin',date:today,status:'new',desc:desc,price:price?'$'+price:'',fan:'Fan request'});document.getElementById('crTitle').value='';document.getElementById('crDesc').value='';document.getElementById('crPrice').value='';addNotif('New content request: '+title+' ('+model+')','info','admin');showToast('Request submitted!');renderCRList('all');};
+function renderCRList(filter){var wrap=$('crListWrap');if(!wrap)return;var isAdmin=CU&&CU.role==='admin';var cn=CU?(CU.cn||''):'';var list=isAdmin?window.CONTENT_REQS:window.CONTENT_REQS.filter(function(r){return r.by===cn;});if(filter&&filter!=='all')list=list.filter(function(r){return r.status===filter;});if(!list.length){wrap.innerHTML='<div style="color:var(--dim);padding:20px;font-size:13px">No requests found.</div>';return;}wrap.innerHTML='<div class="cr-grid">'+list.map(function(r){var nextStatus=CR_STATUS_NEXT[r.status];return'<div class="cr-card"><div class="cr-card-hdr"><div class="cr-title">'+r.title+'</div><span class="cr-status '+r.status+'">'+(CR_STATUS_LABELS[r.status]||r.status)+'</span></div><div class="cr-body"><div class="cr-meta-row"><span class="cr-tag">'+r.model+'</span><span class="cr-tag">'+r.type+'</span>'+(r.price?'<span class="cr-tag" style="color:var(--gold)">'+r.price+'</span>':'')+'</div><div class="cr-desc">'+r.desc+'</div><div class="cr-footer"><div class="cr-by">'+r.by+' · '+r.date+'</div><div class="cr-actions">'+(isAdmin&&nextStatus?'<button class="cr-btn cr-btn-next" onclick="advanceCR(\''+r.id+'\')">→ '+CR_STATUS_LABELS[nextStatus]+'</button>':'')+(isAdmin?'<button class="cr-btn cr-btn-close" onclick="closeCR(\''+r.id+'\')">Close</button>':'')+'</div></div></div></div>';}).join('')+'</div>';}
+
+function pContentReqs(){
+  var p=mkPage('content_reqs');var isAdmin=CU&&CU.role==='admin';
+  var CR_TYPES=['Photo Set','Video','Audio','Custom PPV','Sexting Session','GFE','VC','Other'];
+  var CR_MODELS=['Sabrina','Omi','Maddy','Bee','Izana'];
+  var filterOpts='<option value="all">All</option>'+Object.keys(CR_STATUS_LABELS).map(function(s){return'<option value="'+s+'">'+CR_STATUS_LABELS[s]+'</option>';}).join('');
+  var formHtml='<div class="cr-form"><div class="card-title" style="margin-bottom:14px">➕ Log New Content Request</div><div class="cr-form-grid"><div><div class="eod-label" style="margin-bottom:5px">Title</div><input class="af" id="crTitle" placeholder="e.g. Custom JOI Video"></div><div><div class="eod-label" style="margin-bottom:5px">Model</div><select class="af" id="crModel">'+CR_MODELS.map(function(m){return'<option>'+m+'</option>';}).join('')+'</select></div><div><div class="eod-label" style="margin-bottom:5px">Type</div><select class="af" id="crType">'+CR_TYPES.map(function(t){return'<option>'+t+'</option>';}).join('')+'</select></div><div><div class="eod-label" style="margin-bottom:5px">Price ($)</div><input class="af" id="crPrice" type="number" placeholder="0.00"></div></div><div style="margin-bottom:12px"><div class="eod-label" style="margin-bottom:5px">Description</div><textarea class="af" id="crDesc" rows="2" placeholder="Describe the request..." style="resize:vertical"></textarea></div><button class="abtn" style="width:auto;padding:9px 22px" onclick="submitCR()">Submit →</button></div>';
+  p.innerHTML='<div class="ph"><div><div class="pt">🎬 Content Request Tracker</div><div class="ps">Track custom content from fans</div></div></div>'+formHtml+'<div class="ph" style="margin-bottom:12px;margin-top:4px"><div class="pt" style="font-size:15px">All Requests</div><select class="af" style="width:160px;padding:5px 9px" onchange="renderCRList(this.value)">'+filterOpts+'</select></div><div id="crListWrap"></div>';
+  setTimeout(function(){renderCRList('all');},0);return p;
+}
+
+// ── PROFILES ──
+function pProfiles(){
+  var p=mkPage('profiles');var isAdmin=CU&&CU.role==='admin';var cn=CU?(CU.cn||''):'';
+  var ajCard='<div class="prof-aj"><div class="prof-aj-av">AJ</div><div class="prof-aj-info"><div class="prof-aj-name">AJ <span style="font-size:14px;color:var(--dim);font-weight:400">· Agency Manager</span></div><div class="prof-aj-role">EYE KANDI Operations · QA & Coaching</div><div class="prof-aj-links"><a class="prof-link prof-link-wa" href="https://wa.me/message/PLACEHOLDER" target="_blank">WhatsApp</a><a class="prof-link prof-link-fb" href="https://m.me/PLACEHOLDER" target="_blank">Messenger</a><a class="prof-link prof-link-dc" href="https://discord.gg/7QKp4JJc" target="_blank">Discord</a></div></div></div>';
+  var chatters=Object.keys(PERF);
+  var teamCards=chatters.map(function(name){var d=PERF[name]||{};var clr=CLR[name]||'#FF2D78';var totalSales=d.sales?d.sales.reduce(function(a,b){return a+b;},0):0;var qa=d.qs||d.latestScore||0;var isMe=name===cn;return'<div class="prof-card"'+(isMe?' style="border-color:'+clr+'"':'')+'>'+( '<div class="prof-card-av" style="background:'+clr+'">'+name[0]+'</div>')+'<div class="prof-card-name">'+name+(isMe?' 👋':'')+'</div><div class="prof-card-role">Chatter</div><div class="prof-card-shift">'+(d.sh||d.shift||'—')+' Shift</div><div class="prof-card-stats"><div class="prof-stat"><div class="prof-stat-val" style="color:var(--mint)">'+qa+'</div><div class="prof-stat-lbl">QA Score</div></div><div class="prof-stat"><div class="prof-stat-val" style="color:var(--gold)">$'+(totalSales/1000).toFixed(1)+'k</div><div class="prof-stat-lbl">Sales</div></div></div></div>';}).join('');
+  p.innerHTML='<div class="ph"><div><div class="pt">👤 Profiles</div><div class="ps">Team directory & contact info</div></div></div><div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">👑 Your Manager</div></div>'+ajCard+(isAdmin?'<div class="ph" style="margin-bottom:12px;margin-top:16px"><div class="pt" style="font-size:15px">👥 Team Directory</div></div><div class="prof-grid">'+teamCards+'</div>':'<div class="ph" style="margin-bottom:12px;margin-top:16px"><div class="pt" style="font-size:15px">👤 My Profile</div></div><div class="prof-grid">'+teamCards.split('</div>')[0]+'</div>');
+  return p;
+}
+
+// ── PROOF PAGES (simplified but functional) ──
+window.PPV_PROOFS=window.PPV_PROOFS||[];
+window.TAG_PROOFS=window.TAG_PROOFS||[];
+window.STORY_PROOFS=window.STORY_PROOFS||[];
+window.proofSubmitCard=function(el){var pid=el.dataset.pid;var idx=el.dataset.idx;var fn=window['submitProofCard_'+pid];if(fn)fn(idx);};
+window.proofRemoveCard=function(el){var pid=el.dataset.pid;var idx=el.dataset.idx;var card=document.getElementById('card_'+pid+'_'+idx);if(card){card.style.opacity='0';card.style.transition='opacity .2s';setTimeout(function(){card.remove();},200);}};
+window.reviewProof=function(el){var pid=el.dataset.pid;var id=el.dataset.id;var st=el.dataset.st;var arr=pid==='ppv_proof'?window.PPV_PROOFS:pid==='tag_proof'?window.TAG_PROOFS:window.STORY_PROOFS;var item=arr.find(function(x){return x.id===id;});if(!item)return;item.status=st;addNotif('Proof by '+item.by+' ['+item.model+'] - '+st+' by '+CU.u,'info',item.by);showToast(st+'!');};
+window.saveProofNote=function(el){var pid=el.dataset.pid;var id=el.dataset.id;var arr=pid==='ppv_proof'?window.PPV_PROOFS:pid==='tag_proof'?window.TAG_PROOFS:window.STORY_PROOFS;var item=arr.find(function(x){return x.id===id;});if(item)item.note=el.value;};
+window.proofToggleAcc=function(id){var el=document.getElementById(id);if(el)el.classList.toggle('open');};
+function proofPickFile(id){var el=document.getElementById('file_'+id);if(el)el.click();}
+function proofFileChange(el){var pid=el.dataset.pid;var idx=el.dataset.idx;var fn=window['handleProofFile_'+pid];if(fn)fn('ss_'+idx,el.files[0]);}
+function proofToggleAcc(el){el.parentElement.classList.toggle('open');}
+
+function makeProofPage(storeArr,pageId,title,icon,modelKey){
+  var p=mkPage(pageId);var isAdmin=CU&&CU.role==='admin';var cn=CU?(CU.cn||'admin'):'admin';
+  if(!window._proofFiles)window._proofFiles={};
+  if(!window._proofCardCount)window._proofCardCount={};
+  window._proofCardCount[pageId]=window._proofCardCount[pageId]||0;
+  var MODELS_LIST=['Sabrina VIP','Sabrina SFW','Omi','Bee','Izana','Maddy (Daisy)'];
+  function buildCard(){
+    var idx=++window._proofCardCount[pageId];var cardId=pageId+'_'+idx;
+    return'<div class="proof-card" id="card_'+cardId+'">'
+      +'<label style="cursor:pointer;display:block">'
+      +'<input type="file" id="file_'+cardId+'" accept="image/*" style="display:none" data-pid="'+pageId+'" data-idx="'+idx+'" onchange="proofFileChange(this)">'
+      +'<div class="proof-upload-zone" id="zone_'+cardId+'"><div style="font-size:28px;margin-bottom:6px" id="zicon_'+cardId+'">📸</div><div style="font-size:12px;color:var(--dim)" id="ztxt_'+cardId+'">Click to upload screenshot</div></div></label>'
+      +'<img id="zprev_'+cardId+'" style="width:100%;max-height:130px;object-fit:cover;border-radius:var(--r-sm);margin-top:6px;display:none" alt="Preview">'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">'
+      +'<div><div class="eod-label" style="margin-bottom:4px">Model</div><select class="af" id="sel_'+cardId+'_model" style="padding:6px 10px">'+MODELS_LIST.map(function(o){return'<option>'+o+'</option>';}).join('')+'</select></div>'
+      +'<div><div class="eod-label" style="margin-bottom:4px">'+modelKey+'</div><input class="af" id="inp_'+cardId+'_extra" placeholder="Details..." style="padding:6px 10px"></div>'
+      +'</div>'
+      +'<div class="proof-submit-row" style="margin-top:10px">'
+      +'<button class="btn btn-ghost btn-sm" data-pid="'+pageId+'" data-idx="'+idx+'" onclick="proofRemoveCard(this)">Remove</button>'
+      +'<button class="btn btn-primary" data-pid="'+pageId+'" data-idx="'+idx+'" onclick="proofSubmitCard(this)">Submit ✓</button>'
+      +'</div></div>';
+  }
+  window['handleProofFile_'+pageId]=function(key,file){
+    if(!file)return;var reader=new FileReader();
+    reader.onload=function(e){
+      window._proofFiles[pageId+'_'+key]=e.target.result;
+      var cardId=pageId+'_'+key.replace('ss_','');
+      var zone=document.getElementById('zone_'+cardId);var icon=document.getElementById('zicon_'+cardId);var txt=document.getElementById('ztxt_'+cardId);var prev=document.getElementById('zprev_'+cardId);
+      if(zone)zone.classList.add('has-file');if(icon)icon.textContent='✅';if(txt)txt.textContent=file.name;
+      if(prev&&file.type.startsWith('image/')){prev.src=e.target.result;prev.style.display='block';}
+    };reader.readAsDataURL(file);
+  };
+  window['submitProofCard_'+pageId]=function(idx){
+    var cardId=pageId+'_'+idx;
+    var img=window._proofFiles[pageId+'_ss_'+idx]||null;
+    var modelEl=document.getElementById('sel_'+cardId+'_model');var extraEl=document.getElementById('inp_'+cardId+'_extra');
+    var model=modelEl?modelEl.value:'';var extra=extraEl?extraEl.value:'';
+    var today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    var entry={id:pageId+'_'+Date.now(),img:img,model:model,by:cn,date:today,extra:extra,status:'pending',note:''};
+    storeArr.unshift(entry);
+    var actionData={type:'proof',pid:pageId,proofId:entry.id};
+    addNotif(icon+' '+title+' submitted by '+cn+' · '+model+' — tap to review','info','admin',actionData);
+    showToast('Proof submitted! Admins notified.');
+    delete window._proofFiles[pageId+'_ss_'+idx];
+    renderProofHistory();
+  };
+  window['proofAdd_'+pageId]=function(){
+    var wrap=document.getElementById(pageId+'_cards');if(!wrap)return;
+    var div=document.createElement('div');div.innerHTML=buildCard();
+    var card=div.firstElementChild;wrap.appendChild(card);
+    var idx=window._proofCardCount[pageId];
+    var fi=document.getElementById('file_'+pageId+'_'+idx);
+    if(fi)fi.onchange=function(){proofFileChange(this);};
+    card.scrollIntoView({behavior:'smooth',block:'nearest'});
+  };
+  function renderProofHistory(){
+    var wrap=document.getElementById(pageId+'_hist');if(!wrap)return;
+    var list=isAdmin?storeArr:storeArr.filter(function(x){return x.by===cn;});
+    var statLbl={pending:'Pending',approved:'Approved',revise:'Revise',reviewed:'Reviewed'};
+    if(!list.length){wrap.innerHTML='<div style="color:var(--mu);font-size:12px;padding:12px 0">No submissions yet.</div>';return;}
+    wrap.innerHTML='<div class="proof-hist-accordion">'+list.map(function(x,xi){
+      var sLbl=statLbl[x.status]||'Pending';
+      var adminBtns=isAdmin?'<div class="proof-admin-actions"><button class="btn btn-mint btn-sm" data-pid="'+pageId+'" data-id="'+x.id+'" data-st="approved" onclick="reviewProof(this)">Approve</button><button class="btn btn-gold btn-sm" data-pid="'+pageId+'" data-id="'+x.id+'" data-st="revise" onclick="reviewProof(this)">Revise</button><button class="btn btn-ghost btn-sm" data-pid="'+pageId+'" data-id="'+x.id+'" data-st="reviewed" onclick="reviewProof(this)">Reviewed</button></div><textarea class="proof-note-input" rows="2" placeholder="Admin note..." data-pid="'+pageId+'" data-id="'+x.id+'" onchange="saveProofNote(this)">'+(x.note||'')+'</textarea>':'';
+      var noteBlock=x.note&&!isAdmin?'<div style="font-size:11px;color:var(--gold);margin-top:6px;padding:6px 8px;background:rgba(255,209,102,.08);border-radius:6px">Note: '+x.note+'</div>':'';
+      return'<div class="proof-acc-item" id="pacc_'+pageId+'_'+xi+'"><div class="proof-acc-hdr" onclick="proofToggleAcc(this)">'
+        +(x.img?'<img class="proof-acc-thumb" src="'+x.img+'" alt="">':'<div class="proof-acc-thumb-ph">📎</div>')
+        +'<div class="proof-acc-info"><div class="proof-acc-title">'+x.model+(x.extra?' · '+x.extra:'')+'</div><div class="proof-acc-meta">'+x.by+' · '+x.date+'</div></div>'
+        +'<div class="proof-acc-right"><span class="proof-status '+x.status+'">'+sLbl+'</span><span class="proof-acc-chev">›</span></div></div>'
+        +'<div class="proof-acc-body">'+(x.img?'<img class="proof-acc-img" src="'+x.img+'" alt="proof">':'')
+        +noteBlock+adminBtns+'</div></div>';
+    }).join('')+'</div>';
+  }
+  // Stats
+  var total=isAdmin?storeArr.length:storeArr.filter(function(x){return x.by===cn;}).length;
+  var approved=storeArr.filter(function(x){return x.status==='approved'&&(isAdmin||x.by===cn);}).length;
+  p.innerHTML='<div class="ph"><div><div class="pt">'+icon+' '+title+'</div><div class="ps">'+(isAdmin?'All chatters':cn)+' · Submit proof every shift</div></div></div>'
+    +'<div class="proof-stat-row"><div class="proof-stat"><div class="proof-stat-icon">'+icon+'</div><div><div class="proof-stat-val" style="color:var(--candy)">'+total+'</div><div class="proof-stat-lbl">Submitted</div></div></div><div class="proof-stat"><div class="proof-stat-icon">✅</div><div><div class="proof-stat-val" style="color:var(--mint)">'+approved+'</div><div class="proof-stat-lbl">Approved</div></div></div></div>'
+    +'<div class="proof-active-card"><div class="proof-active-hdr"><div class="proof-active-title">📸 Upload Proof</div><button class="btn btn-ghost btn-sm" onclick="proofAdd_'+pageId+'()">+ Add Another</button></div><div id="'+pageId+'_cards">'+buildCard()+'</div></div>'
+    +'<div class="proof-section"><div class="proof-section-title">📋 Submission History</div><div id="'+pageId+'_hist"></div></div>';
+  setTimeout(renderProofHistory,0);return p;
+}
+function pPPVProof(){return makeProofPage(window.PPV_PROOFS,'ppv_proof','PPV Pricing Proof','💰','Price ($) / Qty');}
+function pTagProof(){return makeProofPage(window.TAG_PROOFS,'tag_proof','PPV Tagging Proof','🏷️','Fan Username');}
+function pStoriesProof(){return makeProofPage(window.STORY_PROOFS,'stories_proof','Posted Stories Proof','📖','Time Posted');}
+
+// ── SHIFT REPORT ──
+function pShiftReport(){
+  var p=mkPage('shift_report');var isAdmin=CU&&CU.role==='admin';
+  var SHIFTS_DEF=[{id:'AM',label:'AM Shift',time:'8PM–4AM PHT',color:'#F97316',chatters:['Adie','Sage','Jammy']},{id:'MID',label:'MID Shift',time:'4AM–12NN PHT',color:'#60A5FA',chatters:['Joan','Fred','Jayce']},{id:'EVE',label:'EVE Shift',time:'12NN–8PM PHT',color:'#C084FC',chatters:['Dale']}];
+  var now=new Date();var phtHour=(now.getUTCHours()+8)%24;
+  var activeShift=phtHour>=20||phtHour<4?'AM':phtHour<12?'MID':'EVE';
+  var todayStr=now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  var todayReports=(window.EOD_REPORTS||[]).filter(function(r){return r.date===todayStr;});
+  var todayTotal=todayReports.reduce(function(s,r){return s+r.gross;},0);
+  var cols=SHIFTS_DEF.map(function(sh){
+    var isLive=sh.id===activeShift;
+    var rows=sh.chatters.map(function(name){var clr=CLR[name]||'#FF2D78';var eod=(window.EOD_REPORTS||[]).find(function(r){return r.by===name;});var sales=eod?'$'+eod.gross.toFixed(2):'—';return'<div class="shift-chatter-row"><div class="shift-av-sm" style="background:'+clr+'">'+name[0]+'</div><div class="shift-chatter-name">'+name+'</div><div class="shift-sales">'+sales+'</div></div>';}).join('');
+    return'<div class="shift-col" style="border-top:3px solid '+sh.color+'"><div class="shift-col-hdr"><div><div class="shift-col-title" style="color:'+sh.color+'">'+sh.label+'</div><div style="font-size:10px;color:var(--mu)">'+sh.time+'</div></div>'+(isLive?'<span class="shift-live"><span class="shift-live-dot"></span>LIVE</span>':'')+'</div><div class="shift-col-body">'+rows+'</div></div>';
   }).join('');
-}
-window.submitEOD = function() {
-  var st = EOD_STATE[EOD_CN];
-  if(!st){ showToast('Error: no shift state.'); return; }
-  var gross = eodCalcGross();
-  var cl = eodCountCL();
-  var today = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-  EOD_REPORTS.unshift({
-    id:'EOD-'+String(EOD_REPORTS.length+1).padStart(3,'0'),
-    by:EOD_CN, shift:st.shift, date:today,
-    sales:Object.assign({},st.sales), mm:Object.assign({},st.mm),
-    gross:gross, notes:'', checklist:cl.done, checklistTotal:cl.total, flagged:false
-  });
-  EOD_STATE[EOD_CN] = {shift:'MID',sales:{},mm:{},flags:{},checklist:{}};
-  addNotif('📝 '+EOD_CN+' submitted EOD · $'+gross.toFixed(2)+' gross');
-  showToast('✅ EOD report submitted!');
-  renderEODHistory();
-};
-
-function pEOD() {
-  var p = mkPage('eod');
-  var isAdmin = CU && CU.role==='admin';
-  var cn = CU ? (CU.cn || 'admin') : 'admin';
-  EOD_CN = cn;
-  if(!EOD_STATE[cn]) EOD_STATE[cn] = {shift:'MID',sales:{},mm:{},flags:{},checklist:{}};
-
-  var gross = eodCalcGross();
-  var cl = eodCountCL();
-  var today = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-
-  // Build model rows
-  var modelRows = MODELS_EOD.map(function(m) {
-    var val = EOD_STATE[cn].sales[m.key] || '';
-    var mmOn = !!EOD_STATE[cn].mm[m.key];
-    return '<tr>'
-      + '<td style="font-weight:600">'+m.emoji+' '+m.label+'</td>'
-      + '<td><input class="af" style="width:100px;text-align:right;padding:5px 9px" type="number" min="0" step="0.01" placeholder="$0.00" value="'+val+'" data-mkey="'+m.key+'" onchange="eodSaleInput(this)"></td>'
-      + '<td style="text-align:center"><div class="eod-mm-check'+(mmOn?' on':'')+'" data-mkey="'+m.key+'" onclick="eodMMToggle(this)">'+(mmOn?'✓':'')+'</div></td>'
-      + '<td><input class="af" style="width:120px;padding:5px 9px;font-size:11px" placeholder="Notes..." data-mkey="'+m.key+'" onchange="eodNoteInput(this)"></td></tr>';
-  }).join('');
-
-  // Build flags
-  var flagList = ['Full Shift','Late','Undertime','Before OT','After OT','Cover for Other'];
-  var flagsHtml = flagList.map(function(f) {
-    var key = f.replace(/\s+/g,'_').toLowerCase();
-    var on = !!EOD_STATE[cn].flags[key];
-    return '<label class="eod-flag'+(on?' checked':'')+'" data-fkey="'+key+'" onclick="eodFlagToggle(this)">'+f+'</label>';
-  }).join('');
-
-  // Build checklist
-  function clItems(items, col) {
-    return items.map(function(txt,i) {
-      var key = col+'_'+i;
-      var on = !!EOD_STATE[cn].checklist[key];
-      return '<div class="eod-cl-item'+(on?' on':'')+'" data-clkey="'+key+'" onclick="eodCLToggle(this)">'
-        + '<div class="eod-cl-dot">'+(on?'✓':'')+'</div>'
-        + '<span>'+txt+'</span></div>';
-    }).join('');
-  }
-
-  // Build shift select
-  var shiftOpts = ['AM','MID','EVE'].map(function(s){
-    return '<option'+(s===EOD_STATE[cn].shift?' selected':'')+'>'+s+'</option>';
-  }).join('');
-
-  p.innerHTML = '<div class="ph"><div>'
-    + '<div class="pt">📝 EOD Shift Report</div>'
-    + '<div class="ps">'+(isAdmin?'Admin view — all submissions':cn+' · Submit your end-of-shift report')+'</div>'
-    + '</div></div>'
-
-    + (!isAdmin ? '<div class="eod-wrap">'
-        + '<div><div class="eod-section">'
-        + '<div class="eod-section-title">📋 Shift Info</div>'
-        + '<div class="eod-meta">'
-        + '<div class="eod-field"><div class="eod-label">Chatter</div><div style="font-weight:700;font-size:13px">'+cn+'</div></div>'
-        + '<div class="eod-field"><div class="eod-label">Date</div><div style="font-weight:700;font-size:13px">'+today+'</div></div>'
-        + '<div class="eod-field"><div class="eod-label">Shift</div>'
-        + '<select class="af" style="padding:5px 9px" onchange="eodShiftChange(this)">'
-        + shiftOpts + '</select></div>'
-        + '<div class="eod-field"><div class="eod-label">Attendance</div></div>'
-        + '</div>'
-        + '<div class="eod-flags">'+flagsHtml+'</div>'
-        + '<div class="eod-section-title" style="margin-top:14px">💰 Sales Per Model</div>'
-        + '<table class="eod-model-table"><thead><tr><th>Model</th><th>Sales ($)</th><th>MM</th><th>Notes</th></tr></thead>'
-        + '<tbody>'+modelRows+'</tbody></table>'
-        + '<div class="eod-total"><div class="eod-total-label">TOTAL GROSS</div>'
-        + '<div class="eod-total-val" id="eodGross">$'+gross.toFixed(2)+'</div></div>'
-        + '</div></div>'
-        + '<div><div class="eod-section">'
-        + '<div class="eod-section-title">✅ Shift Checklist <span id="eodCLCount">('+cl.done+'/'+cl.total+')</span></div>'
-        + '<div class="eod-cl-grid">'
-        + '<div>'+clItems(CKL_LEFT,'L')+'</div>'
-        + '<div>'+clItems(CKL_RIGHT,'R')+'</div>'
-        + '</div></div>'
-        + '<div class="eod-submit-row">'
-        + '<div class="eod-progress">Checklist: <strong id="eodCLProg">'+cl.done+'/'+cl.total+'</strong> · Gross: <strong id="eodGross2">$'+gross.toFixed(2)+'</strong></div>'
-        + '<button class="abtn" style="width:auto;padding:9px 22px" onclick="submitEOD()">Submit EOD →</button>'
-        + '</div></div></div>'
-      : '')
-
-    + '<div class="eod-history">'
-    + '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">'+(isAdmin?'All EOD Reports':'My Submitted Reports')+'</div></div>'
-    + '<div id="eodHistoryWrap"></div>'
-    + '</div>';
-
-  setTimeout(renderEODHistory, 0);
+  p.innerHTML='<div class="ph"><div><div class="pt">⏱️ Live Shift Report</div><div class="ps">Real-time overview · PHT</div></div></div>'
+    +'<div class="g4" style="margin-bottom:20px"><div class="kpi" style="--ac:var(--mint)"><div class="kl">Active Shift</div><div class="kv" style="color:var(--mint);font-size:22px">'+activeShift+'</div></div><div class="kpi" style="--ac:var(--gold)"><div class="kl">Today Sales</div><div class="kv" style="color:var(--gold)">$'+todayTotal.toFixed(2)+'</div></div><div class="kpi" style="--ac:var(--sky)"><div class="kl">Reports Today</div><div class="kv" style="color:var(--sky)">'+todayReports.length+'</div></div><div class="kpi" style="--ac:var(--lav)"><div class="kl">PHT Time</div><div class="kv" style="color:var(--lav);font-size:20px">'+String(phtHour).padStart(2,'0')+':'+String(now.getUTCMinutes()).padStart(2,'0')+'</div></div></div>'
+    +'<div class="shift-board">'+cols+'</div>';
   return p;
 }
 
-window.eodNoteInput = function(el) {
-  if(EOD_STATE[EOD_CN]) EOD_STATE[EOD_CN]['note_'+el.dataset.mkey] = el.value;
-};
+// ── QUICK LINKS (ensure exists) ──
+var QUICK_LINKS_DATA=[{cat:'Trackers & Sheets',icon:'📗',links:[{name:'TRACKER EK1&2',type:'Google Sheets',url:'https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit',ok:true},{name:'MMS Tracker',type:'Google Sheets',url:'https://docs.google.com/spreadsheets/d/1IuG0jsv8zpF0l835u45rPNn5xAyM9JGDVN6Es4OMH-8/edit',ok:true},{name:'PPV Pricing',type:'Google Sheets',url:'https://docs.google.com/spreadsheets/d/1_LbogJfEjxUDSxtG6tO8BaKonrU85R71L2G_nqJcFwU/edit',ok:true},{name:'Campaign Tracker',type:'Google Sheets',url:'https://docs.google.com/spreadsheets/d/1KcgGQNfdcvMFEoNoImLp7ITurci2vAwc_AveKz8u6rU/edit',ok:true},{name:'Sales Tracker',type:'Google Sheets',url:'https://docs.google.com/spreadsheets/d/1Re0u3EWPbwqWImAHds5GVGPCT0rvHVEBQQAoBjMHwq0/edit',ok:true}]},{cat:'SOPs & Docs',icon:'📄',links:[{name:'Main SOP',type:'Google Sheets',url:'https://docs.google.com/spreadsheets/d/1CwPKLRT-HBr4j7i6uERxijaX6yydyVsxDi4JR4ymP_4/edit',ok:true},{name:'Tagging SOP',type:'Google Docs',url:'https://docs.google.com/document/d/1YuSxnAMnFNysG2m0HIgWd3wcv_fcLWJ2Wp3hBfNPvxU/edit',ok:true},{name:'Mass Message Library',type:'Google Docs',url:'https://docs.google.com/document/d/13wFYOi6F_yissaoKrr3qvWoGC9I4efTkBQwhi7JesGg/edit',ok:true}]},{cat:'Tools',icon:'⚙️',links:[{name:'Time Doctor',type:'App',url:'https://www.timedoctor.com/download.html',ok:true},{name:'Infloww',type:'Platform',url:'https://app.infloww.com',ok:true},{name:'Discord Server',type:'Discord',url:'https://discord.gg/7QKp4JJc',ok:true}]}];
+function pQuickLinks(){
+  var p=mkPage('quicklinks');
+  var cats=QUICK_LINKS_DATA.map(function(cat){return'<div class="ql-cat"><div class="ql-cat-hdr"><span class="ql-cat-icon">'+cat.icon+'</span><span class="ql-cat-title">'+cat.cat+'</span></div><div class="ql-items">'+cat.links.map(function(l){return'<a class="ql-item" href="'+l.url+'" target="_blank" rel="noopener"><div class="'+(l.ok?'ql-status-ok':'ql-status-warn')+'"></div><div class="ql-item-info"><div class="ql-item-name">'+l.name+'</div><div class="ql-item-type">'+l.type+'</div></div><div class="ql-item-arrow">↗</div></a>';}).join('')+'</div></div>';}).join('');
+  p.innerHTML='<div class="ph"><div><div class="pt">🔗 Quick Links Hub</div><div class="ps">All tools, sheets, and platforms in one place</div></div></div><div class="ql-cats">'+cats+'</div>';
+  return p;
+}
 
-// ════════════════════════════════════════
-// SESSION 18: VIOLATION + WARNING LOG
-// ════════════════════════════════════════
-function pViolations() {
-  var p = mkPage('violations');
-  var isAdmin = CU && CU.role==='admin';
-  var cn = CU ? (CU.cn || '') : '';
-  var VIOL_TYPES = ['TOS Compliance','Grammar/Quality','Attendance','Conduct','PPV Non-Compliance','Other'];
-  var CHATTERS_V = ['Jayce','Sage','Jammy','Adie','Dale','Joan','Fred'];
+// ── CHATTER COACHING PAGE ──
+function pChatterCoaching(n){
+  var p=mkPage('coaching');var logs=COACHING_DATA[n]||[];
+  p.innerHTML='<div class="ph"><div><div class="pt">🎯 My Coaching Log</div><div class="ps">Your personal coaching history — '+n+'</div></div></div>'+(logs.length===0?'<div class="card" style="text-align:center;padding:36px;color:var(--dim)">No coaching sessions on record yet.</div>':'<div class="co-list">'+logs.map(function(l,i){return coCard(l,i,n,false);}).join('')+'</div>');
+  return p;
+}
 
-  function strikeCount(name) {
-    return VIOLATIONS.filter(function(v){ return v.by===name; }).length;
-  }
-
-  window.logViolation = function() {
-    var chatter = document.getElementById('vChatter').value;
-    var type = document.getElementById('vType').value;
-    var sev = document.getElementById('vSev').value;
-    var desc = (document.getElementById('vDesc').value||'').trim();
-    if(!chatter){ showToast('Please select a chatter.'); return; }
-    if(!desc){ showToast('Please add a description.'); return; }
-    var today = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-    VIOLATIONS.unshift({
-      id:'VIO-'+String(VIOLATIONS.length+1).padStart(3,'0'),
-      by:chatter, type:type, sev:sev, date:today, desc:desc, linked_coaching:null
-    });
-    document.getElementById('vDesc').value='';
-    document.getElementById('vChatter').value='';
-    addNotif('⚠️ Violation logged for '+chatter+' — '+sev+' · '+type);
-    showToast('✅ Violation logged.');
-    renderViol();
-  };
-
-  window.deleteViol = function(id) {
-    if(!confirm('Remove this violation record?')) return;
-    VIOLATIONS = VIOLATIONS.filter(function(v){ return v.id!==id; });
-    showToast('Violation removed.');
-    renderViol();
-  };
-
-  function renderViol() {
-    var wrap = document.getElementById('violListWrap');
-    if(!wrap) return;
-    var visible = isAdmin ? VIOLATIONS : VIOLATIONS.filter(function(v){ return v.by===cn; });
-    if(visible.length===0){
-      wrap.innerHTML='<div style="color:var(--dim);text-align:center;padding:32px;font-size:13px">'
-        +(isAdmin?'No violations logged yet.':'You have no violations on record. Keep it up! ✅')+'</div>';
-      return;
-    }
-    wrap.innerHTML = visible.map(function(v) {
-      var c = CLR[v.by]||'#FF2D78';
-      var sevLabel = v.sev==='minor'?'⚠️ Minor':v.sev==='moderate'?'🟠 Moderate':'🔴 Serious';
-      return '<div class="viol-card '+v.sev+'">'
-        +'<div class="viol-hdr">'
-        +'<div class="viol-av" style="background:'+c+'">'+v.by[0]+'</div>'
-        +'<div><div class="viol-name">'+v.by+'</div><div class="viol-date">'+v.date+'</div></div>'
-        +'<div class="viol-badges">'
-        +'<span class="viol-sev '+v.sev+'">'+sevLabel+'</span>'
-        +'<span class="viol-strike">Strike #'+strikeCount(v.by)+'</span>'
-        +'</div></div>'
-        +'<div class="viol-body">'
-        +'<span class="viol-type-tag">📋 '+v.type+'</span>'
-        +'<div class="viol-desc">'+v.desc+'</div>'
-        +(v.linked_coaching?'<div style="margin-top:8px;font-size:11px;color:var(--mint)">🔗 Linked coaching: '+v.linked_coaching+'</div>':'')
-        +(isAdmin?'<div style="margin-top:10px"><button class="cov-btn reject" style="font-size:10px" onclick="deleteViol(\''+v.id+'\')">Remove</button></div>':'')
-        +'</div></div>';
-    }).join('');
-  }
-
-  // Strike summary
-  var summaryHtml = isAdmin ? '<div class="strike-summary">'
-    + CHATTERS_V.map(function(name) {
-        var c = CLR[name]||'#FF2D78';
-        var count = strikeCount(name);
-        var cls = count===0?'zero':count===1?'one':count===2?'two':'three';
-        return '<div class="strike-card">'
-          +'<div class="strike-av" style="background:'+c+'">'+name[0]+'</div>'
-          +'<div class="strike-name">'+name+'</div>'
-          +'<div class="strike-count '+cls+'">'+count+'</div>'
-          +'<div style="font-size:9.5px;color:var(--mu)">strike'+(count!==1?'s':'')+'</div>'
-          +'</div>';
-      }).join('')
-    + '</div>' : '';
-
-  var formHtml = isAdmin ? '<div class="viol-add-form">'
-    +'<div class="card-title" style="margin-bottom:14px">➕ Log New Violation</div>'
-    +'<div class="viol-form-grid">'
-    +'<div><div class="eod-label" style="margin-bottom:5px">Chatter</div>'
-    +'<select class="af" id="vChatter" style="width:100%"><option value="">Select chatter</option>'
-    +CHATTERS_V.map(function(n){return '<option>'+n+'</option>';}).join('')
-    +'</select></div>'
-    +'<div><div class="eod-label" style="margin-bottom:5px">Type</div>'
-    +'<select class="af" id="vType" style="width:100%">'
-    +VIOL_TYPES.map(function(t){return '<option>'+t+'</option>';}).join('')
-    +'</select></div>'
-    +'<div><div class="eod-label" style="margin-bottom:5px">Severity</div>'
-    +'<select class="af" id="vSev" style="width:100%">'
-    +'<option value="minor">⚠️ Minor</option><option value="moderate">🟠 Moderate</option><option value="serious">🔴 Serious</option>'
-    +'</select></div></div>'
-    +'<div style="margin-bottom:12px"><div class="eod-label" style="margin-bottom:5px">Description</div>'
-    +'<textarea class="af" id="vDesc" rows="2" placeholder="Describe the violation..." style="resize:vertical;line-height:1.5"></textarea></div>'
-    +'<button class="abtn" style="width:auto;padding:9px 22px" onclick="logViolation()">Log Violation →</button>'
-    +'</div>' : '';
-
-  p.innerHTML = '<div class="ph"><div>'
-    +'<div class="pt">⚠️ Violation & Warning Log</div>'
-    +'<div class="ps">'+(isAdmin?'Admin only · All chatter violations':'Your warning history')+'</div>'
-    +'</div></div>'
-    +(isAdmin?'<div class="notice">🔒 Admin-only view. Chatters can only see their own warnings.</div>':'')
-    +summaryHtml+formHtml
-    +'<div class="viol-grid" id="violListWrap"></div>';
-
-  setTimeout(renderViol, 0);
+// ── CHATTER PERF PAGE ──
+function pChatterPerf(n){
+  var p=mkPage('performance');var d=PERF[n];var color=CLR[n]||'#FF2D78';
+  var kpiKeys={MM:'Mass Message',BR:'Building Rapport',RT:'Response Time',TOS:'Terms of Service',GR:'Grammar',PPV:'PPV Sent',SA:'Sales',RE:'Retention',DC:'Drives Conversation',FS:'Fan Satisfaction'};
+  var kpiRows=Object.entries(d.kpi||{}).map(function(kv){var k=kv[0],v=kv[1];var col=v>=90?'var(--mint)':v>=75?'var(--gold)':'var(--candy)';return'<tr><td style="color:var(--dim)">'+kpiKeys[k]+'</td><td><div class="score-cell"><div class="score-bar"><div class="score-fill" style="width:'+v+'%;background:'+col+'"></div></div><div class="score-num" style="color:'+col+'">'+v+'%</div></div></td></tr>';}).join('');
+  p.innerHTML='<div class="ph"><div><div class="pt">📈 Performance Report</div><div class="ps">'+n+' · EYE KANDI · Latest QA data</div></div><a href="https://docs.google.com/spreadsheets/d/1ADCrqcAa7R7kFgUNI3XBAK3QB_mkHxSb_YEcgCwI9lg/edit" target="_blank" class="lnk" style="font-size:12px">↗ Full Tracker</a></div>'
+    +'<div class="g2"><div class="card"><div class="card-title">KPI Breakdown</div><div class="perf-wrap"><table class="pt"><thead><tr><th>Metric</th><th>Score</th></tr></thead><tbody>'+kpiRows+'</tbody></table></div></div>'
+    +'<div class="card"><div class="card-title">QA Score History</div>'+(d.qa?d.qa.label.map(function(l,i){return'<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--bdr)"><div style="font-size:12px;color:var(--dim)">'+l+'</div><div style="font-family:var(--fh);font-weight:800;font-size:13px;color:'+(d.qa.scores[i]>=60?'var(--mint)':d.qa.scores[i]>=50?'var(--gold)':'var(--candy)')+'">'+d.qa.scores[i]+'</div></div>';}).join(''):'<div style="color:var(--dim)">No data</div>')+'<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--bdr);display:flex;justify-content:space-between"><span style="font-size:11px;color:var(--dim)">Target</span><span style="font-family:var(--fh);font-weight:800;color:var(--gold)">'+(d.target||75)+'</span></div></div></div></div>';
   return p;
 }
 
 
 
-// ════════════════════════════════════════
-// SESSION 29: LANGUAGE TOGGLE (EN / Filipino)
-// ════════════════════════════════════════
-var LANG = 'EN';
-
-var TRANSLATIONS = {
-  EN: {
-    dashboard: 'My Dashboard', performance: 'Performance', coaching: 'My Coaching',
-    checklist: 'Shift Checklist', schedule: 'Schedule', sops: 'SOPs',
-    sales_ref: 'Sales Guide', ppv: 'PPV Pricing', quicklinks: 'Quick Links',
-    coverage: 'Coverage', goals: 'Goals', eod: 'EOD Report', violations: 'Violations',
-    announcements: 'Announcements', requests: 'Requests',
-    signin: 'Sign In', signout: 'Sign Out',
-    welcome: 'Welcome back',
-    shift_soon: 'Shift Starting Soon!',
-    submit: 'Submit', save: 'Save', cancel: 'Cancel',
-    approved: 'Approved', pending: 'Pending', rejected: 'Rejected',
-  },
-  FIL: {
-    dashboard: 'Aking Dashboard', performance: 'Pagganap', coaching: 'Aking Coaching',
-    checklist: 'Listahan ng Shift', schedule: 'Iskedyul', sops: 'Mga SOP',
-    sales_ref: 'Gabay sa Benta', ppv: 'Presyo ng PPV', quicklinks: 'Mabilis na Links',
-    coverage: 'Coverage', goals: 'Mga Layunin', eod: 'Ulat ng EOD', violations: 'Mga Paglabag',
-    announcements: 'Mga Anunsyo', requests: 'Mga Kahilingan',
-    signin: 'Mag-sign In', signout: 'Mag-sign Out',
-    welcome: 'Maligayang pagbabalik',
-    shift_soon: 'Magsisimula na ang Shift!',
-    submit: 'Isumite', save: 'I-save', cancel: 'Kanselahin',
-    approved: 'Naaprubahan', pending: 'Nakabinbin', rejected: 'Tinanggihan',
-  }
-};
-
-function t(key) {
-  return (TRANSLATIONS[LANG] && TRANSLATIONS[LANG][key]) || (TRANSLATIONS['EN'][key]) || key;
-}
-
-function toggleLang() {
-  LANG = LANG === 'EN' ? 'FIL' : 'EN';
-  var sw = document.getElementById('langSwitch');
-  var flag = document.getElementById('langFlag');
-  var lbl = document.getElementById('langLbl');
-  if (sw) sw.classList.toggle('on', LANG === 'FIL');
-  if (flag) flag.textContent = LANG === 'FIL' ? '🇺🇸' : '🇵🇭';
-  if (lbl) lbl.textContent = LANG === 'FIL' ? 'EN' : 'FIL';
-  // Update shift reminder text if visible
-  var sr = document.getElementById('srSubText');
-  if (sr && document.getElementById('shiftReminder') && document.getElementById('shiftReminder').classList.contains('show')) {
-    sr.textContent = LANG === 'FIL' ? 'Ang iyong shift ay magsisimula na — mag-clock in sa Time Doctor!' : 'Your shift is starting soon — clock in on Time Doctor!';
-  }
-  showToast(LANG === 'FIL' ? '🇵🇭 Filipino mode on' : '🇺🇸 English mode on');
-}
-
-// ════════════════════════════════════════
-// SESSION 17: LEADERBOARD + STREAKS + BADGES
-// ════════════════════════════════════════
-function getBadges(name) {
-  var d = PERF[name] || {};
-  var badges = [];
-  var totalSales = d.sales ? d.sales.reduce(function(a,b){return a+b;},0) : 0;
-  var qa = d.qs || d.latestScore || 0;
-  var mms = d.mms ? d.mms.t : 0;
-  var tips = d.campaignTips || 0;
-  if (totalSales >= 15000) badges.push({label:'💰 Top Seller', cls:'badge-gold'});
-  if (qa >= 65) badges.push({label:'⭐ QA Star', cls:'badge-mint'});
-  if (mms >= 250) badges.push({label:'💬 MMS King', cls:'badge-sky'});
-  if (tips >= 500) badges.push({label:'🎯 Campaign MVP', cls:'badge-lav'});
-  if (d.mms && d.mms.ok && d.mms.t && Math.round((d.mms.ok/d.mms.t)*100) >= 95) badges.push({label:'✅ MMS Pro', cls:'badge-mint'});
-  if (totalSales >= 5000 && qa >= 60) badges.push({label:'🍬 All-Rounder', cls:'badge-candy'});
-  return badges;
-}
-
-function getStreak(name) {
-  // Simulated streak based on QA scores consistently above target
-  var d = PERF[name] || {};
-  var scores = d.qa ? d.qa.scores : [];
-  if (!scores.length) return 0;
-  var streak = 0;
-  for (var i = scores.length - 1; i >= 0; i--) {
-    if (scores[i] >= 50) streak++; else break;
-  }
-  return streak;
-}
-
-function pLeaderboard() {
-  var p = mkPage('leaderboard');
-  var isAdmin = CU && CU.role === 'admin';
-
-  var METRICS = [
-    {key:'sales', label:'💰 Sales', fn: function(n) {
-      var d = PERF[n]; return d && d.sales ? d.sales.reduce(function(a,b){return a+b;},0) : 0;
-    }, fmt: function(v) { return '$'+v.toLocaleString(); }, color:'var(--gold)'},
-    {key:'qa', label:'⭐ QA Score', fn: function(n) {
-      var d = PERF[n]; return d ? (d.qs||d.latestScore||0) : 0;
-    }, fmt: function(v) { return v+' pts'; }, color:'var(--mint)'},
-    {key:'mms', label:'💬 MMS Count', fn: function(n) {
-      var d = PERF[n]; return d && d.mms ? d.mms.t : 0;
-    }, fmt: function(v) { return v+' sent'; }, color:'var(--sky)'},
-    {key:'tips', label:'🎯 Campaign Tips', fn: function(n) {
-      var d = PERF[n]; return d ? (d.campaignTips||0) : 0;
-    }, fmt: function(v) { return '$'+v.toLocaleString(); }, color:'var(--lav)'},
-  ];
-
-  var activeMetric = 'sales';
-
-  function renderLB(metric) {
-    var m = METRICS.find(function(x){return x.key===metric;}) || METRICS[0];
-    var names = Object.keys(PERF);
-    var ranked = names.slice().sort(function(a,b){ return m.fn(b) - m.fn(a); });
-
-    var rankSymbols = ['🥇','🥈','🥉'];
-
-    var rows = ranked.map(function(name, idx) {
-      var val = m.fn(name);
-      var clr = CLR[name] || '#FF2D78';
-      var rank = idx + 1;
-      var rankCls = rank <= 3 ? 'r'+rank : 'rn';
-      var rankDisp = rank <= 3 ? rankSymbols[idx] : '#'+rank;
-      var badges = getBadges(name);
-      var streak = getStreak(name);
-      var isMe = CU && CU.cn === name;
-
-      return '<div class="lb-row rank-'+(rank <= 3 ? rank : 'n')+'" '+(isMe?'style="box-shadow:0 0 0 2px '+clr+'33"':'')+'>'
-        + '<div class="lb-rank '+rankCls+'">'+rankDisp+'</div>'
-        + '<div class="lb-av" style="background:'+clr+'">'+name[0]+'</div>'
-        + '<div class="lb-info">'
-        + '<div class="lb-name">'+name+(isMe?' <span style="font-size:10px;color:var(--dim)">(You)</span>':'')+'</div>'
-        + '<div class="lb-badges">'
-        + badges.map(function(b){return '<span class="badge '+b.cls+'">'+b.label+'</span>';}).join('')
-        + (streak > 1 ? '<span class="lb-streak">🔥 '+streak+' period streak</span>' : '')
-        + '</div></div>'
-        + '<div class="lb-val" style="color:'+m.color+'">'+m.fmt(val)+'</div>'
-        + '</div>';
-    }).join('');
-
-    var wrap = document.getElementById('lbListWrap');
-    if (wrap) wrap.innerHTML = rows;
-  }
-
-  // Build filter buttons
-  var filterBtns = METRICS.map(function(m) {
-    return '<button class="fb'+(m.key===activeMetric?' active':'')+'" onclick="lbFilter(\''+m.key+'\',this)">'+m.label+'</button>';
-  }).join('');
-
-  // Summary stats
-  var topSeller = Object.keys(PERF).reduce(function(a,b){
-    var av = PERF[a].sales?PERF[a].sales.reduce(function(x,y){return x+y;},0):0;
-    var bv = PERF[b].sales?PERF[b].sales.reduce(function(x,y){return x+y;},0):0;
-    return bv > av ? b : a;
-  });
-  var topQA = Object.keys(PERF).reduce(function(a,b){
-    return (PERF[b].qs||PERF[b].latestScore||0) > (PERF[a].qs||PERF[a].latestScore||0) ? b : a;
-  });
-
-  p.innerHTML = '<div class="ph"><div>'
-    + '<div class="pt">🏆 Leaderboard</div>'
-    + '<div class="ps">Team rankings — updated from latest QA data</div>'
-    + '</div></div>'
-
-    + '<div class="g4" style="margin-bottom:20px">'
-    + '<div class="kpi" style="--ac:var(--gold)"><div class="kpi-lbl">Top Seller</div>'
-    + '<div class="kpi-val" style="color:var(--gold);font-size:20px">'+topSeller+'</div>'
-    + '<div class="kpi-sub">Highest total sales</div></div>'
-    + '<div class="kpi" style="--ac:var(--mint)"><div class="kpi-lbl">QA Leader</div>'
-    + '<div class="kpi-val" style="color:var(--mint);font-size:20px">'+topQA+'</div>'
-    + '<div class="kpi-sub">Highest QA score</div></div>'
-    + '<div class="kpi" style="--ac:var(--lav)"><div class="kpi-lbl">Total Badges</div>'
-    + '<div class="kpi-val" style="color:var(--lav)">'
-    + Object.keys(PERF).reduce(function(s,n){return s+getBadges(n).length;},0)
-    + '</div><div class="kpi-sub">Across all chatters</div></div>'
-    + '<div class="kpi" style="--ac:var(--sky)"><div class="kpi-lbl">Active Streaks</div>'
-    + '<div class="kpi-val" style="color:var(--sky)">'
-    + Object.keys(PERF).filter(function(n){return getStreak(n)>1;}).length
-    + '</div><div class="kpi-sub">Chatters on a streak</div></div>'
-    + '</div>'
-
-    + '<div class="lb-filter">'+filterBtns+'</div>'
-    + '<div class="lb-wrap" id="lbListWrap"></div>'
-
-    + '<div class="card" style="margin-top:8px">'
-    + '<div class="card-title">🏅 Badge Legend</div>'
-    + '<div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:4px">'
-    + '<span class="badge badge-gold">💰 Top Seller — $15k+ total sales</span>'
-    + '<span class="badge badge-mint">⭐ QA Star — 65+ QA score</span>'
-    + '<span class="badge badge-sky">💬 MMS King — 250+ messages sent</span>'
-    + '<span class="badge badge-lav">🎯 Campaign MVP — $500+ in campaign tips</span>'
-    + '<span class="badge badge-mint">✅ MMS Pro — 95%+ approval rate</span>'
-    + '<span class="badge badge-candy">🍬 All-Rounder — $5k sales + 60+ QA</span>'
-    + '</div></div>';
-
-  window.lbFilter = function(key, btn) {
-    document.querySelectorAll('.lb-filter .fb').forEach(function(b){b.classList.remove('active');});
-    btn.classList.add('active');
-    renderLB(key);
-  };
-
-  setTimeout(function(){ renderLB('sales'); }, 0);
-  return p;
-}
-
-// ════════════════════════════════════════
-// SESSION 19: CONTENT REQUEST TRACKER
-// ════════════════════════════════════════
-var CONTENT_REQS = [
-  {id:'CR-001', title:'Custom Lingerie Set Photos', model:'Sabrina', type:'Photo Set',
-   fan:'Fan #1042', by:'Joan', date:'Jun 5, 2026', status:'delivered',
-   desc:'Fan requested a custom 5-photo set in red lingerie. Delivered via PPV $150.', price:'$150'},
-  {id:'CR-002', title:'JOI Video 10 min', model:'Omi', type:'Video',
-   fan:'Fan #0338', by:'Dale', date:'Jun 7, 2026', status:'inprod',
-   desc:'Fan requested custom JOI content. Approved by management. In production.', price:'$200'},
-  {id:'CR-003', title:'Personalized Voice Note', model:'Sabrina', type:'Audio',
-   fan:'Fan #2201', by:'Adie', date:'Jun 9, 2026', status:'pending',
-   desc:'Fan wants a 60-second personalized voice note. Awaiting Sabrina confirmation.', price:'$50'},
-];
-
-var CR_TYPES = ['Photo Set','Video','Audio','Custom PPV','Sexting Session','GFE','VC','Other'];
-var CR_MODELS = ['Sabrina','Omi','Maddy','Bee','Izana'];
-var CR_STATUSES = ['new','pending','approved','inprod','delivered','closed'];
-var CR_STATUS_LABELS = {
-  new:'🆕 New', pending:'⏳ Pending', approved:'✅ Approved',
-  inprod:'🎬 In Production', delivered:'📦 Delivered', closed:'🔒 Closed'
-};
-var CR_STATUS_NEXT = {new:'pending', pending:'approved', approved:'inprod', inprod:'delivered', delivered:'closed'};
-
-function pContentReqs() {
-  var p = mkPage('content_reqs');
-  var isAdmin = CU && CU.role === 'admin';
-  var cn = CU ? (CU.cn || '') : '';
-
-  var PIPELINE_STEPS = ['new','pending','approved','inprod','delivered','closed'];
-
-  function countByStatus(s) {
-    return CONTENT_REQS.filter(function(r){return r.status===s;}).length;
-  }
-
-  function renderCR(filter) {
-    var wrap = document.getElementById('crListWrap');
-    if (!wrap) return;
-    var list = isAdmin ? CONTENT_REQS : CONTENT_REQS.filter(function(r){return r.by===cn;});
-    if (filter && filter !== 'all') list = list.filter(function(r){return r.status===filter;});
-    if (!list.length) {
-      wrap.innerHTML = '<div style="color:var(--dim);text-align:center;padding:32px;font-size:13px">No requests found.</div>';
-      return;
-    }
-    wrap.innerHTML = '<div class="cr-grid">'
-      + list.map(function(r) {
-          var nextStatus = CR_STATUS_NEXT[r.status];
-          return '<div class="cr-card">'
-            + '<div class="cr-card-hdr">'
-            + '<div class="cr-title">'+r.title+'</div>'
-            + '<span class="cr-status '+r.status+'">'+(CR_STATUS_LABELS[r.status]||r.status)+'</span>'
-            + '</div>'
-            + '<div class="cr-body">'
-            + '<div class="cr-meta-row">'
-            + '<span class="cr-tag">'+r.model+'</span>'
-            + '<span class="cr-tag">'+r.type+'</span>'
-            + (r.price?'<span class="cr-tag" style="color:var(--gold)">'+r.price+'</span>':'')
-            + '</div>'
-            + '<div class="cr-desc">'+r.desc+'</div>'
-            + '<div class="cr-footer">'
-            + '<div class="cr-by">By '+r.by+' · '+r.date+'</div>'
-            + '<div class="cr-actions">'
-            + (isAdmin && nextStatus ? '<button class="cr-btn cr-btn-next" onclick="advanceCR(\''+r.id+'\')">→ '+((CR_STATUS_LABELS[nextStatus]||nextStatus).replace(/^\S+\s/,''))+'</button>' : '')
-            + (isAdmin ? '<button class="cr-btn cr-btn-close" onclick="closeCR(\''+r.id+'\')">Close</button>' : '')
-            + '</div></div>'
-            + '</div></div>';
-        }).join('')
-      + '</div>';
-  }
-
-  window.advanceCR = function(id) {
-    var r = CONTENT_REQS.find(function(x){return x.id===id;});
-    if (!r || !CR_STATUS_NEXT[r.status]) return;
-    r.status = CR_STATUS_NEXT[r.status];
-    addNotif('🎬 Content request updated: '+r.title+' → '+(CR_STATUS_LABELS[r.status]||r.status));
-    showToast('✅ Status updated to '+(CR_STATUS_LABELS[r.status]||r.status));
-    renderCR(document.getElementById('crActiveFilter') ? document.getElementById('crActiveFilter').value : 'all');
-  };
-
-  window.closeCR = function(id) {
-    var r = CONTENT_REQS.find(function(x){return x.id===id;});
-    if (!r) return;
-    r.status = 'closed';
-    showToast('Request closed.');
-    renderCR('all');
-  };
-
-  window.submitCR = function() {
-    var title = (document.getElementById('crTitle').value||'').trim();
-    var model = document.getElementById('crModel').value;
-    var type = document.getElementById('crType').value;
-    var desc = (document.getElementById('crDesc').value||'').trim();
-    var price = (document.getElementById('crPrice').value||'').trim();
-    if (!title || !desc) { showToast('Please fill in title and description.'); return; }
-    var today = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-    CONTENT_REQS.unshift({
-      id:'CR-'+String(CONTENT_REQS.length+1).padStart(3,'0'),
-      title:title, model:model, type:type, by:isAdmin?'Admin':(CU.cn||'Admin'),
-      date:today, status:'new', desc:desc, price:price?'$'+price:'', fan:'Fan request'
-    });
-    document.getElementById('crTitle').value='';
-    document.getElementById('crDesc').value='';
-    document.getElementById('crPrice').value='';
-    addNotif('🎬 New content request: '+title+' ('+model+')');
-    showToast('✅ Content request submitted!');
-    renderCR('all');
-  };
-
-  // Pipeline summary
-  var pipelineHtml = '<div class="cr-pipeline">'
-    + PIPELINE_STEPS.map(function(s, i) {
-        var cnt = countByStatus(s);
-        return '<div class="cr-pipe-step">'
-          + (i>0?'<div class="cr-pipe-arrow">›</div>':'')
-          + '<div class="cr-pipe-label '+(cnt>0?'active':'')+'">'+CR_STATUS_LABELS[s]+' '+(cnt>0?'('+cnt+')':'')+'</div>'
-          + '</div>';
-      }).join('')
-    + '</div>';
-
-  var filterOpts = ['<option value="all">All Requests</option>']
-    .concat(CR_STATUSES.map(function(s){return '<option value="'+s+'">'+(CR_STATUS_LABELS[s]||s)+'</option>';}))
-    .join('');
-
-  var formHtml = '<div class="cr-form">'
-    + '<div class="card-title" style="margin-bottom:14px">➕ Log New Content Request</div>'
-    + '<div class="cr-form-grid">'
-    + '<div><div class="eod-label" style="margin-bottom:5px">Title</div>'
-    + '<input class="af" id="crTitle" placeholder="e.g. Custom JOI Video 10min"></div>'
-    + '<div><div class="eod-label" style="margin-bottom:5px">Model</div>'
-    + '<select class="af" id="crModel">'
-    + CR_MODELS.map(function(m){return '<option>'+m+'</option>';}).join('')
-    + '</select></div>'
-    + '<div><div class="eod-label" style="margin-bottom:5px">Content Type</div>'
-    + '<select class="af" id="crType">'
-    + CR_TYPES.map(function(t){return '<option>'+t+'</option>';}).join('')
-    + '</select></div>'
-    + '<div><div class="eod-label" style="margin-bottom:5px">Agreed Price ($)</div>'
-    + '<input class="af" id="crPrice" type="number" placeholder="0.00"></div>'
-    + '</div>'
-    + '<div style="margin-bottom:12px"><div class="eod-label" style="margin-bottom:5px">Description / Fan Notes</div>'
-    + '<textarea class="af" id="crDesc" rows="2" placeholder="Describe what the fan requested..." style="resize:vertical;line-height:1.5"></textarea></div>'
-    + '<button class="abtn" style="width:auto;padding:9px 22px" onclick="submitCR()">Submit Request →</button>'
-    + '</div>';
-
-  p.innerHTML = '<div class="ph"><div>'
-    + '<div class="pt">🎬 Content Request Tracker</div>'
-    + '<div class="ps">Track custom content from fans — log, approve, produce, deliver</div>'
-    + '</div></div>'
-    + pipelineHtml
-    + formHtml
-    + '<div class="ph" style="margin-bottom:12px;margin-top:4px">'
-    + '<div class="pt" style="font-size:15px">All Requests</div>'
-    + '<select class="af" id="crActiveFilter" style="width:160px;padding:5px 9px" onchange="renderCR(this.value)">'+filterOpts+'</select>'
-    + '</div>'
-    + '<div id="crListWrap"></div>';
-
-  setTimeout(function(){ renderCR('all'); }, 0);
-  return p;
-}
-
-// ════════════════════════════════════════
-// SESSION 4: PROFILES TAB
-// ════════════════════════════════════════
-function pProfiles() {
-  var p = mkPage('profiles');
-  var isAdmin = CU && CU.role === 'admin';
-  var cn = CU ? (CU.cn || '') : '';
-
-  // AJ contact card — always shown
-  var ajCard = '<div class="prof-aj">'
-    + '<div class="prof-aj-av">AJ</div>'
-    + '<div class="prof-aj-info">'
-    + '<div class="prof-aj-name">AJ <span style="font-size:14px;color:var(--dim);font-weight:400">· Agency Manager</span></div>'
-    + '<div class="prof-aj-role">EYE KANDI Operations · QA &amp; Coaching · Social Media Manager</div>'
-    + '<div class="prof-aj-links">'
-    + '<a class="prof-link prof-link-wa" href="https://wa.me/message/PLACEHOLDER" target="_blank">💬 WhatsApp</a>'
-    + '<a class="prof-link prof-link-fb" href="https://m.me/PLACEHOLDER" target="_blank">💙 Messenger</a>'
-    + '<a class="prof-link prof-link-dc" href="https://discord.gg/7QKp4JJc" target="_blank" rel="noopener">🎮 Discord</a>'
-    + '<a class="prof-link prof-link-em" href="mailto:eyekandi@gmail.com">✉️ Email</a>'
-    + '</div></div></div>';
-
-  // Team directory
-  var chatters = Object.keys(PERF);
-  var teamCards = chatters.map(function(name) {
-    var d = PERF[name] || {};
-    var clr = CLR[name] || '#FF2D78';
-    var totalSales = d.sales ? d.sales.reduce(function(a,b){return a+b;},0) : 0;
-    var qa = d.qs || d.latestScore || 0;
-    var badges = getBadges(name);
-    var isMe = name === cn;
-    return '<div class="prof-card" '+(isMe?'style="border-color:'+clr+';box-shadow:0 0 0 1px '+clr+'33"':'')+'>'
-      + '<div class="prof-card-av" style="background:'+clr+'">'+name[0]+'</div>'
-      + '<div class="prof-card-name">'+name+(isMe?' 👋':'')+'</div>'
-      + '<div class="prof-card-role">Chatter</div>'
-      + '<div class="prof-card-shift">'+( d.sh || d.shift ||'—')+' Shift</div>'
-      + '<div class="prof-card-stats">'
-      + '<div class="prof-stat"><div class="prof-stat-val" style="color:var(--mint)">'+qa+'</div><div class="prof-stat-lbl">QA Score</div></div>'
-      + '<div class="prof-stat"><div class="prof-stat-val" style="color:var(--gold)">$'+(totalSales/1000).toFixed(1)+'k</div><div class="prof-stat-lbl">Sales</div></div>'
-      + '</div>'
-      + (badges.length ? '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;justify-content:center">'
-        + badges.slice(0,2).map(function(b){return '<span class="badge '+b.cls+'" style="font-size:9px">'+b.label+'</span>';}).join('')
-        + '</div>' : '')
-      + '</div>';
-  }).join('');
-
-  var chattersSection = isAdmin
-    ? '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">👥 Team Directory</div></div>'
-      + '<div class="prof-grid">'+teamCards+'</div>'
-    : '';
-
-  var myCard = !isAdmin && cn
-    ? '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">👤 My Profile</div></div>'
-      + '<div class="prof-grid">' + (function(){
-          var d = PERF[cn] || {};
-          var clr = CLR[cn] || '#FF2D78';
-          var totalSales = d.sales ? d.sales.reduce(function(a,b){return a+b;},0) : 0;
-          var qa = d.qs || d.latestScore || 0;
-          var badges = getBadges(cn);
-          return '<div class="prof-card" style="border-color:'+clr+';box-shadow:0 0 0 1px '+clr+'33">'
-            + '<div class="prof-card-av" style="background:'+clr+'">'+cn[0]+'</div>'
-            + '<div class="prof-card-name">'+cn+' 👋</div>'
-            + '<div class="prof-card-role">Chatter</div>'
-            + '<div class="prof-card-shift">'+( d.sh || d.shift ||'—')+' Shift</div>'
-            + '<div class="prof-card-stats">'
-            + '<div class="prof-stat"><div class="prof-stat-val" style="color:var(--mint)">'+qa+'</div><div class="prof-stat-lbl">QA Score</div></div>'
-            + '<div class="prof-stat"><div class="prof-stat-val" style="color:var(--gold)">$'+(totalSales/1000).toFixed(1)+'k</div><div class="prof-stat-lbl">Sales</div></div>'
-            + '</div>'
-            + (badges.length ? '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;justify-content:center">'
-              + badges.map(function(b){return '<span class="badge '+b.cls+'" style="font-size:9px">'+b.label+'</span>';}).join('')
-              + '</div>' : '')
-            + '</div>';
-        })()
-      + '</div>'
-    : '';
-
-  p.innerHTML = '<div class="ph"><div>'
-    + '<div class="pt">👤 Profiles</div>'
-    + '<div class="ps">Team directory &amp; contact info</div>'
-    + '</div></div>'
-    + '<div class="ph" style="margin-bottom:12px"><div class="pt" style="font-size:15px">👑 Your Manager</div></div>'
-    + ajCard
-    + myCard
-    + chattersSection;
-
-  return p;
-}
-
-
-
-// ════════════════════════════════════════
-// SESSION 28: DARK / LIGHT MODE TOGGLE
-// ════════════════════════════════════════
-var DARK_MODE = true; // default is dark
-
-function toggleDarkMode() {
-  DARK_MODE = !DARK_MODE;
-  applyTheme();
-  showToast(DARK_MODE ? '🌙 Dark mode on' : '☀️ Light mode on');
-}
-
-function applyTheme() {
-  var btn = document.getElementById('darkModeBtn');
-  if (DARK_MODE) {
-    document.body.classList.remove('light');
-    if (btn) btn.textContent = '🌙';
-  } else {
-    document.body.classList.add('light');
-    if (btn) btn.textContent = '☀️';
-  }
-  // Save preference
-  try { localStorage.setItem('ek_theme', DARK_MODE ? 'dark' : 'light'); } catch(e){}
-}
-
-// Load saved theme on startup
-(function() {
-  try {
-    var saved = localStorage.getItem('ek_theme');
-    if (saved === 'light') {
-      DARK_MODE = false;
-      document.body.classList.add('light');
-      var btn = document.getElementById('darkModeBtn');
-      if (btn) btn.textContent = '☀️';
-    }
-  } catch(e) {}
-})();
-
-window.tgCo=(uid)=>{
-  const b=$('body_'+uid),h=$('chv_'+uid);
-  const o=b.classList.toggle('op');h.classList.toggle('op',o);
-};
 </script>
-
-<!-- CHECKLIST COMPLETE MODAL -->
-<div id="clModal">
-  <div class="clm-box">
-    <div class="clm-icon" id="clmIcon">🎉</div>
-    <div class="clm-title" id="clmTitle">Shift Complete!</div>
-    <div class="clm-sub" id="clmSub">You've completed all your shift tasks. Great work!</div>
-    <div class="clm-stats" id="clmStats"></div>
-    <div class="clm-note" id="clmNoteWrap">
-      <div class="clm-note-lbl">Shift Note (optional)</div>
-      <textarea class="clm-note-input" id="clmNote" rows="2" placeholder="e.g. 2 fans flagged, PPV sent to 3 whales..."></textarea>
-    </div>
-    <div class="clm-actions">
-      <button class="clm-btn clm-btn-ghost" onclick="closeClModal()">Close</button>
-      <button class="clm-btn clm-btn-primary" onclick="submitShiftSummary()">Submit Summary ✓</button>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
